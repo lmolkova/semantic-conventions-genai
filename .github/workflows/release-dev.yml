@@ -30,7 +30,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.tag.outputs.tag }}
         run: |
-          info=$(gh release view "$TAG" --json databaseId,isDraft 2>/dev/null || true)
+          info=$(gh release view "$TAG" --json isDraft 2>/dev/null || true)
           if [ -z "$info" ]; then
             existing_drafts=$(gh release list --limit 20 --json tagName,isDraft \
               --jq '[.[] | select(.isDraft) | .tagName] | join(", ")')
@@ -48,7 +48,6 @@ jobs:
             echo "Release '${TAG}' is already published; refusing to re-release."
             exit 1
           fi
-          echo "release_id=$(echo "$info" | jq -r .databaseId)" >> "$GITHUB_OUTPUT"
           echo "Draft release '${TAG}' matches model/manifest.yaml schema_url."
 
       - name: Package registry
@@ -67,10 +66,8 @@ jobs:
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_ID: ${{ steps.draft.outputs.release_id }}
+          TAG: ${{ steps.tag.outputs.tag }}
         run: |
-          gh api \
-            --method PATCH \
-            "/repos/${{ github.repository }}/releases/${RELEASE_ID}" \
-            -F draft=false \
-            -F target_commitish="${{ github.sha }}"
+          gh release edit "$TAG" \
+            --draft=false \
+            --target "${{ github.sha }}"
