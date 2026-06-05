@@ -8,8 +8,6 @@
   decoding only. Retrieval spans now use the new
   `gen_ai.retrieval.top_k` attribute instead of `gen_ai.request.top_k`.
   ([#217](https://github.com/open-telemetry/semantic-conventions-genai/pull/217))
-- Limit supported `gen_ai.system_instructions` part types to text.
-  ([#TODO](https://github.com/open-telemetry/semantic-conventions-genai/pull/TODO))
 
 ### 🚩 Deprecations 🚩
 
@@ -40,6 +38,8 @@
   to align with the `gen_ai.retrieval.client` and `gen_ai.memory.client` spans which already
   allow omitting `gen_ai.provider.name`.
   ([#214](https://github.com/open-telemetry/semantic-conventions-genai/pull/214))
+- Limit supported `gen_ai.system_instructions` part types to text.
+  ([#257](https://github.com/open-telemetry/semantic-conventions-genai/pull/257))
 
 ### 📚 Clarifications 📚
 
