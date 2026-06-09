@@ -1,0 +1,17 @@
+groups:
+  - id: entity.gen_ai.agent
+    type: entity
+    stability: development
+    name: gen_ai.agent
+    brief: >
+      A Generative AI agent.
+    attributes:
+      - ref: gen_ai.agent.id
+        role: identifying
+        requirement_level: required
+      - ref: gen_ai.agent.name
+        role: descriptive
+      - ref: gen_ai.agent.version
+        role: descriptive
+      - ref: gen_ai.agent.description
+        role: descriptive
