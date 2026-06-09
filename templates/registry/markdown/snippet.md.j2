@@ -32,8 +32,7 @@
 {{ at.generate(_attrs, attribute_registry_base_url, upstream_docs_base, "Attributes") }}
 {%- elif (identity is defined or description is defined) and not _kind and not _instrument -%}
 {%- set entity_obj = {"name": type, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "identity": identity | default([]), "description": description | default([])} -%}
-{{ entity.header(entity_obj) }}
-{{ entity.all_attribute_table(entity_obj, attribute_registry_base_url, upstream_docs_base) }}
+{{ entity.header(entity_obj) }}{{ entity.all_attribute_table(entity_obj, attribute_registry_base_url, upstream_docs_base) }}
 {%- elif _name and _attrs -%}
 {%- set event = {"name": _name, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note} -%}
 {{ ev.header(event) }}{{ at.generate(_attrs, attribute_registry_base_url, upstream_docs_base, "Attributes") }}

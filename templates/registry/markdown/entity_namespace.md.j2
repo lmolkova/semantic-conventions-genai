@@ -3,13 +3,13 @@
 <!-- see templates/registry/markdown/entity_namespace.md.j2 -->
 {%- import 'entity_macros.j2' as entity %}
 
-# {{ ctx.id | title_case | acronym | map_text("namespace_mapping") }}
-{% for e in ctx.groups | sort(attribute='name') %}
-## {{ e.name | title_case | acronym | map_text("namespace_mapping") }}
+# {{ ctx.root_namespace | title_case | acronym | map_text("namespace_mapping") }}
+{% for e in ctx.entities | sort(attribute='type') %}
+## {{ e.type | title_case | acronym | map_text("namespace_mapping") }}
 
 {{ entity.header(e) | trim }}
 
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim if params.registry_base_url is defined else "/docs/registry/attributes" -%}
 {%- set upstream_docs_base = params.upstream_docs_base | trim if params.upstream_docs_base is defined else "https://github.com/open-telemetry/semantic-conventions/blob/main" -%}
-{{ entity.all_attribute_table(e, attribute_registry_base_url, upstream_docs_base) | trim }}
+{{ entity.all_attribute_table(e, attribute_registry_base_url, upstream_docs_base) }}
 {% endfor %}

@@ -7,11 +7,6 @@
 {% import 'enum_macros.j2' as enums %}
 {% import 'examples_macros.j2' as examples %}
 
-{#- Create registry URLs. -#}
-{% macro registry_url(id, registry) -%}
-{{registry}}/{{ id | split_id | list | first | kebab_case }}.md#{{ id | kebab_case }}
-{%- endmacro %}
-
 {#- Create role tags #}
 {% macro role_tag(role) -%}
 {% if role == "identity" %}Identity
@@ -24,7 +19,7 @@
 {% macro header(entity) -%}
 **Status:** {{ stability.badge(entity.stability, entity.deprecated, entity.brief) | trim }}
 
-**type:** `{{ entity.name }}`
+**type:** `{{ entity.type }}`
 
 **Description:** {{ entity.brief | trim }}
 {%- if entity.note %}
@@ -44,8 +39,7 @@
 {%- endmacro %}
 
 {% macro all_attribute_table(e, attribute_registry_base_url="/docs/registry/attributes", upstream_docs_base="https://github.com/open-telemetry/semantic-conventions/blob/main") -%}
-{%- set id_attrs = e.identity | default([]) -%}
-{%- set desc_attrs = e.description | default([]) -%}
+{% set id_attrs = e.identity | default([]) %}{% set desc_attrs = e.description | default([]) %}
 
 **Attributes:**
 
