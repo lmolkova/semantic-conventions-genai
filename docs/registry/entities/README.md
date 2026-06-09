@@ -9,12 +9,6 @@ linkTitle: Entities
 
 The entities registry is the catalog of available Entities.
 
-> [!WARNING]
->
-> The following registry overview is a work in progress.
->
-> Relationships and signal associations are a work in progress.
-
 Currently, the following namespaces exist:
 
 | Namespace | Entity | Stability |
