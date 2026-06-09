@@ -6,6 +6,7 @@
 {%- import 'metric_table.j2' as mt -%}
 {%- import 'event_macros.j2' as ev -%}
 {%- import 'span_macros.j2' as sp -%}
+{%- import 'entity_macros.j2' as entity -%}
 
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
 {%- set upstream_docs_base = params.upstream_docs_base | trim -%}
@@ -29,6 +30,10 @@
 {%- set metric = {"name": _name, "instrument": _instrument, "unit": (unit | default("")), "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "entity_associations": (entity_associations | default([]))} -%}
 {{ mt.generate(metric) }}
 {{ at.generate(_attrs, attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{%- elif (identity is defined or description is defined) and not _kind and not _instrument -%}
+{%- set entity_obj = {"name": type, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "identity": identity | default([]), "description": description | default([])} -%}
+{{ entity.header(entity_obj) }}
+{{ entity.all_attribute_table(entity_obj, attribute_registry_base_url, upstream_docs_base) }}
 {%- elif _name and _attrs -%}
 {%- set event = {"name": _name, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note} -%}
 {{ ev.header(event) }}{{ at.generate(_attrs, attribute_registry_base_url, upstream_docs_base, "Attributes") }}
