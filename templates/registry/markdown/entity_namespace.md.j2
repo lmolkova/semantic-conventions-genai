@@ -12,4 +12,4 @@
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim if params.registry_base_url is defined else "/docs/registry/attributes" -%}
 {%- set upstream_docs_base = params.upstream_docs_base | trim if params.upstream_docs_base is defined else "https://github.com/open-telemetry/semantic-conventions/blob/main" -%}
 {{ entity.all_attribute_table(e, attribute_registry_base_url, upstream_docs_base) }}
-{% endfor %}
+{%- endfor -%}
