@@ -17,7 +17,6 @@
 
 ### 💡 Enhancements 💡
 
-- Add `gen_ai.agent` entity definition and resource attributes, and update generator templates to support entity documentation.
 - Add GenAI memory operation span and attributes for memory store lifecycle (create/delete),
   memory record create/update/upsert/search/delete operations, and record counts.
   ([#140](https://github.com/open-telemetry/semantic-conventions-genai/pull/140))
