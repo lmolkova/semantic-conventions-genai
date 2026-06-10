@@ -7099,6 +7099,8 @@ refinements:
       stability: development
       type: string
     brief: Describes tool execution span.
+    entity_associations:
+    - gen_ai.agent
     id: gen_ai.execute_tool.internal
     kind: internal
     name:
@@ -9185,6 +9187,8 @@ refinements:
       type: int
     brief: |
       Describes GenAI agent invocation within the same process.
+    entity_associations:
+    - gen_ai.agent
     id: gen_ai.invoke_agent.internal
     kind: internal
     name:
@@ -9424,6 +9428,8 @@ refinements:
       type: string
     brief: |
       Represents an operation that executes a coordinated process composed of multiple agents or other operations involving generative AI.
+    entity_associations:
+    - gen_ai.agent
     id: gen_ai.invoke_workflow.internal
     kind: internal
     name:
@@ -9899,6 +9905,8 @@ refinements:
           value: delete_memory_store
     brief: |
       Represents an agent planning or task decomposition phase.
+    entity_associations:
+    - gen_ai.agent
     id: gen_ai.plan.internal
     kind: internal
     name:
@@ -17592,6 +17600,8 @@ registry:
       stability: development
       type: string
     brief: Describes tool execution span.
+    entity_associations:
+    - gen_ai.agent
     kind: internal
     name:
       note: gen_ai.execute_tool.internal
@@ -19675,6 +19685,8 @@ registry:
       type: int
     brief: |
       Describes GenAI agent invocation within the same process.
+    entity_associations:
+    - gen_ai.agent
     kind: internal
     name:
       note: gen_ai.invoke_agent.internal
@@ -19913,6 +19925,8 @@ registry:
       type: string
     brief: |
       Represents an operation that executes a coordinated process composed of multiple agents or other operations involving generative AI.
+    entity_associations:
+    - gen_ai.agent
     kind: internal
     name:
       note: gen_ai.invoke_workflow.internal
@@ -20386,6 +20400,8 @@ registry:
           value: delete_memory_store
     brief: |
       Represents an agent planning or task decomposition phase.
+    entity_associations:
+    - gen_ai.agent
     kind: internal
     name:
       note: gen_ai.plan.internal
