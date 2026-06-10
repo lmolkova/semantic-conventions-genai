@@ -4,6 +4,13 @@ entities:
     stability: development
     brief: >
       A Generative AI agent.
+    note: >
+      This entity SHOULD be used to capture the active agent when it's possible
+      to associate an OpenTelemetry SDK instance with a specific agent.
+
+      When multiple top-level agents can be active within the scope of a single
+      OpenTelemetry SDK instance, these attributes MAY be recorded on the
+      corresponding telemetry items instead.
     identity:
       - ref: gen_ai.agent.id
         requirement_level: required
