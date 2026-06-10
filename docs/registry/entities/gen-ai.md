@@ -12,6 +12,9 @@
 
 **Description:** A Generative AI agent.
 
+This entity SHOULD be used to capture the active agent when it's possible to associate an OpenTelemetry SDK instance with a specific agent.
+When multiple top-level agents can be active within the scope of a single OpenTelemetry SDK instance, these attributes MAY be recorded on the corresponding telemetry items instead.
+
 **Attributes:**
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
