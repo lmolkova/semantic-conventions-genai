@@ -7,6 +7,11 @@
 {% import 'enum_macros.j2' as enums %}
 {% import 'examples_macros.j2' as examples %}
 
+{#- Create registry URLs. -#}
+{% macro registry_url(id, registry) -%}
+{{registry}}/{{ id | split_id | list | first | kebab_case }}.md#{{ id | kebab_case }}
+{%- endmacro %}
+
 {#- Create role tags #}
 {% macro role_tag(role) -%}
 {% if role == "identity" %}Identity
