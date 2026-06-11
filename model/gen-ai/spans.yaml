@@ -476,6 +476,8 @@ spans:
         sampling_relevant: true
       - ref: gen_ai.agent.name
         sampling_relevant: true
+        requirement_level:
+          recommended: When instrumentation can't populate `gen_ai.agent` entity.
 
   - type: gen_ai.execute_tool.internal
     kind: internal
@@ -592,7 +594,7 @@ spans:
       - ref: gen_ai.agent.name
         brief: The human-readable name of the agent performing the planning.
         requirement_level:
-          conditionally_required: When available.
+          recommended: When available and when instrumentation can't populate `gen_ai.agent` entity.
 
 span_refinements:
   - id: openai.inference.client
