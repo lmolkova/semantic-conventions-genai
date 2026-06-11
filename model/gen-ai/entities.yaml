@@ -16,5 +16,4 @@ entities:
         requirement_level: required
     description:
       - ref: gen_ai.agent.name
-      - ref: gen_ai.agent.version
       - ref: gen_ai.agent.description
