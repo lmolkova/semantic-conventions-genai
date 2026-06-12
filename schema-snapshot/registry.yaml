@@ -627,6 +627,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -636,6 +641,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -4762,6 +4772,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -5467,6 +5482,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -5476,6 +5496,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -6181,6 +6206,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -6191,6 +6221,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -6268,7 +6303,7 @@ refinements:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the GenAI agent created during this operation.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -6279,17 +6314,22 @@ refinements:
         conditionally_required: If provided by the application.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
+    - brief: The stable unique identifier of the GenAI agent created during this operation.
       examples:
       - asst_5j66UpCpwteGg4YSxUnt7lPY
+      - arn:aws:bedrock:us-east-1:123:agent/42
+      - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
       key: gen_ai.agent.id
+      note: |
+        For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+        It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
         conditionally_required: If applicable.
       stability: development
       type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the GenAI agent created during this operation.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -6301,7 +6341,7 @@ refinements:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the GenAI agent created during this operation.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -6818,6 +6858,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -7706,6 +7751,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -7715,6 +7765,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -7799,7 +7854,7 @@ refinements:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the invoked GenAI agent.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -7810,17 +7865,22 @@ refinements:
         conditionally_required: When available.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
+    - brief: The stable unique identifier of the invoked GenAI agent.
       examples:
       - asst_5j66UpCpwteGg4YSxUnt7lPY
+      - arn:aws:bedrock:us-east-1:123:agent/42
+      - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
       key: gen_ai.agent.id
+      note: |
+        For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+        It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
         conditionally_required: If applicable.
       stability: development
       type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the invoked GenAI agent.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -7832,7 +7892,7 @@ refinements:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the invoked GenAI agent.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -8409,6 +8469,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -8418,6 +8483,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -8489,7 +8559,7 @@ refinements:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the invoked GenAI agent.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -8500,17 +8570,7 @@ refinements:
         conditionally_required: When available.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
-      examples:
-      - asst_5j66UpCpwteGg4YSxUnt7lPY
-      key: gen_ai.agent.id
-      provenance:
-        path: ./model/gen-ai/registry.yaml
-      requirement_level:
-        conditionally_required: If applicable.
-      stability: development
-      type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the invoked GenAI agent.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -8522,7 +8582,7 @@ refinements:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the invoked GenAI agent.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -9099,6 +9159,11 @@ refinements:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -9108,6 +9173,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -9737,17 +9807,7 @@ refinements:
           id: other
           stability: stable
           value: _OTHER
-    - brief: The unique identifier of the GenAI agent.
-      examples:
-      - asst_5j66UpCpwteGg4YSxUnt7lPY
-      key: gen_ai.agent.id
-      provenance:
-        path: ./model/gen-ai/registry.yaml
-      requirement_level:
-        conditionally_required: If applicable.
-      stability: development
-      type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the agent performing the planning.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -11785,6 +11845,11 @@ refinements:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -11927,10 +11992,15 @@ registry:
       path: ./model/gen-ai/registry.yaml
     stability: development
     type: string
-  - brief: The unique identifier of the GenAI agent.
+  - brief: The unique and stable identifier of the GenAI hosted agent resource.
     examples:
     - asst_5j66UpCpwteGg4YSxUnt7lPY
+    - arn:aws:bedrock:us-east-1:123:agent/42
+    - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
     key: gen_ai.agent.id
+    note: |
+      For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+      It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
     provenance:
       path: ./model/gen-ai/registry.yaml
     stability: development
@@ -12811,6 +12881,11 @@ registry:
       Instrumentations SHOULD make a best effort to populate this value, using a total
       provided by the provider when available or, depending on the provider API,
       by summing different token types parsed from the provider output.
+
+      When the provider reports both billed token counts and model-consumed
+      token counts (for example, Cohere exposes both `usage.billed_units` and
+      `usage.tokens`), instrumentations SHOULD report the billed count so the
+      value matches the units the customer is charged for.
     provenance:
       path: ./model/gen-ai/registry.yaml
     stability: development
@@ -12819,6 +12894,11 @@ registry:
     examples:
     - 180
     key: gen_ai.usage.output_tokens
+    note: |
+      When the provider reports both billed token counts and model-consumed
+      token counts (for example, Cohere exposes both `usage.billed_units` and
+      `usage.tokens`), instrumentations SHOULD report the billed count so the
+      value matches the units the customer is charged for.
     provenance:
       path: ./model/gen-ai/registry.yaml
     stability: development
@@ -13688,6 +13768,11 @@ registry:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -13697,6 +13782,11 @@ registry:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -16656,7 +16746,7 @@ registry:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the GenAI agent created during this operation.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -16667,17 +16757,22 @@ registry:
         conditionally_required: If provided by the application.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
+    - brief: The stable unique identifier of the GenAI agent created during this operation.
       examples:
       - asst_5j66UpCpwteGg4YSxUnt7lPY
+      - arn:aws:bedrock:us-east-1:123:agent/42
+      - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
       key: gen_ai.agent.id
+      note: |
+        For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+        It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
         conditionally_required: If applicable.
       stability: development
       type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the GenAI agent created during this operation.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -16689,7 +16784,7 @@ registry:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the GenAI agent created during this operation.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -17205,6 +17300,11 @@ registry:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -18091,6 +18191,11 @@ registry:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -18100,6 +18205,11 @@ registry:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -18183,7 +18293,7 @@ registry:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the invoked GenAI agent.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -18194,17 +18304,22 @@ registry:
         conditionally_required: When available.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
+    - brief: The stable unique identifier of the invoked GenAI agent.
       examples:
       - asst_5j66UpCpwteGg4YSxUnt7lPY
+      - arn:aws:bedrock:us-east-1:123:agent/42
+      - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
       key: gen_ai.agent.id
+      note: |
+        For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+        It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
         conditionally_required: If applicable.
       stability: development
       type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the invoked GenAI agent.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -18216,7 +18331,7 @@ registry:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the invoked GenAI agent.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -18793,6 +18908,11 @@ registry:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -18802,6 +18922,11 @@ registry:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -18872,7 +18997,7 @@ registry:
           id: other
           stability: stable
           value: _OTHER
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the invoked GenAI agent.
       examples:
       - Helps with math problems
       - Generates fiction stories
@@ -18883,17 +19008,7 @@ registry:
         conditionally_required: When available.
       stability: development
       type: string
-    - brief: The unique identifier of the GenAI agent.
-      examples:
-      - asst_5j66UpCpwteGg4YSxUnt7lPY
-      key: gen_ai.agent.id
-      provenance:
-        path: ./model/gen-ai/registry.yaml
-      requirement_level:
-        conditionally_required: If applicable.
-      stability: development
-      type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the invoked GenAI agent.
       examples:
       - Math Tutor
       - Fiction Writer
@@ -18905,7 +19020,7 @@ registry:
       sampling_relevant: true
       stability: development
       type: string
-    - brief: The version of the GenAI agent.
+    - brief: The version of the invoked GenAI agent.
       examples:
       - 1.0.0
       - 2025-05-01
@@ -19482,6 +19597,11 @@ registry:
         Instrumentations SHOULD make a best effort to populate this value, using a total
         provided by the provider when available or, depending on the provider API,
         by summing different token types parsed from the provider output.
+
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -19491,6 +19611,11 @@ registry:
       examples:
       - 180
       key: gen_ai.usage.output_tokens
+      note: |
+        When the provider reports both billed token counts and model-consumed
+        token counts (for example, Cohere exposes both `usage.billed_units` and
+        `usage.tokens`), instrumentations SHOULD report the billed count so the
+        value matches the units the customer is charged for.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
@@ -20117,17 +20242,7 @@ registry:
           id: other
           stability: stable
           value: _OTHER
-    - brief: The unique identifier of the GenAI agent.
-      examples:
-      - asst_5j66UpCpwteGg4YSxUnt7lPY
-      key: gen_ai.agent.id
-      provenance:
-        path: ./model/gen-ai/registry.yaml
-      requirement_level:
-        conditionally_required: If applicable.
-      stability: development
-      type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the agent performing the planning.
       examples:
       - Math Tutor
       - Fiction Writer
