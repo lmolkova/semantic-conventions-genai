@@ -58,7 +58,6 @@ async def run_agent():
     print("  [agent_run] agent with tool calling (reference implementation)")
     agent_span_attributes = {
         "gen_ai.operation.name": "invoke_agent",
-        "gen_ai.provider.name": "openai",
         "gen_ai.request.model": request_model,
         "gen_ai.agent.name": agent.name,
     }

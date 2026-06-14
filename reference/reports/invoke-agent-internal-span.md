@@ -7,7 +7,6 @@
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.operation.name | [autogen], [crewai], [google-adk], [pydantic-ai] |
-| gen_ai.provider.name | [autogen], [crewai], [google-adk], [pydantic-ai] |
 
 ## Conditionally Required
 
