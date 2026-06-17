@@ -8,6 +8,11 @@ entities:
       This entity SHOULD be used to capture the active agent when it's possible
       to associate an OpenTelemetry SDK instance with a specific agent.
 
+      As noted on `gen_ai.agent.id`, transient in-memory or process-local identifiers
+      MUST NOT be used. If no stable identifier is available, the agent entity is
+      not emitted, and instrumentation continues to report `gen_ai.agent.name` at
+      the span level when relevant.
+
       When multiple top-level agents can be active within the scope of a single
       OpenTelemetry SDK instance, these attributes MAY be recorded on the
       corresponding telemetry items instead.
