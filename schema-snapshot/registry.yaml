@@ -7160,7 +7160,7 @@ refinements:
       type: string
     brief: Describes tool execution span.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     id: gen_ai.execute_tool.internal
     kind: internal
     name:
@@ -8655,7 +8655,7 @@ refinements:
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
-        recommended: When instrumentation can\u0027t populate `gen_ai.agent` entity.
+        recommended: When instrumentation can\u0027t populate `gen_ai.server.agent` entity.
       sampling_relevant: true
       stability: development
       type: string
@@ -9166,7 +9166,7 @@ refinements:
     brief: |
       Describes GenAI agent invocation within the same process.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     id: gen_ai.invoke_agent.internal
     kind: internal
     name:
@@ -9407,7 +9407,7 @@ refinements:
     brief: |
       Represents an operation that executes a coordinated process composed of multiple agents or other operations involving generative AI.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     id: gen_ai.invoke_workflow.internal
     kind: internal
     name:
@@ -9799,7 +9799,7 @@ refinements:
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
-        recommended: When available and when instrumentation can\u0027t populate `gen_ai.agent` entity.
+        recommended: When available and when instrumentation can\u0027t populate `gen_ai.server.agent` entity.
       stability: development
       type: string
     - brief: The name of the operation being performed.
@@ -9884,7 +9884,7 @@ refinements:
     brief: |
       Represents an agent planning or task decomposition phase.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     id: gen_ai.plan.internal
     kind: internal
     name:
@@ -12676,6 +12676,41 @@ registry:
       path: ./model/gen-ai/registry.yaml
     stability: development
     type: int
+  - brief: The free-form description of the GenAI server agent exposed to external callers.
+    examples:
+    - Helps with math problems
+    - Generates fiction stories
+    key: gen_ai.server.agent.description
+    note: |
+      In Agent-to-Agent (A2A) communication, this maps to the `description` property declared in the Agent Card.
+    provenance:
+      path: ./model/gen-ai/registry.yaml
+    stability: development
+    type: string
+  - brief: The unique and stable identifier of the GenAI hosted server agent resource.
+    examples:
+    - asst_5j66UpCpwteGg4YSxUnt7lPY
+    - arn:aws:bedrock:us-east-1:123:agent/42
+    - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
+    key: gen_ai.server.agent.id
+    note: |
+      For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+      It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
+    provenance:
+      path: ./model/gen-ai/registry.yaml
+    stability: development
+    type: string
+  - brief: The human-readable name of the GenAI server agent exposed to external callers.
+    examples:
+    - Math Tutor
+    - Fiction Writer
+    key: gen_ai.server.agent.name
+    note: |
+      In Agent-to-Agent (A2A) communication, this maps to the `name` property declared in the Agent Card.
+    provenance:
+      path: ./model/gen-ai/registry.yaml
+    stability: development
+    type: string
   - brief: The system message or instructions provided to the GenAI model separately from the chat history.
     examples:
     - |
@@ -13155,35 +13190,39 @@ registry:
     type: string
   entities:
   - brief: |
-      A Generative AI agent.
+      The Generative AI server agent exposed to external callers.
     description:
-    - brief: Free-form description of the GenAI agent provided by the application.
+    - brief: The free-form description of the GenAI server agent exposed to external callers.
       examples:
       - Helps with math problems
       - Generates fiction stories
-      key: gen_ai.agent.description
+      key: gen_ai.server.agent.description
+      note: |
+        In Agent-to-Agent (A2A) communication, this maps to the `description` property declared in the Agent Card.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
       stability: development
       type: string
-    - brief: Human-readable name of the GenAI agent provided by the application.
+    - brief: The human-readable name of the GenAI server agent exposed to external callers.
       examples:
       - Math Tutor
       - Fiction Writer
-      key: gen_ai.agent.name
+      key: gen_ai.server.agent.name
+      note: |
+        In Agent-to-Agent (A2A) communication, this maps to the `name` property declared in the Agent Card.
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level: recommended
       stability: development
       type: string
     identity:
-    - brief: The unique and stable identifier of the GenAI hosted agent resource.
+    - brief: The unique and stable identifier of the GenAI hosted server agent resource.
       examples:
       - asst_5j66UpCpwteGg4YSxUnt7lPY
       - arn:aws:bedrock:us-east-1:123:agent/42
       - urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456
-      key: gen_ai.agent.id
+      key: gen_ai.server.agent.id
       note: |
         For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
         It\u0027s NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
@@ -13193,13 +13232,13 @@ registry:
       stability: development
       type: string
     note: |
-      This entity SHOULD be used to capture the active agent when it\u0027s possible to associate an OpenTelemetry SDK instance with a specific agent.
-      As noted on `gen_ai.agent.id`, transient in-memory or process-local identifiers MUST NOT be used. If no stable identifier is available, the agent entity is not emitted, and instrumentation continues to report `gen_ai.agent.name` at the span level when relevant.
-      When multiple top-level agents can be active within the scope of a single OpenTelemetry SDK instance, these attributes MAY be recorded on the corresponding telemetry items instead.
+      This entity identifies the externally visible agent service (for example, the hosted agent configured in a cloud provider console, or declared in an Agent-to-Agent (A2A) Agent Card). It SHOULD be used when it is possible to associate an OpenTelemetry SDK instance with that externally visible root agent.
+      As noted on [gen_ai.server.agent.id](/docs/registry/attributes/gen-ai.md), transient in-memory or process-local identifiers MUST NOT be used. If no stable identifier is available, the server agent entity MUST NOT be emitted.
+      When internal helper agents, subagents, or orchestrators are active within the service process, their attributes SHOULD be recorded on signal-level telemetry items (such as [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
     provenance:
       path: ./model/gen-ai/entities.yaml
     stability: development
-    type: gen_ai.agent
+    type: gen_ai.server.agent
   events:
   - attributes:
     - brief: |
@@ -17616,7 +17655,7 @@ registry:
       type: string
     brief: Describes tool execution span.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     kind: internal
     name:
       note: gen_ai.execute_tool.internal
@@ -19108,7 +19147,7 @@ registry:
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
-        recommended: When instrumentation can\u0027t populate `gen_ai.agent` entity.
+        recommended: When instrumentation can\u0027t populate `gen_ai.server.agent` entity.
       sampling_relevant: true
       stability: development
       type: string
@@ -19619,7 +19658,7 @@ registry:
     brief: |
       Describes GenAI agent invocation within the same process.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     kind: internal
     name:
       note: gen_ai.invoke_agent.internal
@@ -19859,7 +19898,7 @@ registry:
     brief: |
       Represents an operation that executes a coordinated process composed of multiple agents or other operations involving generative AI.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     kind: internal
     name:
       note: gen_ai.invoke_workflow.internal
@@ -20249,7 +20288,7 @@ registry:
       provenance:
         path: ./model/gen-ai/registry.yaml
       requirement_level:
-        recommended: When available and when instrumentation can\u0027t populate `gen_ai.agent` entity.
+        recommended: When available and when instrumentation can\u0027t populate `gen_ai.server.agent` entity.
       stability: development
       type: string
     - brief: The name of the operation being performed.
@@ -20334,7 +20373,7 @@ registry:
     brief: |
       Represents an agent planning or task decomposition phase.
     entity_associations:
-    - gen_ai.agent
+    - gen_ai.server.agent
     kind: internal
     name:
       note: gen_ai.plan.internal

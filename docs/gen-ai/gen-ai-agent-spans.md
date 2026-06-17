@@ -485,7 +485,7 @@ Examples: LangChain agents, CrewAI agents.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.agent`](/docs/registry/entities/gen-ai.md#gen-ai-agent)
+- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
 
 
 **Attributes:**
@@ -552,7 +552,7 @@ Additional output format details may be recorded in the future in the `gen_ai.ou
 
 **[7] `gen_ai.request.model`:** The name of the GenAI model a request is being made to. If the model is supplied by a vendor, then the value must be the exact name of the model requested. If the model is a fine-tuned custom model, the value should have a more specific name than the base model that's been fine-tuned.
 
-**[8] `gen_ai.agent.name`:** When instrumentation can't populate `gen_ai.agent` entity.
+**[8] `gen_ai.agent.name`:** When instrumentation can't populate `gen_ai.server.agent` entity.
 
 **[9] `gen_ai.usage.cache_creation.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens`.
 
@@ -722,7 +722,7 @@ that is separate from individual agents, so they SHOULD report `invoke_workflow`
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.agent`](/docs/registry/entities/gen-ai.md#gen-ai-agent)
+- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
 
 
 **Attributes:**
@@ -858,7 +858,7 @@ reasoning or normal inference.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.agent`](/docs/registry/entities/gen-ai.md#gen-ai-agent)
+- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
 
 
 **Attributes:**
@@ -875,7 +875,7 @@ reasoning or normal inference.
 the canonical name of exception that occurred, or another low-cardinality error identifier.
 Instrumentations SHOULD document the list of errors they report.
 
-**[3] `gen_ai.agent.name`:** When available and when instrumentation can't populate `gen_ai.agent` entity.
+**[3] `gen_ai.agent.name`:** When available and when instrumentation can't populate `gen_ai.server.agent` entity.
 
 The following attributes can be important for making sampling decisions
 and SHOULD be provided **at span creation time** (if provided at all):

@@ -467,7 +467,7 @@ spans:
       Examples: LangChain agents, CrewAI agents.
     stability: development
     entity_associations:
-      - "gen_ai.agent"
+      - "gen_ai.server.agent"
     attributes:
       - ref_group: attributes.gen_ai.invoke_agent.common
       - ref: gen_ai.operation.name
@@ -477,7 +477,7 @@ spans:
       - ref: gen_ai.agent.name
         sampling_relevant: true
         requirement_level:
-          recommended: When instrumentation can't populate `gen_ai.agent` entity.
+          recommended: When instrumentation can't populate `gen_ai.server.agent` entity.
 
   - type: gen_ai.execute_tool.internal
     kind: internal
@@ -501,7 +501,7 @@ spans:
       instrumentations do not cover.
     stability: development
     entity_associations:
-      - "gen_ai.agent"
+      - "gen_ai.server.agent"
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref: gen_ai.operation.name
@@ -545,7 +545,7 @@ spans:
       that is separate from individual agents, so they SHOULD report `invoke_workflow` spans.
     stability: development
     entity_associations:
-      - "gen_ai.agent"
+      - "gen_ai.server.agent"
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref: gen_ai.operation.name
@@ -585,7 +585,7 @@ spans:
       reasoning or normal inference.
     stability: development
     entity_associations:
-      - "gen_ai.agent"
+      - "gen_ai.server.agent"
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref: gen_ai.operation.name
@@ -594,7 +594,7 @@ spans:
       - ref: gen_ai.agent.name
         brief: The human-readable name of the agent performing the planning.
         requirement_level:
-          recommended: When available and when instrumentation can't populate `gen_ai.agent` entity.
+          recommended: When available and when instrumentation can't populate `gen_ai.server.agent` entity.
 
 span_refinements:
   - id: openai.inference.client

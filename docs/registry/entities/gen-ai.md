@@ -4,26 +4,30 @@
 
 # Gen AI
 
-## Gen AI Agent
+## Gen AI Server Agent
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-**type:** `gen_ai.agent`
+**type:** `gen_ai.server.agent`
 
-**Description:** A Generative AI agent.
+**Description:** The Generative AI server agent exposed to external callers.
 
-This entity SHOULD be used to capture the active agent when it's possible to associate an OpenTelemetry SDK instance with a specific agent.
-As noted on `gen_ai.agent.id`, transient in-memory or process-local identifiers MUST NOT be used. If no stable identifier is available, the agent entity is not emitted, and instrumentation continues to report `gen_ai.agent.name` at the span level when relevant.
-When multiple top-level agents can be active within the scope of a single OpenTelemetry SDK instance, these attributes MAY be recorded on the corresponding telemetry items instead.
+This entity identifies the externally visible agent service (for example, the hosted agent configured in a cloud provider console, or declared in an Agent-to-Agent (A2A) Agent Card). It SHOULD be used when it is possible to associate an OpenTelemetry SDK instance with that externally visible root agent.
+As noted on [gen_ai.server.agent.id](/docs/registry/attributes/gen-ai.md), transient in-memory or process-local identifiers MUST NOT be used. If no stable identifier is available, the server agent entity MUST NOT be emitted.
+When internal helper agents, subagents, or orchestrators are active within the service process, their attributes SHOULD be recorded on signal-level telemetry items (such as [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
 
 **Attributes:**
 
 | Role | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- | --- |
-| Identity | [`gen_ai.agent.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The unique and stable identifier of the GenAI hosted agent resource. [1] | `asst_5j66UpCpwteGg4YSxUnt7lPY`; `arn:aws:bedrock:us-east-1:123:agent/42`; `urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456` |
-| Description | [`gen_ai.agent.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Free-form description of the GenAI agent provided by the application. | `Helps with math problems`; `Generates fiction stories` |
-| Description | [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | Human-readable name of the GenAI agent provided by the application. | `Math Tutor`; `Fiction Writer` |
+| Identity | [`gen_ai.server.agent.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The unique and stable identifier of the GenAI hosted server agent resource. [1] | `asst_5j66UpCpwteGg4YSxUnt7lPY`; `arn:aws:bedrock:us-east-1:123:agent/42`; `urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456` |
+| Description | [`gen_ai.server.agent.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The free-form description of the GenAI server agent exposed to external callers. [2] | `Helps with math problems`; `Generates fiction stories` |
+| Description | [`gen_ai.server.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The human-readable name of the GenAI server agent exposed to external callers. [3] | `Math Tutor`; `Fiction Writer` |
 
-**[1] `gen_ai.agent.id`:** For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+**[1] `gen_ai.server.agent.id`:** For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
 It's NOT RECOMMENDED to record in-memory agent instance ids on this attribute due to their transient nature.
+
+**[2] `gen_ai.server.agent.description`:** In Agent-to-Agent (A2A) communication, this maps to the `description` property declared in the Agent Card.
+
+**[3] `gen_ai.server.agent.name`:** In Agent-to-Agent (A2A) communication, this maps to the `name` property declared in the Agent Card.
 

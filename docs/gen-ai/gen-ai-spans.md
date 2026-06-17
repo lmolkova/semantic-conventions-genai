@@ -823,7 +823,7 @@ instrumentations do not cover.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.agent`](/docs/registry/entities/gen-ai.md#gen-ai-agent)
+- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
 
 
 **Attributes:**
