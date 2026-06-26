@@ -15,6 +15,8 @@
 | --- | --- |
 | gen_ai.conversation.id | [google-adk] |
 | gen_ai.output.type | (none) |
+| gen_ai.prompt.name | [aws-bedrock], [openai] |
+| gen_ai.prompt.version | [aws-bedrock], [openai] |
 | gen_ai.request.choice.count | [crewai], [google-adk], [llamaindex], [openai] |
 | gen_ai.request.model | [anthropic], [autogen], [aws-bedrock], [azure-ai-inference], [azure-openai], [cohere], [crewai], [dspy], [google-adk], [google-genai], [groq], [instructor], [langchain], [litellm], [llamaindex], [mistralai], [openai], [openai-agents], [pydantic-ai], [vertexai] |
 | gen_ai.request.seed | [autogen], [crewai], [openai], [pydantic-ai] |
@@ -30,6 +32,7 @@
 | gen_ai.request.frequency_penalty | [autogen], [crewai], [google-adk], [openai], [pydantic-ai] |
 | gen_ai.request.max_tokens | [anthropic], [autogen], [crewai], [google-adk], [openai], [pydantic-ai] |
 | gen_ai.request.presence_penalty | [autogen], [crewai], [google-adk], [openai], [pydantic-ai] |
+| gen_ai.request.reasoning.level | [anthropic], [openai] |
 | gen_ai.request.stop_sequences | [autogen], [crewai], [google-adk], [openai], [pydantic-ai] |
 | gen_ai.request.temperature | [autogen], [crewai], [google-adk], [llamaindex], [openai], [pydantic-ai] |
 | gen_ai.request.top_p | [autogen], [crewai], [google-adk], [openai], [pydantic-ai] |
@@ -50,6 +53,7 @@
 | --- | --- |
 | gen_ai.input.messages | [anthropic], [autogen], [aws-bedrock], [claude-agent-sdk], [crewai], [dspy], [google-adk], [groq], [instructor], [langchain], [litellm], [llamaindex], [mistralai], [openai], [pydantic-ai] |
 | gen_ai.output.messages | [anthropic], [autogen], [aws-bedrock], [claude-agent-sdk], [crewai], [dspy], [google-adk], [instructor], [langchain], [litellm], [llamaindex], [mistralai], [openai], [pydantic-ai] |
+| gen_ai.prompt.variable | (none) |
 | gen_ai.system_instructions | [autogen], [crewai], [google-adk], [langchain], [openai], [pydantic-ai] |
 | gen_ai.tool.definitions | [autogen], [aws-bedrock], [azure-ai-inference], [cohere], [crewai], [dspy], [google-adk], [google-genai], [groq], [instructor], [litellm], [llamaindex], [mistralai], [openai], [openai-agents], [pydantic-ai], [vertexai] |
 
