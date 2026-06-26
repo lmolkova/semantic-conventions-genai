@@ -14,4 +14,4 @@ Currently, the following namespaces exist:
 | Namespace | Entity | Stability |
 | --------- | ------ | --------- |
 | Gen AI | | |
-| | [gen_ai.server.agent](gen-ai.md#gen-ai-server-agent) | ![Development](https://img.shields.io/badge/-development-blue) |
+| | [gen_ai.main_agent](gen-ai.md#gen-ai-main-agent) | ![Development](https://img.shields.io/badge/-development-blue) |

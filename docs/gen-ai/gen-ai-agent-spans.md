@@ -483,7 +483,7 @@ Examples: LangChain agents, CrewAI agents.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
+- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
 **Attributes:**
@@ -547,7 +547,7 @@ libraries.
 This attribute specifies the output modality and not the actual output format. For example, if an image is requested, the actual output could be a URL pointing to an image file.
 Additional output format details may be recorded in the future in the `gen_ai.output.{type}.*` attributes.
 
-**[7] `gen_ai.agent.name`:** When instrumentation can't populate `gen_ai.server.agent` entity.
+**[7] `gen_ai.agent.name`:** When instrumentation can't populate `gen_ai.main_agent` entity.
 
 **[8] `gen_ai.request.model`:** This attribute SHOULD be populated if and only if the instrumented library allows to set only a single model per agent. It SHOULD NOT be populated for agents that support multiple models or dynamic selection.
 
@@ -713,7 +713,7 @@ that is separate from individual agents, so they SHOULD report `invoke_workflow`
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
+- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
 **Attributes:**
@@ -846,7 +846,7 @@ reasoning or normal inference.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
+- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
 **Attributes:**
@@ -863,7 +863,7 @@ reasoning or normal inference.
 the canonical name of exception that occurred, or another low-cardinality error identifier.
 Instrumentations SHOULD document the list of errors they report.
 
-**[3] `gen_ai.agent.name`:** When available and when instrumentation can't populate `gen_ai.server.agent` entity.
+**[3] `gen_ai.agent.name`:** When available and when instrumentation can't populate `gen_ai.main_agent` entity.
 
 The following attributes can be important for making sampling decisions
 and SHOULD be provided **at span creation time** (if provided at all):

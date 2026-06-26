@@ -844,7 +844,7 @@ instrumentations do not cover.
 
 **Entity Associations** SHOULD be associated with one of the following entities:
 
-- [`gen_ai.server.agent`](/docs/registry/entities/gen-ai.md#gen-ai-server-agent)
+- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
 **Attributes:**

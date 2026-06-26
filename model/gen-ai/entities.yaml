@@ -1,25 +1,26 @@
 file_format: definition/2
 entities:
-  - type: gen_ai.server.agent
+  - type: gen_ai.main_agent
     stability: development
     brief: >
-      The Generative AI server agent exposed to external callers.
+      A logical top-level Generative AI agent in the process.
     note: >
-      This entity identifies the externally visible agent service (for example,
-      the hosted agent configured in a cloud provider console, or declared in an
-      Agent-to-Agent (A2A) Agent Card). It SHOULD be used when it is possible to
-      associate an OpenTelemetry SDK instance with that externally visible root agent.
+      This entity identifies an agent that exists as a persistent resource with a
+      stable identifier across invocations (for example, a scheduled or cron-driven
+      agent job, a hosted agent configured in a cloud provider console, or an agent
+      declared in an Agent-to-Agent (A2A) Agent Card). It SHOULD be used when it is
+      possible to associate an OpenTelemetry SDK instance with that main agent.
 
-      As noted on [gen_ai.server.agent.id](/docs/registry/attributes/gen-ai.md),
+      As noted on [gen_ai.main_agent.id](/docs/registry/attributes/gen-ai.md),
       transient in-memory or process-local identifiers MUST NOT be used. If no stable
-      identifier is available, the server agent entity MUST NOT be emitted.
+      identifier is available, the main agent entity MUST NOT be emitted.
 
       When internal helper agents, subagents, or orchestrators are active within the
       service process, their attributes SHOULD be recorded on signal-level telemetry
       items (such as [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
     identity:
-      - ref: gen_ai.server.agent.id
+      - ref: gen_ai.main_agent.id
         requirement_level: required
     description:
-      - ref: gen_ai.server.agent.name
-      - ref: gen_ai.server.agent.description
+      - ref: gen_ai.main_agent.name
+      - ref: gen_ai.main_agent.description
