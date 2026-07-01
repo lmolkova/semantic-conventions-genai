@@ -855,3 +855,27 @@ attributes:
       If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
     examples: ["multi_agent_rag", "customer_support_pipeline"]
     stability: development
+  - key: gen_ai.workflow.nested
+    type: boolean
+    brief: Indicates if a workflow is nested within another workflow in a multi-step process.
+    note: |
+      Workflows can be composed of multiple nested workflows or chains. The top-level (entry point) workflow is the first workflow that is invoked
+      by the application or user; any workflow invoked within another workflow is nested.
+
+      Instrumentations SHOULD set this attribute to `true` only when they
+      can reliably determine that the workflow is invoked within an encompassing workflow. Instrumentations SHOULD NOT set it to `false`; they SHOULD leave it
+      unset otherwise. Instrumentations for libraries that don't support nested workflows SHOULD NOT set this attribute.
+      A workflow span without this attribute SHOULD be treated as a top-level workflow.
+
+      Instrumentation SHOULD make a best effort to determine whether a workflow is nested.
+      Instrumentation MAY use heuristics that depend on the instrumented library. For example, when the public API invoked by the user to start a workflow
+      is different from the API used to invoke nested workflows, or by using OpenTelemetry Context to record the presence
+      of an encompassing workflow invocation.
+
+      When nested workflows are invoked in different processes, instrumentation MAY propagate the encompassing-workflow information across processes when it can.
+      However, consumers of the telemetry should not rely on the instrumentation's ability to propagate this information across processes
+      and should expect a nested workflow invoked in a separate process to be missing `gen_ai.workflow.nested` and therefore appear as a top-level workflow.
+
+      It is NOT RECOMMENDED to suppress nested workflow invocations, since they serve as a grouping mechanism for their underlying operations.
+      
+    stability: development

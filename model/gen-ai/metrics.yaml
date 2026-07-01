@@ -139,6 +139,9 @@ metrics:
       - ref: gen_ai.workflow.name
         requirement_level:
           conditionally_required: If available.
+      - ref: gen_ai.workflow.nested
+        requirement_level:
+          conditionally_required: If and only if the workflow is nested within another workflow.
   - name: gen_ai.invoke_agent.duration
     requirement_level: recommended
     annotations:

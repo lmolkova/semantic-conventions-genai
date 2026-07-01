@@ -592,6 +592,9 @@ spans:
       - ref: gen_ai.workflow.name
         requirement_level:
           conditionally_required: When available.
+      - ref: gen_ai.workflow.nested
+        requirement_level:
+          conditionally_required: If and only if the workflow is nested within another workflow.
       - ref: gen_ai.input.messages
         requirement_level: opt_in
       - ref: gen_ai.output.messages

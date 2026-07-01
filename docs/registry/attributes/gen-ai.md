@@ -67,6 +67,7 @@
 | <a id="gen-ai-usage-output-tokens" href="#gen-ai-usage-output-tokens">`gen_ai.usage.output_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of tokens used in the GenAI response (completion). [29] | `180` |
 | <a id="gen-ai-usage-reasoning-output-tokens" href="#gen-ai-usage-reasoning-output-tokens">`gen_ai.usage.reasoning.output_tokens`</a> | ![Development](https://img.shields.io/badge/-development-blue) | int | The number of output tokens used for reasoning (e.g. chain-of-thought, extended thinking). [30] | `50` |
 | <a id="gen-ai-workflow-name" href="#gen-ai-workflow-name">`gen_ai.workflow.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Human-readable name of the GenAI workflow provided by the application. [31] | `multi_agent_rag`; `customer_support_pipeline` |
+| <a id="gen-ai-workflow-nested" href="#gen-ai-workflow-nested">`gen_ai.workflow.nested`</a> | ![Development](https://img.shields.io/badge/-development-blue) | boolean | Indicates if a workflow is nested within another workflow in a multi-step process. [32] | |
 
 
 **[1] `gen_ai.agent.id`:** For hosted agents, this SHOULD be the provider-assigned stable identifier of the agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html) or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
@@ -285,6 +286,25 @@ It is usually a static name that is expected to be unique within an application.
 Semantic conventions for individual Generative AI frameworks SHOULD document what `gen_ai.workflow.name` means in the context of that framework.
 If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
 
+**[32] `gen_ai.workflow.nested`:** Workflows can be composed of multiple nested workflows or chains. The top-level (entry point) workflow is the first workflow that is invoked
+by the application or user; any workflow invoked within another workflow is nested.
+
+Instrumentations SHOULD set this attribute to `true` only when they
+can reliably determine that the workflow is invoked within an encompassing workflow. Instrumentations SHOULD NOT set it to `false`; they SHOULD leave it
+unset otherwise. Instrumentations for libraries that don't support nested workflows SHOULD NOT set this attribute.
+A workflow span without this attribute SHOULD be treated as a top-level workflow.
+
+Instrumentation SHOULD make a best effort to determine whether a workflow is nested.
+Instrumentation MAY use heuristics that depend on the instrumented library. For example, when the public API invoked by the user to start a workflow
+is different from the API used to invoke nested workflows, or by using OpenTelemetry Context to record the presence
+of an encompassing workflow invocation.
+
+When nested workflows are invoked in different processes, instrumentation MAY propagate the encompassing-workflow information across processes when it can.
+However, consumers of the telemetry should not rely on the instrumentation's ability to propagate this information across processes
+and should expect a nested workflow invoked in a separate process to be missing `gen_ai.workflow.nested` and therefore appear as a top-level workflow.
+
+It is NOT RECOMMENDED to suppress nested workflow invocations, since they serve as a grouping mechanism for their underlying operations.
+
 ---
 
 `gen_ai.operation.name` has the following list of well-known values. If one of them applies, then the respective value MUST be used; otherwise, a custom value MAY be used.
@@ -332,9 +352,9 @@ If there is no low-cardinality workflow name available for a given framework, th
 | `azure.ai.openai` | [Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `cohere` | [Cohere](https://cohere.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `deepseek` | [DeepSeek](https://www.deepseek.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [32] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.gen_ai` | Any Google generative AI endpoint [33] | ![Development](https://img.shields.io/badge/-development-blue) |
-| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [34] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gemini` | [Gemini](https://cloud.google.com/products/gemini) [33] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.gen_ai` | Any Google generative AI endpoint [34] | ![Development](https://img.shields.io/badge/-development-blue) |
+| `gcp.vertex_ai` | [Vertex AI](https://cloud.google.com/vertex-ai) [35] | ![Development](https://img.shields.io/badge/-development-blue) |
 | `groq` | [Groq](https://groq.com/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `ibm.watsonx.ai` | [IBM Watsonx AI](https://www.ibm.com/products/watsonx-ai) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `mistral_ai` | [Mistral AI](https://mistral.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
@@ -343,11 +363,11 @@ If there is no low-cardinality workflow name available for a given framework, th
 | `perplexity` | [Perplexity](https://www.perplexity.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `x_ai` | [xAI](https://x.ai/) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-**[32]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
+**[33]:** Used when accessing the 'generativelanguage.googleapis.com' endpoint. Also known as the AI Studio API.
 
-**[33]:** May be used when specific backend is unknown.
+**[34]:** May be used when specific backend is unknown.
 
-**[34]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
+**[35]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
 ---
 

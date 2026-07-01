@@ -915,6 +915,7 @@ When this metric is reported alongside a `gen_ai.invoke_workflow` span, the metr
 | --- | --- | --- | --- | --- | --- |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [1] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.workflow.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | Human-readable name of the GenAI workflow provided by the application. [2] | `multi_agent_rag`; `customer_support_pipeline` |
+| [`gen_ai.workflow.nested`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [3] | boolean | Indicates if a workflow is nested within another workflow in a multi-step process. [4] | |
 
 **[1] `error.type`:** The `error.type` SHOULD match the error code returned by the Generative AI provider or the client library,
 the canonical name of exception that occurred, or another low-cardinality error identifier.
@@ -927,6 +928,27 @@ It is usually a static name that is expected to be unique within an application.
 `gen_ai.workflow.name` MUST have low cardinality.
 Semantic conventions for individual Generative AI frameworks SHOULD document what `gen_ai.workflow.name` means in the context of that framework.
 If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
+
+**[3] `gen_ai.workflow.nested`:** If and only if the workflow is nested within another workflow.
+
+**[4] `gen_ai.workflow.nested`:** Workflows can be composed of multiple nested workflows or chains. The top-level (entry point) workflow is the first workflow that is invoked
+by the application or user; any workflow invoked within another workflow is nested.
+
+Instrumentations SHOULD set this attribute to `true` only when they
+can reliably determine that the workflow is invoked within an encompassing workflow. Instrumentations SHOULD NOT set it to `false`; they SHOULD leave it
+unset otherwise. Instrumentations for libraries that don't support nested workflows SHOULD NOT set this attribute.
+A workflow span without this attribute SHOULD be treated as a top-level workflow.
+
+Instrumentation SHOULD make a best effort to determine whether a workflow is nested.
+Instrumentation MAY use heuristics that depend on the instrumented library. For example, when the public API invoked by the user to start a workflow
+is different from the API used to invoke nested workflows, or by using OpenTelemetry Context to record the presence
+of an encompassing workflow invocation.
+
+When nested workflows are invoked in different processes, instrumentation MAY propagate the encompassing-workflow information across processes when it can.
+However, consumers of the telemetry should not rely on the instrumentation's ability to propagate this information across processes
+and should expect a nested workflow invoked in a separate process to be missing `gen_ai.workflow.nested` and therefore appear as a top-level workflow.
+
+It is NOT RECOMMENDED to suppress nested workflow invocations, since they serve as a grouping mechanism for their underlying operations.
 
 ---
 
