@@ -1,0 +1,12 @@
+# Project-level Weaver configuration, discovered by walking up from the registry
+# (./model). Customizes the shared markdown documentation template package
+# (opentelemetry-weaver-packages/templates/docs/markdown) for this repo without
+# forking it: acronyms and text maps are layered on top of the package defaults.
+[template]
+# Initialisms that must stay fully upper-cased when a namespace heading is
+# title-cased (e.g. the `gen_ai` namespace renders as "GenAI"). Unioned with the
+# package's default acronyms; on a case-insensitive collision our value wins.
+acronyms = ["AI", "AWS", "Bedrock", "GenAI", "MCP", "OpenAI"]
+
+# Term -> replacement maps consumed by weaver's text-mapping filters.
+text_maps = { namespace_mapping = { gen_ai = "GenAI" } }

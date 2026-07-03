@@ -1,33 +1,17 @@
 # GenAI Semantic Conventions - Makefile
-# Requires: either local weaver >= $(WEAVER_VERSION) OR docker/podman (aliased as docker)
+# Requires: docker (or podman aliased as docker)
 # The weaver version is pinned in versions.env (WEAVER_VERSION) and run via
-# the otel/weaver container image if a local weaver installation is not found.
+# the otel/weaver container image -- contributors do not need to install weaver locally.
 
 # Shared external version pins. Override on the command line when needed, e.g.
 # `make check-policies SEMCONV_VERSION=v1.40.0`.
 VERSION_PINS_FILE := versions.env
 include $(VERSION_PINS_FILE)
 
-# Run weaver locally if available, otherwise run via the pinned container image.
-# The repo is bind-mounted at /workspace when running in Docker, resolving
-# relative paths the same way they would on the host.
-LOCAL_RAW_VERSION := $(shell weaver --version 2>/dev/null)
-
-ifeq ($(LOCAL_RAW_VERSION),)
-    USE_DOCKER := 1
-else
-    LOCAL_VERSION := $(shell echo "$(LOCAL_RAW_VERSION)" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?' | head -n1)
-    REPO_VERSION := $(shell echo "$(WEAVER_VERSION)" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?' | head -n1)
-    IS_LOWER := $(shell awk -v v1="$(LOCAL_VERSION)" -v v2="$(REPO_VERSION)" 'BEGIN { split(v1, a, "."); split(v2, b, "."); for (i = 1; i <= 3; i++) { if (a[i]+0 < b[i]+0) { print "yes"; exit }; if (a[i]+0 > b[i]+0) { print "no"; exit } }; print "no" }')
-    ifeq ($(IS_LOWER),yes)
-        $(warning local weaver version $(LOCAL_VERSION) is lower than required $(REPO_VERSION). Falling back to Docker.)
-        USE_DOCKER := 1
-    else
-        USE_DOCKER := 0
-    endif
-endif
-
-ifeq ($(USE_DOCKER),1)
+# Run weaver via the pinned container image. The repo is bind-mounted at
+# /workspace and that is the working directory, so every relative path the
+# targets below pass to weaver (./model, .build/..., docs/, docs/registry)
+# resolves the same way it would for a host-installed weaver.
 WEAVER_IMAGE := otel/weaver:$(WEAVER_VERSION)
 WEAVER := docker run --rm \
 	-u $(shell id -u):$(shell id -g) \
@@ -35,9 +19,18 @@ WEAVER := docker run --rm \
 	-w /workspace \
 	-e HOME=/tmp \
 	$(WEAVER_IMAGE)
-else
-WEAVER := weaver
-endif
+
+# EXPERIMENT: drive doc generation from the shared markdown template package
+# (open-telemetry/opentelemetry-weaver-packages) instead of a forked copy under
+# ./templates. The `.weaver.toml` acronym/text-map merge these targets rely on is
+# not in the pinned weaver release yet, so the doc targets use a locally-built
+# weaver from ../weaver rather than the $(WEAVER) docker image.
+WEAVER_LOCAL := ../weaver/target/debug/weaver
+DOCS_TEMPLATES := ../opentelemetry-weaver-packages/templates/docs
+
+# Local cache of policies fetched from upstream (gitignored)
+LOCAL_POLICIES := .build/weaver-policies
+LOCAL_POLICY_STAMP := $(LOCAL_POLICIES)/.$(POLICY_REPO_REF)
 
 # Baseline registry for the backwards-compatibility policy. Override on the
 # command line to compare against a different ref or fork.
@@ -85,6 +78,18 @@ VERSION := $(shell awk '/^schema_url:/ { n = split($$2, parts, "/"); print parts
 RESOLVED_SCHEMA_URI := https://github.com/open-telemetry/semantic-conventions-genai/releases/download/v$(VERSION)/resolved.yaml
 PACKAGE_OUTPUT := .build/package
 
+# Work around a Weaver 0.23.0 panic when `registry check` fetches a pinned remote
+# policy pack by commit SHA. Keep the policy source pinned, but materialize it as
+# a local checkout before running validation.
+$(LOCAL_POLICY_STAMP): $(VERSION_PINS_FILE)
+	@mkdir -p .build
+	rm -rf $(LOCAL_POLICIES)
+	git init -q $(LOCAL_POLICIES)
+	cd $(LOCAL_POLICIES) && git remote add origin $(POLICY_REPO_URL)
+	cd $(LOCAL_POLICIES) && git fetch --depth 1 origin $(POLICY_REPO_REF)
+	cd $(LOCAL_POLICIES) && git checkout --detach FETCH_HEAD
+	touch $(LOCAL_POLICY_STAMP)
+
 # Clone upstream semantic-conventions at the pinned version and drop the
 # subdirectories that have been migrated into this repo. See the long
 # comment on SC_UPSTREAM_FILTERED above.
@@ -113,36 +118,51 @@ $(SC_UPSTREAM_STAMP): $(VERSION_PINS_FILE)
 
 filter-upstream: $(SC_UPSTREAM_STAMP)
 
-# Validate the model and run shared policies from otel-weaver-packages.
-check-policies: $(SC_UPSTREAM_STAMP)
+# Validate the model and run shared policies
+check-policies: $(LOCAL_POLICY_STAMP) $(SC_UPSTREAM_STAMP)
 	$(WEAVER) registry check \
 		-r ./model \
 		--v2 \
-		--policy '$(POLICY_REPO_URL)@$(POLICY_REPO_REF)[policies/check]' \
+		--policy $(LOCAL_POLICIES)/policies/check \
 		--policy policies/check/json-schema-annotations
 		# --baseline-registry '$(BASELINE_REGISTRY)' \ uncomment after removing deprecated entries
 
-# Generate the attribute registry pages under docs/registry/ from local
-# templates that consume the v2 resolved registry.
+# Generate the namespace-first registry pages under docs/registry/ from the
+# shared markdown template package. Per-repo customization is config-only:
+# acronyms/text-maps come from ./.weaver.toml; link roots come from --param.
+#
+# Span/metric/event registry pages are turned off: this repo documents those
+# signals in the hand-written docs/gen-ai/*.md pages (via embedded snippets), so
+# the auto-generated per-namespace spans.md/metrics.md/events.md would be
+# redundant. Attribute (rendered into each namespace README) and entity pages
+# stay on.
 generate-registry: $(SC_UPSTREAM_STAMP)
-	$(WEAVER) registry generate \
+	$(WEAVER_LOCAL) registry generate \
 		-r ./model \
 		--v2 \
-		-t ./templates/registry \
-		--param upstream_docs_base=$(UPSTREAM_DOCS_BASE) \
+		-t $(DOCS_TEMPLATES) \
+		--param registry_base_url=/docs/registry \
+		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
+		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
+		--param generate_span_registry=true \
+		--param generate_metric_registry=true \
+		--param generate_event_registry=true \
 		markdown \
 		./docs/registry
 
 # Refresh the weaver snippet tables embedded in hand-written signal docs under
-# docs/gen-ai/ (rewritten in place between <!-- weaver ... --> markers).
+# docs/gen-ai/ (rewritten in place between <!-- weaver ... --> markers). Uses the
+# same shared package and params as generate-registry so embedded tables match
+# the generated pages.
 generate-docs: $(SC_UPSTREAM_STAMP)
-	$(WEAVER) registry update-markdown \
+	$(WEAVER_LOCAL) registry update-markdown \
 		-r ./model \
 		--v2 \
-		-t ./templates \
+		-t $(DOCS_TEMPLATES) \
 		--target markdown \
-		--param registry_base_url=/docs/registry/ \
-		--param upstream_docs_base=$(UPSTREAM_DOCS_BASE) \
+		--param registry_base_url=/docs/registry \
+		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
+		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
 		docs
 
 # Regenerate the JSON schemas under model/gen-ai/ from the pydantic models in
