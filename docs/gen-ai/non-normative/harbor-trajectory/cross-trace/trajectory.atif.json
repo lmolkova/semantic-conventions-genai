@@ -1,0 +1,268 @@
+{
+  "schema_version": "ATIF-v1.7",
+  "trajectory_id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e",
+  "session_id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+  "agent": {
+    "name": "orchestrator"
+  },
+  "steps": [
+    {
+      "step_id": 1,
+      "source": "system",
+      "message": "[agent:orchestrator] You plan and delegate."
+    },
+    {
+      "step_id": 2,
+      "source": "user",
+      "message": "Write a 1-sentence brief on the benefits of rooftop solar for homeowners."
+    },
+    {
+      "step_id": 3,
+      "source": "agent",
+      "model_name": "gpt-4o-mini",
+      "message": "Plan: (1) research rooftop-solar benefits, (2) draft a 1-sentence brief, (3) review it.",
+      "metrics": {
+        "prompt_tokens": 40,
+        "completion_tokens": 20
+      },
+      "llm_call_count": 1
+    },
+    {
+      "step_id": 4,
+      "source": "agent",
+      "llm_call_count": 0,
+      "message": "Delegating to researcher.",
+      "observation": {
+        "results": [
+          {
+            "subagent_trajectory_ref": [
+              {
+                "trajectory_id": "55eaa80fc20ff6ca6eee89c18af8288f-fe0d66315f7ed9c7"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step_id": 5,
+      "source": "agent",
+      "llm_call_count": 0,
+      "message": "Delegating to writer.",
+      "observation": {
+        "results": [
+          {
+            "subagent_trajectory_ref": [
+              {
+                "trajectory_id": "55eaa80fc20ff6ca6eee89c18af8288f-956113e982869a7c"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step_id": 6,
+      "source": "agent",
+      "llm_call_count": 0,
+      "message": "Delegating to reviewer.",
+      "observation": {
+        "results": [
+          {
+            "subagent_trajectory_ref": [
+              {
+                "trajectory_id": "fea8980749b16dd5647489599b528428-6e17597ea245d117"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "final_metrics": {
+    "total_prompt_tokens": 40,
+    "total_completion_tokens": 20,
+    "total_steps": 6
+  },
+  "extra": {
+    "gen_ai.conversation.id": "conv-demo-rooftop-solar"
+  },
+  "subagent_trajectories": [
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "55eaa80fc20ff6ca6eee89c18af8288f-fe0d66315f7ed9c7",
+      "session_id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+      "agent": {
+        "name": "researcher"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "system",
+          "message": "[agent:researcher] You gather factual background."
+        },
+        {
+          "step_id": 2,
+          "source": "user",
+          "message": "Write a 1-sentence brief on the benefits of rooftop solar for homeowners."
+        },
+        {
+          "step_id": 3,
+          "source": "agent",
+          "model_name": "gpt-4o-mini",
+          "message": "Rooftop solar cuts a household's electricity bill by roughly half and tends to raise resale value.",
+          "metrics": {
+            "prompt_tokens": 40,
+            "completion_tokens": 20
+          },
+          "llm_call_count": 1
+        }
+      ],
+      "final_metrics": {
+        "total_prompt_tokens": 40,
+        "total_completion_tokens": 20,
+        "total_steps": 3
+      },
+      "extra": {
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar"
+      }
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "55eaa80fc20ff6ca6eee89c18af8288f-956113e982869a7c",
+      "session_id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+      "agent": {
+        "name": "writer"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "system",
+          "message": "[agent:writer] You turn findings into a 1-sentence brief."
+        },
+        {
+          "step_id": 2,
+          "source": "user",
+          "message": "Rooftop solar cuts a household's electricity bill by roughly half and tends to raise resale value."
+        },
+        {
+          "step_id": 3,
+          "source": "agent",
+          "model_name": "gpt-4o-mini",
+          "message": "Rooftop solar pays homeowners twice: about 50% lower power bills and a higher resale price.",
+          "metrics": {
+            "prompt_tokens": 40,
+            "completion_tokens": 20
+          },
+          "llm_call_count": 1
+        }
+      ],
+      "final_metrics": {
+        "total_prompt_tokens": 40,
+        "total_completion_tokens": 20,
+        "total_steps": 3
+      },
+      "extra": {
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar"
+      }
+    },
+    {
+      "schema_version": "ATIF-v1.7",
+      "trajectory_id": "fea8980749b16dd5647489599b528428-6e17597ea245d117",
+      "session_id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+      "agent": {
+        "name": "reviewer"
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "source": "system",
+          "message": "[agent:reviewer] You review the draft for accuracy."
+        },
+        {
+          "step_id": 2,
+          "source": "user",
+          "message": "Rooftop solar pays homeowners twice: about 50% lower power bills and a higher resale price."
+        },
+        {
+          "step_id": 3,
+          "source": "agent",
+          "model_name": "gpt-4o-mini",
+          "message": "The draft is clear and accurate; the ~50% savings figure should be verified.",
+          "metrics": {
+            "prompt_tokens": 40,
+            "completion_tokens": 20
+          },
+          "llm_call_count": 1
+        },
+        {
+          "step_id": 4,
+          "source": "agent",
+          "llm_call_count": 0,
+          "message": "Delegating to fact-checker.",
+          "observation": {
+            "results": [
+              {
+                "subagent_trajectory_ref": [
+                  {
+                    "trajectory_id": "fea8980749b16dd5647489599b528428-76c5c77263bf2e48"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "final_metrics": {
+        "total_prompt_tokens": 40,
+        "total_completion_tokens": 20,
+        "total_steps": 4
+      },
+      "extra": {
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar"
+      },
+      "subagent_trajectories": [
+        {
+          "schema_version": "ATIF-v1.7",
+          "trajectory_id": "fea8980749b16dd5647489599b528428-76c5c77263bf2e48",
+          "session_id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+          "agent": {
+            "name": "fact-checker"
+          },
+          "steps": [
+            {
+              "step_id": 1,
+              "source": "system",
+              "message": "[agent:fact-checker] You verify factual claims."
+            },
+            {
+              "step_id": 2,
+              "source": "user",
+              "message": "The draft is clear and accurate; the ~50% savings figure should be verified."
+            },
+            {
+              "step_id": 3,
+              "source": "agent",
+              "model_name": "gpt-4o-mini",
+              "message": "Verified: a ~50% bill reduction is well supported for typical residential installs.",
+              "metrics": {
+                "prompt_tokens": 40,
+                "completion_tokens": 20
+              },
+              "llm_call_count": 1
+            }
+          ],
+          "final_metrics": {
+            "total_prompt_tokens": 40,
+            "total_completion_tokens": 20,
+            "total_steps": 3
+          },
+          "extra": {
+            "gen_ai.conversation.id": "conv-demo-rooftop-solar"
+          }
+        }
+      ]
+    }
+  ],
+  "notes": "Reconstructed from 11 spans across 2 traces by gen_ai.session.id / gen_ai.trajectory.id alone; the OTel span tree (trace_id, parent_span_id) was not used."
+}

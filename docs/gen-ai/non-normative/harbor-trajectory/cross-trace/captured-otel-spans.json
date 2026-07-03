@@ -1,0 +1,233 @@
+{
+  "spans": [
+    {
+      "name": "chat gpt-4o-mini",
+      "kind": "CLIENT",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "53d91959df5ec5fe",
+      "parent_span_id": "2fd429748f699d2e",
+      "start_time_unix_nano": 1782804049044472000,
+      "end_time_unix_nano": 1782804049057635000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.response.model": "gpt-4o-mini",
+        "gen_ai.response.id": "chatcmpl-orchestrator",
+        "gen_ai.usage.input_tokens": 40,
+        "gen_ai.usage.output_tokens": 20,
+        "gen_ai.input.messages": "[{\"role\":\"system\",\"parts\":[{\"content\":\"[agent:orchestrator] You plan and delegate.\",\"type\":\"text\"}]},{\"role\":\"human\",\"parts\":[{\"content\":\"Write a 1-sentence brief on the benefits of rooftop solar for homeowners.\",\"type\":\"text\"}]}]",
+        "gen_ai.output.messages": "[{\"role\":\"ai\",\"parts\":[{\"content\":\"Plan: (1) research rooftop-solar benefits, (2) draft a 1-sentence brief, (3) review it.\",\"type\":\"text\"}],\"finish_reason\":\"stop\"}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e"
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "kind": "CLIENT",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "ff079dd364d72c52",
+      "parent_span_id": "fe0d66315f7ed9c7",
+      "start_time_unix_nano": 1782804049058018000,
+      "end_time_unix_nano": 1782804049059264000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.response.model": "gpt-4o-mini",
+        "gen_ai.response.id": "chatcmpl-researcher",
+        "gen_ai.usage.input_tokens": 40,
+        "gen_ai.usage.output_tokens": 20,
+        "gen_ai.input.messages": "[{\"role\":\"system\",\"parts\":[{\"content\":\"[agent:researcher] You gather factual background.\",\"type\":\"text\"}]},{\"role\":\"human\",\"parts\":[{\"content\":\"Write a 1-sentence brief on the benefits of rooftop solar for homeowners.\",\"type\":\"text\"}]}]",
+        "gen_ai.output.messages": "[{\"role\":\"ai\",\"parts\":[{\"content\":\"Rooftop solar cuts a household's electricity bill by roughly half and tends to raise resale value.\",\"type\":\"text\"}],\"finish_reason\":\"stop\"}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-fe0d66315f7ed9c7"
+      }
+    },
+    {
+      "name": "invoke_agent researcher",
+      "kind": "INTERNAL",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "fe0d66315f7ed9c7",
+      "parent_span_id": "2fd429748f699d2e",
+      "start_time_unix_nano": 1782804049057802000,
+      "end_time_unix_nano": 1782804049059339000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "researcher",
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-fe0d66315f7ed9c7",
+        "gen_ai.trajectory.parent.id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e"
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "kind": "CLIENT",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "fbe77b7605542083",
+      "parent_span_id": "956113e982869a7c",
+      "start_time_unix_nano": 1782804049059560000,
+      "end_time_unix_nano": 1782804049060554000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.response.model": "gpt-4o-mini",
+        "gen_ai.response.id": "chatcmpl-writer",
+        "gen_ai.usage.input_tokens": 40,
+        "gen_ai.usage.output_tokens": 20,
+        "gen_ai.input.messages": "[{\"role\":\"system\",\"parts\":[{\"content\":\"[agent:writer] You turn findings into a 1-sentence brief.\",\"type\":\"text\"}]},{\"role\":\"human\",\"parts\":[{\"content\":\"Rooftop solar cuts a household's electricity bill by roughly half and tends to raise resale value.\",\"type\":\"text\"}]}]",
+        "gen_ai.output.messages": "[{\"role\":\"ai\",\"parts\":[{\"content\":\"Rooftop solar pays homeowners twice: about 50% lower power bills and a higher resale price.\",\"type\":\"text\"}],\"finish_reason\":\"stop\"}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-956113e982869a7c"
+      }
+    },
+    {
+      "name": "invoke_agent writer",
+      "kind": "INTERNAL",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "956113e982869a7c",
+      "parent_span_id": "2fd429748f699d2e",
+      "start_time_unix_nano": 1782804049059407000,
+      "end_time_unix_nano": 1782804049060587000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "writer",
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-956113e982869a7c",
+        "gen_ai.trajectory.parent.id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e"
+      }
+    },
+    {
+      "name": "invoke_agent orchestrator",
+      "kind": "INTERNAL",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "2fd429748f699d2e",
+      "parent_span_id": "8eab4422f2e1a142",
+      "start_time_unix_nano": 1782804049044170000,
+      "end_time_unix_nano": 1782804049060607000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "orchestrator",
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e"
+      }
+    },
+    {
+      "name": "invoke_workflow research-pipeline",
+      "kind": "INTERNAL",
+      "trace_id": "55eaa80fc20ff6ca6eee89c18af8288f",
+      "span_id": "8eab4422f2e1a142",
+      "parent_span_id": null,
+      "start_time_unix_nano": 1782804049043434000,
+      "end_time_unix_nano": 1782804049060853000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_workflow",
+        "gen_ai.input.messages": "[{\"role\":\"user\",\"parts\":[{\"content\":\"Write a 1-sentence brief on the benefits of rooftop solar for homeowners.\",\"type\":\"text\"}],\"name\":null}]",
+        "gen_ai.output.messages": "[{\"role\":\"assistant\",\"parts\":[{\"content\":\"Rooftop solar pays homeowners twice: about 50% lower power bills and a higher resale price.\",\"type\":\"text\"}],\"finish_reason\":\"stop\",\"name\":null}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142"
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "kind": "CLIENT",
+      "trace_id": "fea8980749b16dd5647489599b528428",
+      "span_id": "2cd84596651db7a5",
+      "parent_span_id": "6e17597ea245d117",
+      "start_time_unix_nano": 1782804049061050000,
+      "end_time_unix_nano": 1782804049061962000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.response.model": "gpt-4o-mini",
+        "gen_ai.response.id": "chatcmpl-reviewer",
+        "gen_ai.usage.input_tokens": 40,
+        "gen_ai.usage.output_tokens": 20,
+        "gen_ai.input.messages": "[{\"role\":\"system\",\"parts\":[{\"content\":\"[agent:reviewer] You review the draft for accuracy.\",\"type\":\"text\"}]},{\"role\":\"human\",\"parts\":[{\"content\":\"Rooftop solar pays homeowners twice: about 50% lower power bills and a higher resale price.\",\"type\":\"text\"}]}]",
+        "gen_ai.output.messages": "[{\"role\":\"ai\",\"parts\":[{\"content\":\"The draft is clear and accurate; the ~50% savings figure should be verified.\",\"type\":\"text\"}],\"finish_reason\":\"stop\"}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "fea8980749b16dd5647489599b528428-6e17597ea245d117"
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "kind": "CLIENT",
+      "trace_id": "fea8980749b16dd5647489599b528428",
+      "span_id": "da4ee0a4c2498254",
+      "parent_span_id": "76c5c77263bf2e48",
+      "start_time_unix_nano": 1782804049062139000,
+      "end_time_unix_nano": 1782804049063092000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.temperature": 0.0,
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.response.model": "gpt-4o-mini",
+        "gen_ai.response.id": "chatcmpl-fact-checker",
+        "gen_ai.usage.input_tokens": 40,
+        "gen_ai.usage.output_tokens": 20,
+        "gen_ai.input.messages": "[{\"role\":\"system\",\"parts\":[{\"content\":\"[agent:fact-checker] You verify factual claims.\",\"type\":\"text\"}]},{\"role\":\"human\",\"parts\":[{\"content\":\"The draft is clear and accurate; the ~50% savings figure should be verified.\",\"type\":\"text\"}]}]",
+        "gen_ai.output.messages": "[{\"role\":\"ai\",\"parts\":[{\"content\":\"Verified: a ~50% bill reduction is well supported for typical residential installs.\",\"type\":\"text\"}],\"finish_reason\":\"stop\"}]",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "fea8980749b16dd5647489599b528428-76c5c77263bf2e48"
+      }
+    },
+    {
+      "name": "invoke_agent fact-checker",
+      "kind": "INTERNAL",
+      "trace_id": "fea8980749b16dd5647489599b528428",
+      "span_id": "76c5c77263bf2e48",
+      "parent_span_id": "6e17597ea245d117",
+      "start_time_unix_nano": 1782804049062017000,
+      "end_time_unix_nano": 1782804049063124000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "fact-checker",
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "fea8980749b16dd5647489599b528428-76c5c77263bf2e48",
+        "gen_ai.trajectory.parent.id": "fea8980749b16dd5647489599b528428-6e17597ea245d117"
+      }
+    },
+    {
+      "name": "invoke_agent reviewer",
+      "kind": "INTERNAL",
+      "trace_id": "fea8980749b16dd5647489599b528428",
+      "span_id": "6e17597ea245d117",
+      "parent_span_id": null,
+      "start_time_unix_nano": 1782804049060919000,
+      "end_time_unix_nano": 1782804049063145000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "reviewer",
+        "gen_ai.conversation.id": "conv-demo-rooftop-solar",
+        "gen_ai.session.id": "55eaa80fc20ff6ca6eee89c18af8288f-8eab4422f2e1a142",
+        "gen_ai.trajectory.id": "fea8980749b16dd5647489599b528428-6e17597ea245d117",
+        "gen_ai.trajectory.parent.id": "55eaa80fc20ff6ca6eee89c18af8288f-2fd429748f699d2e"
+      }
+    }
+  ]
+}

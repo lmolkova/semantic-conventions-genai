@@ -1,0 +1,186 @@
+{
+  "spans": [
+    {
+      "name": "invoke_workflow research-assistant",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "56b40d844992e8bb",
+      "parent_span_id": null,
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965851000,
+      "end_time_unix_nano": 1782796311966117000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_workflow",
+        "gen_ai.workflow.name": "research-assistant",
+        "gen_ai.agent.version": "0.3.0",
+        "gen_ai.agent.description": "Orchestrates the researcher and writer agents.",
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Write a 2-sentence brief on the benefits of rooftop solar for homeowners.\"}]}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar can cut a household's electricity bills by roughly half, delivering substantial long-term savings. It also tends to raise a home's resale value, making it both an operational and an investment win for homeowners.\"}], \"finish_reason\": \"stop\"}]"
+      }
+    },
+    {
+      "name": "plan research-assistant",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "e7f698de0293497d",
+      "parent_span_id": "56b40d844992e8bb",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965886000,
+      "end_time_unix_nano": 1782796311965901000,
+      "attributes": {
+        "gen_ai.operation.name": "plan",
+        "gen_ai.agent.name": "research-assistant",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Write a 2-sentence brief on the benefits of rooftop solar for homeowners.\"}]}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"text\", \"content\": \"Plan: (1) use the researcher agent to gather facts on rooftop solar benefits; (2) use the writer agent to turn the findings into a 2-sentence brief.\"}], \"finish_reason\": \"stop\"}]"
+      }
+    },
+    {
+      "name": "invoke_agent researcher",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "af44c8a9c22c5f5d",
+      "parent_span_id": "56b40d844992e8bb",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965922000,
+      "end_time_unix_nano": 1782796311966016000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "researcher",
+        "gen_ai.agent.description": "Finds and summarizes facts using web search.",
+        "gen_ai.agent.version": "1.2.0",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.system_instructions": "[{\"type\": \"text\", \"content\": \"You are a research assistant. Use web_search to find facts, then summarize.\"}]",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Write a 2-sentence brief on the benefits of rooftop solar for homeowners.\"}]}]",
+        "gen_ai.tool.definitions": "[{\"type\": \"function\", \"name\": \"web_search\", \"description\": \"Search the web for up-to-date information.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}}, \"required\": [\"query\"]}}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar typically reduces electricity bills by about half and tends to increase a home's resale value.\"}], \"finish_reason\": \"stop\"}]",
+        "gen_ai.usage.input_tokens": 235,
+        "gen_ai.usage.output_tokens": 50
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "a41d3d7424c8373f",
+      "parent_span_id": "af44c8a9c22c5f5d",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965941000,
+      "end_time_unix_nano": 1782796311965963000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "server.address": "api.openai.com",
+        "server.port": 443,
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.system_instructions": "[{\"type\": \"text\", \"content\": \"You are a research assistant. Use web_search to find facts, then summarize.\"}]",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Write a 2-sentence brief on the benefits of rooftop solar for homeowners.\"}]}]",
+        "gen_ai.tool.definitions": "[{\"type\": \"function\", \"name\": \"web_search\", \"description\": \"Search the web for up-to-date information.\", \"parameters\": {\"type\": \"object\", \"properties\": {\"query\": {\"type\": \"string\"}}, \"required\": [\"query\"]}}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"tool_call\", \"id\": \"call_ws_01\", \"name\": \"web_search\", \"arguments\": {\"query\": \"rooftop solar benefits homeowners\"}}], \"finish_reason\": \"tool_calls\"}]",
+        "gen_ai.response.id": "chatcmpl-r1",
+        "gen_ai.response.model": "gpt-4o-mini-2024-07-18",
+        "gen_ai.response.finish_reasons": [
+          "tool_calls"
+        ],
+        "gen_ai.usage.input_tokens": 95,
+        "gen_ai.usage.output_tokens": 18
+      }
+    },
+    {
+      "name": "execute_tool web_search",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "4559bb19b6387060",
+      "parent_span_id": "af44c8a9c22c5f5d",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965979000,
+      "end_time_unix_nano": 1782796311965983000,
+      "attributes": {
+        "gen_ai.operation.name": "execute_tool",
+        "gen_ai.tool.name": "web_search",
+        "gen_ai.tool.type": "function",
+        "gen_ai.tool.description": "Search the web for up-to-date information.",
+        "gen_ai.tool.call.id": "call_ws_01",
+        "gen_ai.agent.name": "researcher",
+        "gen_ai.tool.call.arguments": "{\"query\": \"rooftop solar benefits homeowners\"}",
+        "gen_ai.tool.call.result": "\"Rooftop solar cuts electricity bills by ~50% on average and can raise home resale value.\""
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "7351494f06046d30",
+      "parent_span_id": "af44c8a9c22c5f5d",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311965995000,
+      "end_time_unix_nano": 1782796311966010000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "server.address": "api.openai.com",
+        "server.port": 443,
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.system_instructions": "[{\"type\": \"text\", \"content\": \"You are a research assistant. Use web_search to find facts, then summarize.\"}]",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Write a 2-sentence brief on the benefits of rooftop solar for homeowners.\"}]}, {\"role\": \"assistant\", \"parts\": [{\"type\": \"tool_call\", \"id\": \"call_ws_01\", \"name\": \"web_search\", \"arguments\": {\"query\": \"rooftop solar benefits homeowners\"}}]}, {\"role\": \"tool\", \"parts\": [{\"type\": \"tool_call_response\", \"id\": \"call_ws_01\", \"response\": \"Rooftop solar cuts electricity bills by ~50% on average and can raise home resale value.\"}]}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar typically reduces electricity bills by about half and tends to increase a home's resale value.\"}], \"finish_reason\": \"stop\"}]",
+        "gen_ai.response.id": "chatcmpl-r2",
+        "gen_ai.response.model": "gpt-4o-mini-2024-07-18",
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.usage.input_tokens": 140,
+        "gen_ai.usage.output_tokens": 32
+      }
+    },
+    {
+      "name": "invoke_agent writer",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "b9d6a92397060eab",
+      "parent_span_id": "56b40d844992e8bb",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311966029000,
+      "end_time_unix_nano": 1782796311966112000,
+      "attributes": {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.agent.name": "writer",
+        "gen_ai.agent.description": "Turns research findings into a polished brief.",
+        "gen_ai.agent.version": "1.0.0",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.request.reasoning.level": "medium",
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.system_instructions": "[{\"type\": \"text\", \"content\": \"You are a concise technical writer. Produce a polished 2-sentence brief.\"}]",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar typically reduces electricity bills by about half and tends to increase a home's resale value.\"}]}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar can cut a household's electricity bills by roughly half, delivering substantial long-term savings. It also tends to raise a home's resale value, making it both an operational and an investment win for homeowners.\"}], \"finish_reason\": \"stop\"}]",
+        "gen_ai.usage.input_tokens": 60,
+        "gen_ai.usage.output_tokens": 55
+      }
+    },
+    {
+      "name": "chat gpt-4o-mini",
+      "trace_id": "0007340380ecf4661533254e391170c9",
+      "span_id": "907b4dcfe7d525ab",
+      "parent_span_id": "b9d6a92397060eab",
+      "kind": "INTERNAL",
+      "start_time_unix_nano": 1782796311966092000,
+      "end_time_unix_nano": 1782796311966105000,
+      "attributes": {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "openai",
+        "gen_ai.request.model": "gpt-4o-mini",
+        "gen_ai.request.reasoning.level": "medium",
+        "server.address": "api.openai.com",
+        "server.port": 443,
+        "gen_ai.conversation.id": "conv_demo_8a1f",
+        "gen_ai.system_instructions": "[{\"type\": \"text\", \"content\": \"You are a concise technical writer. Produce a polished 2-sentence brief.\"}]",
+        "gen_ai.input.messages": "[{\"role\": \"user\", \"parts\": [{\"type\": \"text\", \"content\": \"Rooftop solar typically reduces electricity bills by about half and tends to increase a home's resale value.\"}]}]",
+        "gen_ai.output.messages": "[{\"role\": \"assistant\", \"parts\": [{\"type\": \"reasoning\", \"content\": \"Combine the savings and resale points into two crisp sentences.\"}, {\"type\": \"text\", \"content\": \"Rooftop solar can cut a household's electricity bills by roughly half, delivering substantial long-term savings. It also tends to raise a home's resale value, making it both an operational and an investment win for homeowners.\"}], \"finish_reason\": \"stop\"}]",
+        "gen_ai.response.id": "chatcmpl-w1",
+        "gen_ai.response.model": "gpt-4o-mini-2024-07-18",
+        "gen_ai.response.finish_reasons": [
+          "stop"
+        ],
+        "gen_ai.usage.input_tokens": 60,
+        "gen_ai.usage.output_tokens": 55,
+        "gen_ai.usage.reasoning.output_tokens": 12
+      }
+    }
+  ]
+}
