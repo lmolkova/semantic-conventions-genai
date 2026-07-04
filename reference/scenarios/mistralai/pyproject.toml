@@ -13,7 +13,5 @@ genai-reference-shared = { path = "../../shared", editable = true }
 [tool.uv]
 package = false
 override-dependencies = [
-    "opentelemetry-api==1.39.1",
-    "opentelemetry-sdk==1.39.1",
-    "opentelemetry-exporter-otlp-proto-grpc==1.39.1",
+    "opentelemetry-semantic-conventions==0.63b1",
 ]
