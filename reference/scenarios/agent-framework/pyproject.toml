@@ -1,9 +1,9 @@
 [project]
-name = "litellm-reference-test"
+name = "agent-framework-reference-test"
 version = "0.0.0"
 requires-python = ">=3.12"
 dependencies = [
-    "litellm==1.91.0",
+    "agent-framework-openai==1.10.0",
     "genai-reference-shared",
 ]
 
