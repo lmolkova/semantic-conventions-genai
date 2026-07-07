@@ -1,0 +1,23 @@
+[project]
+name = "a2a-reference-test"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "a2a-sdk>=1.0.0, <2.0.0",
+    "httpx>=0.28.0",
+    "sse-starlette>=2.0.0",
+    "starlette>=0.40.0",
+    "genai-reference-shared",
+]
+
+[dependency-groups]
+dev = ["pyright"]
+
+[tool.uv.sources]
+genai-reference-shared = { path = "../../shared", editable = true }
+
+[tool.uv]
+package = false
+
+[tool.pyright]
+extraPaths = ["../../shared"]

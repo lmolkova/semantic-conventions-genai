@@ -1,0 +1,26 @@
+{
+  "spans": {
+    "invoke_agent_internal": [
+      "gen_ai.agent.name",
+      "gen_ai.conversation.id",
+      "gen_ai.input.messages",
+      "gen_ai.operation.name",
+      "gen_ai.output.messages"
+    ],
+    "execute_tool": [
+      "gen_ai.operation.name",
+      "gen_ai.tool.call.arguments",
+      "gen_ai.tool.call.id",
+      "gen_ai.tool.call.result",
+      "gen_ai.tool.name",
+      "gen_ai.tool.type"
+    ]
+  },
+  "entities": {
+    "gen_ai.main_agent": [
+      "gen_ai.main_agent.description",
+      "gen_ai.main_agent.id",
+      "gen_ai.main_agent.name"
+    ]
+  }
+}
