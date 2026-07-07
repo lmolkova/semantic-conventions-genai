@@ -26,6 +26,7 @@ from semconv_genai.parse_results import (
     parse_result_dir,
 )
 from semconv_genai.semconv_model import (
+    ENTITY_SPECS,
     EVENT_SPECS,
     SPAN_SPECS,
 )
@@ -50,6 +51,11 @@ SPAN_TYPE_ORDER = [
 EVENT_TYPE_ORDER = [
     "gen_ai.client.inference.operation.details",
     "gen_ai.evaluation.result",
+]
+
+# Display order for entity types in reports.
+ENTITY_TYPE_ORDER = [
+    "gen_ai.main_agent",
 ]
 
 _REQUIREMENT_LEVELS = (
@@ -171,6 +177,18 @@ def _build_event_type_present_names(result: ScenarioResult) -> dict[str, list[st
     )
 
 
+def _build_entity_type_present_names(result: ScenarioResult) -> dict[str, list[str]]:
+    """Return sparse per-entity-type attribute lists for detected entities."""
+    sparse: dict[str, list[str]] = {}
+    for entity_name in ENTITY_TYPE_ORDER:
+        if result.detected.entities.get(entity_name, 0) <= 0:
+            continue
+        spec = ENTITY_SPECS[entity_name]
+        present = result.detected.entity_any_attrs.get(entity_name, set())
+        sparse[entity_name] = [attr for attr in attr_names(spec) if attr in present]
+    return sparse
+
+
 # ── Scenario data types and generation ──────────────────────────────
 
 
@@ -179,6 +197,7 @@ class ScenarioDataEntry:
     library: str
     spans: dict[str, dict[str, str]]
     events: dict[str, dict[str, str]]
+    entities: dict[str, dict[str, str]]
 
 
 def _normalize_generated_scenario_payload(data: dict[str, object]) -> dict[str, object]:
@@ -194,19 +213,29 @@ def _normalize_generated_scenario_payload(data: dict[str, object]) -> dict[str, 
         normalized["events"] = {
             name: sorted(attrs) if isinstance(attrs, (list, set)) else [] for name, attrs in events.items()
         }
+    entities = data.get("entities")
+    if isinstance(entities, dict) and entities:
+        normalized["entities"] = {
+            name: sorted(attrs) if isinstance(attrs, (list, set)) else [] for name, attrs in entities.items()
+        }
     return normalized
 
 
 def _build_single_scenario_data(result: ScenarioResult) -> tuple[dict[str, object], bool]:
     """Build committed status-report data from a parsed Weaver result."""
-    event_present = _build_event_type_present_names(result)
     spans = _build_span_type_present_names(result)
+    event_present = _build_event_type_present_names(result)
+    entity_present = _build_entity_type_present_names(result)
 
-    data: dict[str, object] = {"events": event_present}
+    data: dict[str, object] = {}
     if spans:
         data["spans"] = spans
+    if event_present:
+        data["events"] = event_present
+    if entity_present:
+        data["entities"] = entity_present
 
-    return _normalize_generated_scenario_payload(data), bool(spans) or bool(event_present)
+    return _normalize_generated_scenario_payload(data), bool(spans) or bool(event_present) or bool(entity_present)
 
 
 def write_generated_scenario_data(library: str) -> Path:
@@ -255,6 +284,7 @@ def _normalize_scenario_data_entry(entry: dict[str, object], library: str) -> Sc
         library=library,
         spans=_normalize_attr_data(entry.get("spans"), SPAN_SPECS),
         events=_normalize_attr_data(entry.get("events"), EVENT_SPECS),
+        entities=_normalize_attr_data(entry.get("entities"), ENTITY_SPECS),
     )
 
 

@@ -7,6 +7,8 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from .semconv_model import ENTITY_SPECS
+
 # ── Span classification types ──────────────────────────────────────
 
 
@@ -25,6 +27,9 @@ class DetectedSignals:
     event_any_attrs: dict[str, set[str]] = field(default_factory=dict)
     metric_attrs: dict[str, set[str]] = field(default_factory=dict)
     metric_any_attrs: dict[str, set[str]] = field(default_factory=dict)
+    entities: dict[str, int] = field(default_factory=dict)
+    entity_attrs: dict[str, set[str]] = field(default_factory=dict)
+    entity_any_attrs: dict[str, set[str]] = field(default_factory=dict)
 
 
 ClassifySpan = Callable[[str, str, dict[str, object]], set[str]]
@@ -145,6 +150,18 @@ def _summarize_samples(
                     else:
                         signals.metric_attrs[metric_name].intersection_update(attr_names)
                     signals.metric_any_attrs.setdefault(metric_name, set()).update(attr_names)
+
+            resource = sample.get("resource")
+            if resource:
+                attr_names = _attribute_names(resource, include_attr)
+                for entity_name, spec in ENTITY_SPECS.items():
+                    if all(req in attr_names for req in spec.required):
+                        signals.entities[entity_name] = signals.entities.get(entity_name, 0) + 1
+                        if entity_name not in signals.entity_attrs:
+                            signals.entity_attrs[entity_name] = set(attr_names)
+                        else:
+                            signals.entity_attrs[entity_name].intersection_update(attr_names)
+                        signals.entity_any_attrs.setdefault(entity_name, set()).update(attr_names)
 
     return spans, signals
 

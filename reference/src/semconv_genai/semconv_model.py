@@ -42,6 +42,9 @@ def _load_groups() -> dict[str, dict]:
         for event in doc.get("events", []) or []:
             if "name" in event:
                 groups[f"event.{event['name']}"] = event
+        for entity in doc.get("entities", []) or []:
+            if "type" in entity:
+                groups[f"entity.{entity['type']}"] = entity
     return groups
 
 
@@ -103,6 +106,44 @@ def _from_yaml(
         opt_in=tuple(buckets["opt_in"]),
         op_names=op_names,
         discriminator_attrs=discriminator_attrs,
+    )
+
+
+def _entity_from_yaml(
+    groups: dict[str, dict],
+    group_id: str,
+    *,
+    label: str,
+) -> AttributeSpec:
+    entity = groups.get(group_id)
+    if not entity:
+        return AttributeSpec(
+            label=label,
+            required=(),
+            conditionally_required=(),
+            recommended=(),
+            opt_in=(),
+        )
+    buckets: dict[str, list[str]] = {
+        "required": [],
+        "conditionally_required": [],
+        "recommended": [],
+        "opt_in": [],
+    }
+    for entry in entity.get("identity", []) or []:
+        if isinstance(entry, dict) and entry.get("ref"):
+            level = _requirement_level_key(entry.get("requirement_level", "required"))
+            buckets[level].append(entry["ref"])
+    for entry in entity.get("description", []) or []:
+        if isinstance(entry, dict) and entry.get("ref"):
+            level = _requirement_level_key(entry.get("requirement_level", "recommended"))
+            buckets[level].append(entry["ref"])
+    return AttributeSpec(
+        label=label,
+        required=tuple(sorted(buckets["required"])),
+        conditionally_required=tuple(sorted(buckets["conditionally_required"])),
+        recommended=tuple(sorted(buckets["recommended"])),
+        opt_in=tuple(sorted(buckets["opt_in"])),
     )
 
 
@@ -211,6 +252,14 @@ EVENT_SPECS: dict[str, AttributeSpec] = {
         _groups,
         "event.gen_ai.evaluation.result",
         label="Evaluation Result",
+    ),
+}
+
+ENTITY_SPECS: dict[str, AttributeSpec] = {
+    "gen_ai.main_agent": _entity_from_yaml(
+        _groups,
+        "entity.gen_ai.main_agent",
+        label="Main Agent",
     ),
 }
 
