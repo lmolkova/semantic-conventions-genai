@@ -631,7 +631,7 @@ spans:
       - ref: gen_ai.agent.name
         brief: The human-readable name of the agent performing the planning.
         requirement_level:
-          recommended: When available and when instrumentation can't populate `gen_ai.main_agent` entity.
+          recommended: When available.
 
 span_refinements:
   - id: openai.inference.client

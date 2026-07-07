@@ -15,9 +15,9 @@ entities:
       transient in-memory or process-local identifiers MUST NOT be used. If no stable
       identifier is available, the main agent entity MUST NOT be emitted.
 
-      When internal helper agents, subagents, or orchestrators are active within the
-      service process, their attributes SHOULD be recorded on signal-level telemetry
-      items (such as [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
+      In-process instrumentations that record telemetry for `invoke_agent` operation 
+      should use `gen_ai.agent.*` attributes such as   
+      [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
     identity:
       - ref: gen_ai.main_agent.id
         requirement_level: required
