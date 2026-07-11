@@ -206,8 +206,8 @@ invocation records its presence (for example, in the OpenTelemetry Context), des
 inherit it, and inner invocations don't overwrite it.
 
 Instrumentations SHOULD set this attribute only when they can reliably determine that the operation
-runs within an encompassing invocation and SHOULD leave it unset otherwise. 
-Gen AI workflow and agent invocations without this attribute SHOULD be treated as the outer operation: 
+runs within an encompassing invocation and SHOULD leave it unset otherwise.
+GenAI workflow and agent invocations without this attribute SHOULD be treated as the outer operation:
 for example, top-level workflows are `invoke_workflow` spans without `gen_ai.root_operation.name`.
 
 It is NOT RECOMMENDED to suppress nested agent or workflow invocations by default, since they group their
