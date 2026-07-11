@@ -6,6 +6,7 @@ import json
 import os
 import time
 
+from opentelemetry import context as _otel_context
 from opentelemetry import trace as _trace
 from opentelemetry.sdk.trace import SpanProcessor
 from reference_shared import flush_and_shutdown, mock_server_host_port, reference_tracer, setup_otel
@@ -13,6 +14,26 @@ from reference_shared import flush_and_shutdown, mock_server_host_port, referenc
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 
 _reference_tracer = reference_tracer()
+
+# Context key carrying the span name of the outermost invoke_agent/invoke_workflow
+# invocation, so nested invocations can record gen_ai.root_operation.name without
+# hardcoding the trace structure.
+_ROOT_OPERATION_KEY = _otel_context.create_key("gen_ai.root_operation")
+
+
+@contextlib.contextmanager
+def _root_operation_scope(span_name):
+    """Yield the root invocation's span name from OTel Context, or register this
+    invocation as the root one (yielding None) if no root operation is set."""
+    root_operation = _otel_context.get_value(_ROOT_OPERATION_KEY)
+    if root_operation is not None:
+        yield root_operation
+        return
+    token = _otel_context.attach(_otel_context.set_value(_ROOT_OPERATION_KEY, span_name))
+    try:
+        yield None
+    finally:
+        _otel_context.detach(token)
 
 
 class SpanCounter(SpanProcessor):
@@ -164,9 +185,15 @@ def run_agent_reference():
             workflow_span_attributes = {
                 "gen_ai.operation.name": "invoke_workflow",
             }
-            with _reference_tracer.start_as_current_span(
-                f"invoke_workflow {runner.app_name}", attributes=workflow_span_attributes
-            ) as workflow_span:
+            workflow_span_name = f"invoke_workflow {runner.app_name}"
+            with (
+                _reference_tracer.start_as_current_span(
+                    workflow_span_name, attributes=workflow_span_attributes
+                ) as workflow_span,
+                _root_operation_scope(workflow_span_name) as root_operation,
+            ):
+                if root_operation is not None:
+                    workflow_span.set_attribute("gen_ai.root_operation.name", root_operation)
                 workflow_span.set_attribute("gen_ai.workflow.name", runner.app_name)
                 workflow_span.set_attribute(
                     "gen_ai.input.messages",
@@ -177,9 +204,15 @@ def run_agent_reference():
                     "gen_ai.request.model": request_model,
                     "gen_ai.agent.name": agent.name,
                 }
-                with _reference_tracer.start_as_current_span(
-                    "invoke_agent test_agent", attributes=agent_span_attributes
-                ) as agent_span:
+                agent_span_name = f"invoke_agent {agent.name}"
+                with (
+                    _reference_tracer.start_as_current_span(
+                        agent_span_name, attributes=agent_span_attributes
+                    ) as agent_span,
+                    _root_operation_scope(agent_span_name) as agent_root_operation,
+                ):
+                    if agent_root_operation is not None:
+                        agent_span.set_attribute("gen_ai.root_operation.name", agent_root_operation)
                     agent_span.set_attribute("gen_ai.request.choice.count", request_choice_count)
                     agent_span.set_attribute("gen_ai.request.max_tokens", request_max_tokens)
                     agent_span.set_attribute("gen_ai.request.temperature", request_temperature)

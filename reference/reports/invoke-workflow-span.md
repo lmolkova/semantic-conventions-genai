@@ -12,6 +12,7 @@
 
 | Attribute | Supporting Libraries |
 | --- | --- |
+| gen_ai.root_operation.name | (none) |
 | gen_ai.workflow.name | [crewai], [google-adk] |
 
 ## Opt-In

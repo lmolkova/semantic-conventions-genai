@@ -43,6 +43,14 @@ It is recommended to check system-specific documentation, if available.
 
 ### Metric: `gen_ai.client.token.usage`
 
+This metric is [recommended][MetricRecommended] when an operation involves the usage
+of tokens and the count is readily available.
+
+For example, if GenAI system returns usage information in the streaming response, it SHOULD be used. Or if GenAI system returns each token independently, instrumentation SHOULD count number of output tokens and record the result.
+
+If instrumentation cannot efficiently obtain number of input and/or output tokens, it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metric.
+
+When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864].
 
@@ -168,6 +176,8 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 ### Metric: `gen_ai.client.operation.duration`
 
+This metric is [required][MetricRequired].
+
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
 
 <!-- weaver .registry.metrics[] | select(.name == "gen_ai.client.operation.duration") -->
@@ -292,6 +302,8 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 ### Metric: `gen_ai.client.operation.time_to_first_chunk`
 
+This metric is [recommended][MetricRecommended].
+
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
 
 <!-- weaver .registry.metrics[] | select(.name == "gen_ai.client.operation.time_to_first_chunk") -->
@@ -402,6 +414,8 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 <!-- endweaver -->
 
 ### Metric: `gen_ai.client.operation.time_per_output_chunk`
+
+This metric is [recommended][MetricRecommended].
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
 
@@ -519,7 +533,7 @@ operational metrics. It includes both functional and performance metrics.
 
 ### Metric: `gen_ai.server.request.duration`
 
-This metric reports the model server
+This metric is [recommended][MetricRecommended] to report the model server
 latency in terms of time spent per request.
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of
@@ -645,7 +659,7 @@ Instrumentations SHOULD document the list of errors they report.
 
 ### Metric: `gen_ai.server.time_per_output_token`
 
-This metric reports the model server
+This metric is [recommended][MetricRecommended] to report the model server
 latency in terms of time per token generated after the first token for any model
 servers which support serving LLMs. It is measured by subtracting the time taken
 to generate the first output token from the request duration and dividing the
@@ -763,7 +777,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 ### Metric: `gen_ai.server.time_to_first_token`
 
-This metric reports the model server
+This metric is [recommended][MetricRecommended] to report the model server
 latency in terms of time spent to generate the first token of the response for
 any model servers which support serving LLMs. It helps measure the time spent in
 the queue and the prefill phase. It is important especially for streaming
@@ -892,6 +906,9 @@ Instrumentation MAY emit both metrics for the same request path when both bounda
 
 ### Metric: `gen_ai.workflow.duration`
 
+This metric is [required][MetricRequired] when instrumented component implements workflow operations.
+
+When this metric is reported alongside a `gen_ai.invoke_workflow` span, the metric value SHOULD be the same as the span duration.
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [1, 5, 10, 30, 60, 120, 300, 600, 1800, 3600, 7200].
 
@@ -905,7 +922,7 @@ This metric SHOULD be specified with [ExplicitBucketBoundaries] of [1, 5, 10, 30
 | `gen_ai.workflow.duration` | Histogram | `s` | GenAI workflow duration. [1] | ![Development](https://img.shields.io/badge/-development-blue) | |
 
 **[1]:** This metric instrument describes an operation that executes a coordinated process composed of multiple agents or other operations involving generative AI.
-When this metric is reported alongside a `gen_ai.invoke_workflow` span, the metric  value SHOULD be the same as the span duration.
+When this metric is reported alongside a `gen_ai.invoke_workflow` span, the metric value SHOULD be the same as the span duration.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
@@ -914,41 +931,38 @@ When this metric is reported alongside a `gen_ai.invoke_workflow` span, the metr
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [1] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.workflow.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | Human-readable name of the GenAI workflow provided by the application. [2] | `multi_agent_rag`; `customer_support_pipeline` |
-| [`gen_ai.workflow.nested`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [3] | boolean | Indicates if a workflow is nested within another workflow in a multi-step process. [4] | |
+| [`gen_ai.root_operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [2] | string | The name of the outermost known GenAI agent or workflow invocation this operation runs within. [3] | `invoke_workflow content_pipeline`; `invoke_agent Travel Planner` |
+| [`gen_ai.workflow.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | Human-readable name of the GenAI workflow provided by the application. [4] | `multi_agent_rag`; `customer_support_pipeline` |
 
 **[1] `error.type`:** The `error.type` SHOULD match the error code returned by the Generative AI provider or the client library,
 the canonical name of exception that occurred, or another low-cardinality error identifier.
 Instrumentations SHOULD document the list of errors they report.
 
-**[2] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks; for example, as the name of the first chain in LangChain or the name of the crew in CrewAI.
+**[2] `gen_ai.root_operation.name`:** If the workflow is invoked within an encompassing agent or workflow invocation and instrumentation can reliably determine it.
+
+**[3] `gen_ai.root_operation.name`:** The value follows the span name of the outer invocation: `invoke_workflow {gen_ai.workflow.name}`
+or `invoke_agent {gen_ai.agent.name}`, falling back to the operation name alone when no
+low-cardinality workflow or agent name is available.
+
+Records the outermost known encompassing invocation: the first `invoke_agent` or `invoke_workflow`
+invocation records its presence (for example, in the OpenTelemetry Context), descendant operations
+inherit it, and inner invocations don't overwrite it.
+
+Instrumentations SHOULD set this attribute only when they can reliably determine that the operation
+runs within an encompassing invocation and SHOULD leave it unset otherwise. 
+Gen AI workflow and agent invocations without this attribute SHOULD be treated as the outer operation: 
+for example, top-level workflows are `invoke_workflow` spans without `gen_ai.root_operation.name`.
+
+It is NOT RECOMMENDED to suppress nested agent or workflow invocations by default, since they group their
+underlying operations.
+
+**[4] `gen_ai.workflow.name`:** This attribute can be populated in different frameworks; for example, as the name of the first chain in LangChain or the name of the crew in CrewAI.
 The workflow name is usually provided by the application in a way that is specific to the generative AI framework or library that orchestrates the workflow.
 It is usually a static name that is expected to be unique within an application.
 
 `gen_ai.workflow.name` MUST have low cardinality.
 Semantic conventions for individual Generative AI frameworks SHOULD document what `gen_ai.workflow.name` means in the context of that framework.
 If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
-
-**[3] `gen_ai.workflow.nested`:** If and only if the workflow is nested within another workflow.
-
-**[4] `gen_ai.workflow.nested`:** Workflows can be composed of multiple nested workflows or chains. The top-level (entry point) workflow is the first workflow that is invoked
-by the application or user; any workflow invoked within another workflow is nested.
-
-Instrumentations SHOULD set this attribute to `true` only when they
-can reliably determine that the workflow is invoked within an encompassing workflow. Instrumentations SHOULD NOT set it to `false`; they SHOULD leave it
-unset otherwise. Instrumentations for libraries that don't support nested workflows SHOULD NOT set this attribute.
-A workflow span without this attribute SHOULD be treated as a top-level workflow.
-
-Instrumentation SHOULD make a best effort to determine whether a workflow is nested.
-Instrumentation MAY use heuristics that depend on the instrumented library. For example, when the public API invoked by the user to start a workflow
-is different from the API used to invoke nested workflows, or by using OpenTelemetry Context to record the presence
-of an encompassing workflow invocation.
-
-When nested workflows are invoked in different processes, instrumentation MAY propagate the encompassing-workflow information across processes when it can.
-However, consumers of the telemetry should not rely on the instrumentation's ability to propagate this information across processes
-and should expect a nested workflow invoked in a separate process to be missing `gen_ai.workflow.nested` and therefore appear as a top-level workflow.
-
-It is NOT RECOMMENDED to suppress nested workflow invocations, since they serve as a grouping mechanism for their underlying operations.
 
 ---
 
@@ -968,6 +982,9 @@ Individual systems may include additional system-specific attributes.
 It is recommended to check system-specific documentation, if available.
 
 ### Metric: `gen_ai.invoke_agent.duration`
+
+This metric is [required][MetricRequired] when the instrumented component
+implements agent invocation operations.
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of
 [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2, 102.4, 204.8, 409.6].
@@ -1005,13 +1022,32 @@ span, the metric value SHOULD be the same as the span duration.
 | --- | --- | --- | --- | --- | --- |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [1] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the invoked GenAI agent. | `Math Tutor`; `Fiction Writer` |
-| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If applicable. | string | The name of the GenAI model configured for the agent. [2] | `gpt-4` |
+| [`gen_ai.root_operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [2] | string | The name of the outermost known GenAI agent or workflow invocation this operation runs within. [3] | `invoke_workflow content_pipeline`; `invoke_agent Travel Planner` |
+| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If applicable. | string | The name of the GenAI model configured for the agent. [4] | `gpt-4` |
 
 **[1] `error.type`:** The `error.type` SHOULD match the error code returned by the Generative AI provider or the client library,
 the canonical name of exception that occurred, or another low-cardinality error identifier.
 Instrumentations SHOULD document the list of errors they report.
 
-**[2] `gen_ai.request.model`:** This attribute SHOULD be populated if and only if the instrumented library allows to set only a single model per agent. It SHOULD NOT be populated for agents that support multiple models or dynamic selection.
+**[2] `gen_ai.root_operation.name`:** If the agent is invoked within an encompassing agent or workflow invocation and instrumentation can reliably determine it.
+
+**[3] `gen_ai.root_operation.name`:** The value follows the span name of the outer invocation: `invoke_workflow {gen_ai.workflow.name}`
+or `invoke_agent {gen_ai.agent.name}`, falling back to the operation name alone when no
+low-cardinality workflow or agent name is available.
+
+Records the outermost known encompassing invocation: the first `invoke_agent` or `invoke_workflow`
+invocation records its presence (for example, in the OpenTelemetry Context), descendant operations
+inherit it, and inner invocations don't overwrite it.
+
+Instrumentations SHOULD set this attribute only when they can reliably determine that the operation
+runs within an encompassing invocation and SHOULD leave it unset otherwise. 
+Gen AI workflow and agent invocations without this attribute SHOULD be treated as the outer operation: 
+for example, top-level workflows are `invoke_workflow` spans without `gen_ai.root_operation.name`.
+
+It is NOT RECOMMENDED to suppress nested agent or workflow invocations by default, since they group their
+underlying operations.
+
+**[4] `gen_ai.request.model`:** This attribute SHOULD be populated if and only if the instrumented library allows to set only a single model per agent. It SHOULD NOT be populated for agents that support multiple models or dynamic selection.
 
 ---
 
@@ -1031,6 +1067,9 @@ Individual systems may include additional system-specific attributes.
 It is recommended to check system-specific documentation, if available.
 
 ### Metric: `gen_ai.execute_tool.duration`
+
+This metric is [recommended][MetricRecommended] for instrumentations that can
+observe tool executions.
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of
 [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
@@ -1084,4 +1123,6 @@ Datastore: A tool used by the agent to access and query structured or unstructur
 <!-- endweaver -->
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
+[MetricRequired]: https://github.com/open-telemetry/semantic-conventions/blob/v1.40.0/docs/general/metric-requirement-level.md#required
+[MetricRecommended]: https://github.com/open-telemetry/semantic-conventions/blob/v1.40.0/docs/general/metric-requirement-level.md#recommended
 [ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters

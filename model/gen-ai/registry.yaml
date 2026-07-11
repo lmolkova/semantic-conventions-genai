@@ -855,27 +855,27 @@ attributes:
       If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
     examples: ["multi_agent_rag", "customer_support_pipeline"]
     stability: development
-  - key: gen_ai.workflow.nested
-    type: boolean
-    brief: Indicates if a workflow is nested within another workflow in a multi-step process.
+  - key: gen_ai.root_operation.name
+    # alternatives:
+    #   - gen_ai.outer_operation.name
+    #   - gen_ai.main_operation.name
+    type: string
+    brief: The name of the outermost known GenAI agent or workflow invocation this operation runs within.
     note: |
-      Workflows can be composed of multiple nested workflows or chains. The top-level (entry point) workflow is the first workflow that is invoked
-      by the application or user; any workflow invoked within another workflow is nested.
+      The value follows the span name of the outer invocation: `invoke_workflow {gen_ai.workflow.name}`
+      or `invoke_agent {gen_ai.agent.name}`, falling back to the operation name alone when no
+      low-cardinality workflow or agent name is available.
 
-      Instrumentations SHOULD set this attribute to `true` only when they
-      can reliably determine that the workflow is invoked within an encompassing workflow. Instrumentations SHOULD NOT set it to `false`; they SHOULD leave it
-      unset otherwise. Instrumentations for libraries that don't support nested workflows SHOULD NOT set this attribute.
-      A workflow span without this attribute SHOULD be treated as a top-level workflow.
+      Records the outermost known encompassing invocation: the first `invoke_agent` or `invoke_workflow`
+      invocation records its presence (for example, in the OpenTelemetry Context), descendant operations
+      inherit it, and inner invocations don't overwrite it.
 
-      Instrumentation SHOULD make a best effort to determine whether a workflow is nested.
-      Instrumentation MAY use heuristics that depend on the instrumented library. For example, when the public API invoked by the user to start a workflow
-      is different from the API used to invoke nested workflows, or by using OpenTelemetry Context to record the presence
-      of an encompassing workflow invocation.
+      Instrumentations SHOULD set this attribute only when they can reliably determine that the operation
+      runs within an encompassing invocation and SHOULD leave it unset otherwise. 
+      Gen AI workflow and agent invocations without this attribute SHOULD be treated as the outer operation: 
+      for example, top-level workflows are `invoke_workflow` spans without `gen_ai.root_operation.name`.
 
-      When nested workflows are invoked in different processes, instrumentation MAY propagate the encompassing-workflow information across processes when it can.
-      However, consumers of the telemetry should not rely on the instrumentation's ability to propagate this information across processes
-      and should expect a nested workflow invoked in a separate process to be missing `gen_ai.workflow.nested` and therefore appear as a top-level workflow.
-
-      It is NOT RECOMMENDED to suppress nested workflow invocations, since they serve as a grouping mechanism for their underlying operations.
-      
+      It is NOT RECOMMENDED to suppress nested agent or workflow invocations by default, since they group their
+      underlying operations.
+    examples: ["invoke_workflow content_pipeline", "invoke_agent Travel Planner"]
     stability: development

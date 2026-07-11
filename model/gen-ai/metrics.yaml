@@ -139,9 +139,11 @@ metrics:
       - ref: gen_ai.workflow.name
         requirement_level:
           conditionally_required: If available.
-      - ref: gen_ai.workflow.nested
+      - ref: gen_ai.root_operation.name
         requirement_level:
-          conditionally_required: If and only if the workflow is nested within another workflow.
+          conditionally_required: >
+            If the workflow is invoked within an encompassing agent or workflow invocation
+            and instrumentation can reliably determine it.
   - name: gen_ai.invoke_agent.duration
     requirement_level: recommended
     annotations:
@@ -173,8 +175,11 @@ metrics:
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref_group: attributes.gen_ai.invoked_agent.internal.common
-      
-      
+      - ref: gen_ai.root_operation.name
+        requirement_level:
+          conditionally_required: >
+            If the agent is invoked within an encompassing agent or workflow invocation
+            and instrumentation can reliably determine it.
   - name: gen_ai.execute_tool.duration
     requirement_level: recommended
     annotations:
