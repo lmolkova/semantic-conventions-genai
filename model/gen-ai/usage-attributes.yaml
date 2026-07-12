@@ -1,0 +1,190 @@
+file_format: definition/2
+# I'm an AI agent!!!
+attributes:
+  - key: gen_ai.usage.input_tokens
+    type: int
+    brief: The number of tokens used in the GenAI input (prompt).
+    note: |
+      This value SHOULD include all types of input tokens, including cached tokens.
+      Instrumentations SHOULD make a best effort to populate this value, using a total
+      provided by the provider when available or, depending on the provider API,
+      by summing different token types parsed from the provider output.
+
+      When the provider reports both billed token counts and model-consumed
+      token counts (for example, Cohere exposes both `usage.billed_units` and
+      `usage.tokens`), instrumentations SHOULD report the billed count so the
+      value matches the units the customer is charged for.
+    examples: [100]
+    stability: development
+  - key: gen_ai.usage.cache_read.input_tokens
+    type: int
+    brief: The number of input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [50]
+    stability: development
+  - key: gen_ai.usage.cache_write.input_tokens
+    type: int
+    brief: The number of input tokens written to a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [25]
+    stability: development
+  - key: gen_ai.usage.tool.input_tokens
+    type: int
+    brief: The number of input tokens from tool results that are provided back to as input.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [30]
+    stability: development
+  - key: gen_ai.usage.output_tokens
+    type: int
+    brief: The number of tokens used in the GenAI response (completion).
+    note: |
+      When the provider reports both billed token counts and model-consumed
+      token counts (for example, Cohere exposes both `usage.billed_units` and
+      `usage.tokens`), instrumentations SHOULD report the billed count so the
+      value matches the units the customer is charged for.
+    examples: [180]
+    stability: development
+  - key: gen_ai.usage.reasoning.output_tokens
+    type: int
+    brief: The number of output tokens used for reasoning (e.g. chain-of-thought, extended thinking).
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
+    examples: [50]
+    stability: development
+  # Per-modality input token counts. Each is a subset of gen_ai.usage.input_tokens.
+  - key: gen_ai.usage.text.input_tokens
+    type: int
+    brief: The number of text input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [100]
+    stability: development
+  - key: gen_ai.usage.image.input_tokens
+    type: int
+    brief: The number of image input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [258]
+    stability: development
+  - key: gen_ai.usage.audio.input_tokens
+    type: int
+    brief: The number of audio input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [120]
+    stability: development
+  - key: gen_ai.usage.video.input_tokens
+    type: int
+    brief: The number of video input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [1024]
+    stability: development
+  - key: gen_ai.usage.document.input_tokens
+    type: int
+    brief: The number of document input tokens (e.g. PDF and other file inputs).
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
+    examples: [512]
+    stability: development
+  # Per-modality output token counts. Each is a subset of gen_ai.usage.output_tokens.
+  - key: gen_ai.usage.text.output_tokens
+    type: int
+    brief: The number of text output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
+    examples: [180]
+    stability: development
+  - key: gen_ai.usage.image.output_tokens
+    type: int
+    brief: The number of image output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
+    examples: [1290]
+    stability: development
+  - key: gen_ai.usage.audio.output_tokens
+    type: int
+    brief: The number of audio output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
+    examples: [240]
+    stability: development
+  # There is no `gen_ai.usage.video.output_tokens`: no video-generation API
+  # exposes a token count today (Sora, Veo, and similar bill per second of
+  # output), so there is nothing to populate it with.
+  #
+  # Per-modality cache-read token counts. Each is a subset of the
+  # corresponding `gen_ai.usage.<modality>.input_tokens` and of
+  # `gen_ai.usage.cache_read.input_tokens`.
+  - key: gen_ai.usage.text.cache_read.input_tokens
+    type: int
+    brief: The number of text input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+    examples: [40]
+    stability: development
+  - key: gen_ai.usage.image.cache_read.input_tokens
+    type: int
+    brief: The number of image input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+    examples: [128]
+    stability: development
+  - key: gen_ai.usage.audio.cache_read.input_tokens
+    type: int
+    brief: The number of audio input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+    examples: [60]
+    stability: development
+  - key: gen_ai.usage.video.cache_read.input_tokens
+    type: int
+    brief: The number of video input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+    examples: [512]
+    stability: development
+  - key: gen_ai.usage.document.cache_read.input_tokens
+    type: int
+    brief: The number of document input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+    examples: [256]
+    stability: development
+  - key: gen_ai.token.modality
+    type:
+      members:
+        - id: text
+          stability: development
+          value: "text"
+          brief: 'Text tokens.'
+        - id: image
+          stability: development
+          value: "image"
+          brief: 'Image tokens.'
+        - id: audio
+          stability: development
+          value: "audio"
+          brief: 'Audio tokens.'
+        - id: video
+          stability: development
+          value: "video"
+          brief: 'Video tokens.'
+        - id: document
+          stability: development
+          value: "document"
+          brief: 'Document tokens (e.g. PDF and other file inputs).'
+        - id: unknown
+          stability: development
+          value: "unknown"
+          brief: 'The modality is not known.'
+    brief: The modality of the tokens being counted.
+    note: >
+      When the provider does not break usage down by modality and the modality
+      cannot be reliably determined, instrumentations SHOULD report the tokens
+      under the `unknown` modality rather than guessing.
+    examples: ['text', 'image', 'audio']
+    stability: development

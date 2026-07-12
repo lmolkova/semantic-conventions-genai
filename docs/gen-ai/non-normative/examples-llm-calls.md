@@ -45,41 +45,49 @@ sequenceDiagram
 
 ### GenAI client span when content capturing is disabled
 
-| Property                         | Value                                      |
-| -------------------------------- | ------------------------------------------ |
-| Span name                        | `"chat gpt-4"`                             |
-| Trace id                         | `"4bf92f3577b34da6a3ce929d0e0e4736"`       |
-| Span id                          | `"00f067aa0ba902b7"`                       |
-| `gen_ai.provider.name`           | `"openai"`                                 |
-| `gen_ai.operation.name`          | `"chat"`                                   |
-| `gen_ai.request.model`           | `"gpt-4"`                                  |
-| `gen_ai.request.max_tokens`      | `200`                                      |
-| `gen_ai.request.top_p`           | `1.0`                                      |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"` |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                             |
-| `gen_ai.usage.output_tokens`     | `47`                                       |
-| `gen_ai.usage.input_tokens`      | `52`                                       |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                 |
+| Property                                | Value                                      |
+| --------------------------------------- | ------------------------------------------ |
+| Span name                               | `"chat gpt-4"`                             |
+| Trace id                                | `"4bf92f3577b34da6a3ce929d0e0e4736"`       |
+| Span id                                 | `"00f067aa0ba902b7"`                       |
+| `gen_ai.provider.name`                  | `"openai"`                                 |
+| `gen_ai.operation.name`                 | `"chat"`                                   |
+| `gen_ai.request.model`                  | `"gpt-4"`                                  |
+| `gen_ai.request.max_tokens`             | `200`                                      |
+| `gen_ai.request.top_p`                  | `1.0`                                      |
+| `gen_ai.response.id`                    | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"` |
+| `gen_ai.response.model`                 | `"gpt-4-0613"`                             |
+| `gen_ai.usage.output_tokens`            | `47`                                       |
+| `gen_ai.usage.input_tokens`             | `52`                                       |
+| `gen_ai.usage.cache_read.input_tokens`  | `10`                                       |
+| `gen_ai.usage.cache_write.input_tokens` | `8`                                        |
+| `gen_ai.usage.text.input_tokens`        | `52`                                       |
+| `gen_ai.usage.text.output_tokens`       | `47`                                       |
+| `gen_ai.response.finish_reasons`        | `["stop"]`                                 |
 
 ### GenAI client span when content capturing is enabled on span attributes
 
-| Property                         | Value                                                      |
-| -------------------------------- | ---------------------------------------------------------- |
-| Span name                        | `"chat gpt-4"`                                             |
-| Trace id                         | `"4bf92f3577b34da6a3ce929d0e0e4736"`                       |
-| Span id                          | `"00f067aa0ba902b7"`                                       |
-| `gen_ai.provider.name`           | `"openai"`                                                 |
-| `gen_ai.operation.name`          | `"chat"`                                                   |
-| `gen_ai.request.model`           | `"gpt-4"`                                                  |
-| `gen_ai.request.max_tokens`      | `200`                                                      |
-| `gen_ai.request.top_p`           | `1.0`                                                      |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                 |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                             |
-| `gen_ai.usage.output_tokens`     | `47`                                                       |
-| `gen_ai.usage.input_tokens`      | `52`                                                       |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                                 |
-| `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-simple)   |
-| `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-simple) |
+| Property                                | Value                                                      |
+| --------------------------------------- | ---------------------------------------------------------- |
+| Span name                               | `"chat gpt-4"`                                             |
+| Trace id                                | `"4bf92f3577b34da6a3ce929d0e0e4736"`                       |
+| Span id                                 | `"00f067aa0ba902b7"`                                       |
+| `gen_ai.provider.name`                  | `"openai"`                                                 |
+| `gen_ai.operation.name`                 | `"chat"`                                                   |
+| `gen_ai.request.model`                  | `"gpt-4"`                                                  |
+| `gen_ai.request.max_tokens`             | `200`                                                      |
+| `gen_ai.request.top_p`                  | `1.0`                                                      |
+| `gen_ai.response.id`                    | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                 |
+| `gen_ai.response.model`                 | `"gpt-4-0613"`                                             |
+| `gen_ai.usage.output_tokens`            | `47`                                                       |
+| `gen_ai.usage.input_tokens`             | `52`                                                       |
+| `gen_ai.usage.cache_read.input_tokens`  | `10`                                                       |
+| `gen_ai.usage.cache_write.input_tokens` | `8`                                                        |
+| `gen_ai.usage.text.input_tokens`        | `52`                                                       |
+| `gen_ai.usage.text.output_tokens`       | `47`                                                       |
+| `gen_ai.response.finish_reasons`        | `["stop"]`                                                 |
+| `gen_ai.input.messages`                 | [`gen_ai.input.messages`](#gen-ai-input-messages-simple)   |
+| `gen_ai.output.messages`                | [`gen_ai.output.messages`](#gen-ai-output-messages-simple) |
 
 <span id="gen-ai-input-messages-simple">`gen_ai.input.messages` value</span>
 
@@ -127,40 +135,48 @@ sequenceDiagram
 
 Span:
 
-| Property                         | Value                                      |
-| -------------------------------- | ------------------------------------------ |
-| Span name                        | `"chat gpt-4"`                             |
-| Trace id                         | `"4bf92f3577b34da6a3ce929d0e0e4736"`       |
-| Span id                          | `"00f067aa0ba902b7"`                       |
-| `gen_ai.provider.name`           | `"openai"`                                 |
-| `gen_ai.operation.name`          | `"chat"`                                   |
-| `gen_ai.request.model`           | `"gpt-4"`                                  |
-| `gen_ai.request.max_tokens`      | `200`                                      |
-| `gen_ai.request.top_p`           | `1.0`                                      |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"` |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                             |
-| `gen_ai.usage.output_tokens`     | `47`                                       |
-| `gen_ai.usage.input_tokens`      | `52`                                       |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                 |
+| Property                                | Value                                      |
+| --------------------------------------- | ------------------------------------------ |
+| Span name                               | `"chat gpt-4"`                             |
+| Trace id                                | `"4bf92f3577b34da6a3ce929d0e0e4736"`       |
+| Span id                                 | `"00f067aa0ba902b7"`                       |
+| `gen_ai.provider.name`                  | `"openai"`                                 |
+| `gen_ai.operation.name`                 | `"chat"`                                   |
+| `gen_ai.request.model`                  | `"gpt-4"`                                  |
+| `gen_ai.request.max_tokens`             | `200`                                      |
+| `gen_ai.request.top_p`                  | `1.0`                                      |
+| `gen_ai.response.id`                    | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"` |
+| `gen_ai.response.model`                 | `"gpt-4-0613"`                             |
+| `gen_ai.usage.output_tokens`            | `47`                                       |
+| `gen_ai.usage.input_tokens`             | `52`                                       |
+| `gen_ai.usage.cache_read.input_tokens`  | `10`                                       |
+| `gen_ai.usage.cache_write.input_tokens` | `8`                                        |
+| `gen_ai.usage.text.input_tokens`        | `52`                                       |
+| `gen_ai.usage.text.output_tokens`       | `47`                                       |
+| `gen_ai.response.finish_reasons`        | `["stop"]`                                 |
 
 Event:
 
-| Property                         | Value                                                     |
-| -------------------------------- | --------------------------------------------------------- |
-| Trace id                         | `"4bf92f3577b34da6a3ce929d0e0e4736"`                      |
-| Span id                          | `"00f067aa0ba902b7"`                                      |
-| `gen_ai.provider.name`           | `"openai"`                                                |
-| `gen_ai.operation.name`          | `"chat"`                                                  |
-| `gen_ai.request.model`           | `"gpt-4"`                                                 |
-| `gen_ai.request.max_tokens`      | `200`                                                     |
-| `gen_ai.request.top_p`           | `1.0`                                                     |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                            |
-| `gen_ai.usage.output_tokens`     | `47`                                                      |
-| `gen_ai.usage.input_tokens`      | `52`                                                      |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                                |
-| `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-event)   |
-| `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-event) |
+| Property                                | Value                                                     |
+| --------------------------------------- | --------------------------------------------------------- |
+| Trace id                                | `"4bf92f3577b34da6a3ce929d0e0e4736"`                      |
+| Span id                                 | `"00f067aa0ba902b7"`                                      |
+| `gen_ai.provider.name`                  | `"openai"`                                                |
+| `gen_ai.operation.name`                 | `"chat"`                                                  |
+| `gen_ai.request.model`                  | `"gpt-4"`                                                 |
+| `gen_ai.request.max_tokens`             | `200`                                                     |
+| `gen_ai.request.top_p`                  | `1.0`                                                     |
+| `gen_ai.response.id`                    | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                |
+| `gen_ai.response.model`                 | `"gpt-4-0613"`                                            |
+| `gen_ai.usage.output_tokens`            | `47`                                                      |
+| `gen_ai.usage.input_tokens`             | `52`                                                      |
+| `gen_ai.usage.cache_read.input_tokens`  | `10`                                                      |
+| `gen_ai.usage.cache_write.input_tokens` | `8`                                                       |
+| `gen_ai.usage.text.input_tokens`        | `52`                                                      |
+| `gen_ai.usage.text.output_tokens`       | `47`                                                      |
+| `gen_ai.response.finish_reasons`        | `["stop"]`                                                |
+| `gen_ai.input.messages`                 | [`gen_ai.input.messages`](#gen-ai-input-messages-event)   |
+| `gen_ai.output.messages`                | [`gen_ai.output.messages`](#gen-ai-output-messages-event) |
 
 <span id="gen-ai-input-messages-event">`gen_ai.input.messages` value</span>
 
@@ -654,23 +670,24 @@ Span:
 
 ## Chat completion with reasoning (content enabled)
 
-| Property                         | Value                                                         |
-| -------------------------------- | ------------------------------------------------------------- |
-| Span name                        | `"chat gpt-4"`                                                |
-| Trace id                         | `"4bf92f3577b34da6a3ce929d0e0e4736"`                          |
-| Span id                          | `"00f067aa0ba902b7"`                                          |
-| `gen_ai.provider.name`           | `"openai"`                                                    |
-| `gen_ai.operation.name`          | `"chat"`                                                      |
-| `gen_ai.request.model`           | `"gpt-4"`                                                     |
-| `gen_ai.request.max_tokens`      | `200`                                                         |
-| `gen_ai.request.top_p`           | `1.0`                                                         |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                    |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                                |
-| `gen_ai.usage.output_tokens`     | `47`                                                          |
-| `gen_ai.usage.input_tokens`      | `52`                                                          |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                                    |
-| `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-reasoning)   |
-| `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-reasoning) |
+| Property                               | Value                                                         |
+| -------------------------------------- | ------------------------------------------------------------- |
+| Span name                              | `"chat gpt-4"`                                                |
+| Trace id                               | `"4bf92f3577b34da6a3ce929d0e0e4736"`                          |
+| Span id                                | `"00f067aa0ba902b7"`                                          |
+| `gen_ai.provider.name`                 | `"openai"`                                                    |
+| `gen_ai.operation.name`                | `"chat"`                                                      |
+| `gen_ai.request.model`                 | `"gpt-4"`                                                     |
+| `gen_ai.request.max_tokens`            | `200`                                                         |
+| `gen_ai.request.top_p`                 | `1.0`                                                         |
+| `gen_ai.response.id`                   | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                    |
+| `gen_ai.response.model`                | `"gpt-4-0613"`                                                |
+| `gen_ai.usage.output_tokens`           | `47`                                                          |
+| `gen_ai.usage.input_tokens`            | `52`                                                          |
+| `gen_ai.usage.reasoning.output_tokens` | `20`                                                          |
+| `gen_ai.response.finish_reasons`       | `["stop"]`                                                    |
+| `gen_ai.input.messages`                | [`gen_ai.input.messages`](#gen-ai-input-messages-reasoning)   |
+| `gen_ai.output.messages`               | [`gen_ai.output.messages`](#gen-ai-output-messages-reasoning) |
 
 <span id="gen-ai-input-messages-reasoning">`gen_ai.input.messages` value</span>
 
