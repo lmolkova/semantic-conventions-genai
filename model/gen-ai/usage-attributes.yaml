@@ -31,7 +31,7 @@ attributes:
     stability: development
   - key: gen_ai.usage.tool.input_tokens
     type: int
-    brief: The number of input tokens from tool results that are provided back to as input.
+    brief: The number of input tokens from tool results that are provided back to the model as input.
     note: >
       The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
     examples: [30]

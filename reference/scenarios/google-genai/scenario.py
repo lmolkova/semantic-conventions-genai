@@ -219,9 +219,7 @@ def run_chat_tool_call():
             part = response.candidates[0].content.parts[0]
             if hasattr(part, "function_call") and part.function_call:
                 tool_call = part.function_call
-        input_messages = [
-            {"role": "user", "parts": [{"type": "text", "content": "What's the weather in Seattle?"}]}
-        ]
+        input_messages = [{"role": "user", "parts": [{"type": "text", "content": "What's the weather in Seattle?"}]}]
         output_messages = [
             {
                 "role": "assistant",
@@ -235,14 +233,6 @@ def run_chat_tool_call():
         ]
         _emit_inference_event(request_model, input_messages, output_messages, response, usage)
         print(f"    -> tool_call: {tool_call.name}" if tool_call else f"    -> {response.text[:60]}")
-
-
-def _set_usage(span, um):
-    """Set aggregate and per-modality usage attributes on the span; return them."""
-    usage = _usage_attributes(um)
-    for attr, value in usage.items():
-        span.set_attribute(attr, value)
-    return usage
 
 
 def run_chat_multimodal():
@@ -280,7 +270,9 @@ def run_chat_multimodal():
             span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
         usage = {}
         if hasattr(response, "usage_metadata") and response.usage_metadata:
-            usage = _set_usage(span, response.usage_metadata)
+            usage = _usage_attributes(response.usage_metadata)
+            for attr, value in usage.items():
+                span.set_attribute(attr, value)
 
         input_messages = [
             {
@@ -323,9 +315,7 @@ def run_generate_media():
             "gen_ai.provider.name": "gcp.gemini",
             "gen_ai.request.model": request_model,
         }
-        with _reference_tracer.start_as_current_span(
-            "chat gemini-2.0-flash", attributes=span_attributes
-        ) as span:
+        with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes) as span:
             response = client.models.generate_content(
                 model=request_model,
                 contents=f"Generate {label} output.",
@@ -337,7 +327,9 @@ def run_generate_media():
                 span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
             usage = {}
             if hasattr(response, "usage_metadata") and response.usage_metadata:
-                usage = _set_usage(span, response.usage_metadata)
+                usage = _usage_attributes(response.usage_metadata)
+                for attr, value in usage.items():
+                    span.set_attribute(attr, value)
 
             input_messages = [{"role": "user", "parts": [{"type": "text", "content": f"Generate {label} output."}]}]
             output_parts = []

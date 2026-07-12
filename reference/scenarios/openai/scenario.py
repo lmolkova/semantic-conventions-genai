@@ -247,9 +247,7 @@ def run_responses_compaction_reference(client):
         }
         if output_messages:
             event_attrs["gen_ai.output.messages"] = json.dumps(output_messages)
-        if response.usage:
-            event_attrs["gen_ai.usage.input_tokens"] = response.usage.input_tokens
-            event_attrs["gen_ai.usage.output_tokens"] = response.usage.output_tokens
+        event_attrs.update(usage)
         if host:
             event_attrs["server.address"] = host
         if port is not None:

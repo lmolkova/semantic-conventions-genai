@@ -93,11 +93,7 @@ def _request_media_modalities(body):
     for content in body.get("contents") or []:
         for part in content.get("parts") or []:
             blob = (
-                part.get("inlineData")
-                or part.get("inline_data")
-                or part.get("fileData")
-                or part.get("file_data")
-                or {}
+                part.get("inlineData") or part.get("inline_data") or part.get("fileData") or part.get("file_data") or {}
             )
             mime = blob.get("mimeType") or blob.get("mime_type") or ""
             for prefix, entry in _MIME_MODALITY:

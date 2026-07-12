@@ -21,7 +21,7 @@ metrics:
   # pending a dedicated `gen_ai.client.embeddings.usage.*` instrument in a
   # follow-up. Embeddings span attributes (`gen_ai.usage.input_tokens`) are
   # unchanged.
-  - name: gen_ai.client.inference.usage.input_tokens.per_operation
+  - name: gen_ai.client.inference.usage.operation.input_tokens
     requirement_level: recommended
     instrument: histogram
     unit: "{token}"
@@ -44,7 +44,7 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
-  - name: gen_ai.client.inference.usage.output_tokens.per_operation
+  - name: gen_ai.client.inference.usage.operation.output_tokens
     requirement_level: recommended
     instrument: histogram
     unit: "{token}"
@@ -56,7 +56,7 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
-  - name: gen_ai.client.inference.usage.total_tokens.per_operation
+  - name: gen_ai.client.inference.usage.operation.total_tokens
     requirement_level: recommended
     instrument: histogram
     unit: "{token}"
@@ -158,10 +158,10 @@ metrics:
     attributes:
       - ref_group: metric_attributes.gen_ai.inference_usage
 metric_refinements:
-  - id: openai.client.inference.usage.input_tokens.per_operation
-    ref: gen_ai.client.inference.usage.input_tokens.per_operation
+  - id: openai.client.inference.usage.operation.input_tokens
+    ref: gen_ai.client.inference.usage.operation.input_tokens
     brief: >
-      OpenAI-specific extension to `gen_ai.client.inference.usage.input_tokens.per_operation`. Adds
+      OpenAI-specific extension to `gen_ai.client.inference.usage.operation.input_tokens`. Adds
       `openai.response.service_tier` and `openai.response.system_fingerprint`
       when the provider is `openai`.
     stability: development
@@ -171,10 +171,10 @@ metric_refinements:
         requirement_level: recommended
       - ref: openai.response.system_fingerprint
         requirement_level: recommended
-  - id: openai.client.inference.usage.output_tokens.per_operation
-    ref: gen_ai.client.inference.usage.output_tokens.per_operation
+  - id: openai.client.inference.usage.operation.output_tokens
+    ref: gen_ai.client.inference.usage.operation.output_tokens
     brief: >
-      OpenAI-specific extension to `gen_ai.client.inference.usage.output_tokens.per_operation`. Adds
+      OpenAI-specific extension to `gen_ai.client.inference.usage.operation.output_tokens`. Adds
       `openai.response.service_tier` and `openai.response.system_fingerprint`
       when the provider is `openai`.
     stability: development
@@ -184,10 +184,10 @@ metric_refinements:
         requirement_level: recommended
       - ref: openai.response.system_fingerprint
         requirement_level: recommended
-  - id: openai.client.inference.usage.total_tokens.per_operation
-    ref: gen_ai.client.inference.usage.total_tokens.per_operation
+  - id: openai.client.inference.usage.operation.total_tokens
+    ref: gen_ai.client.inference.usage.operation.total_tokens
     brief: >
-      OpenAI-specific extension to `gen_ai.client.inference.usage.total_tokens.per_operation`. Adds
+      OpenAI-specific extension to `gen_ai.client.inference.usage.operation.total_tokens`. Adds
       `openai.response.service_tier` and `openai.response.system_fingerprint`
       when the provider is `openai`.
     stability: development

@@ -43,8 +43,8 @@
 | gen_ai.usage.audio.cache_read.input_tokens | [google-genai], [vertexai] |
 | gen_ai.usage.audio.input_tokens | [google-genai], [openai], [vertexai] |
 | gen_ai.usage.audio.output_tokens | [google-genai], [openai] |
-| gen_ai.usage.cache_read.input_tokens | [anthropic], [google-genai], [vertexai] |
-| gen_ai.usage.cache_write.input_tokens | [anthropic] |
+| gen_ai.usage.cache_read.input_tokens | [anthropic], [google-genai], [openai], [vertexai] |
+| gen_ai.usage.cache_write.input_tokens | [anthropic], [openai] |
 | gen_ai.usage.document.cache_read.input_tokens | [google-genai], [vertexai] |
 | gen_ai.usage.document.input_tokens | [google-genai], [vertexai] |
 | gen_ai.usage.image.cache_read.input_tokens | [google-genai], [vertexai] |
@@ -52,7 +52,7 @@
 | gen_ai.usage.image.output_tokens | [google-genai] |
 | gen_ai.usage.input_tokens | [anthropic], [autogen], [aws-bedrock], [azure-ai-inference], [cohere], [dspy], [google-genai], [groq], [instructor], [litellm], [llamaindex], [mistralai], [openai], [pydantic-ai], [vertexai] |
 | gen_ai.usage.output_tokens | [anthropic], [autogen], [aws-bedrock], [azure-ai-inference], [cohere], [dspy], [google-genai], [groq], [instructor], [litellm], [llamaindex], [mistralai], [openai], [pydantic-ai], [vertexai] |
-| gen_ai.usage.reasoning.output_tokens | [google-genai], [vertexai] |
+| gen_ai.usage.reasoning.output_tokens | [google-genai], [openai], [vertexai] |
 | gen_ai.usage.text.cache_read.input_tokens | [google-genai], [vertexai] |
 | gen_ai.usage.text.input_tokens | [google-genai], [vertexai] |
 | gen_ai.usage.text.output_tokens | [google-genai], [vertexai] |
