@@ -1,5 +1,4 @@
 file_format: definition/2
-# I'm an AI agent!!!
 attribute_groups:
   # Attributes for the per-modality inference usage counters.
   - id: metric_attributes.gen_ai.inference_usage
