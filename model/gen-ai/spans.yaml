@@ -520,8 +520,6 @@ spans:
         sampling_relevant: true
       - ref: gen_ai.agent.name
         sampling_relevant: true
-        requirement_level:
-          recommended: When instrumentation can't populate `gen_ai.main_agent` entity.
 
   - type: gen_ai.execute_tool.internal
     requirement_level: recommended

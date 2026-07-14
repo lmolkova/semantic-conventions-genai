@@ -13,6 +13,7 @@
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.agent.description | [adk_a2a], [agent-framework], [autogen] |
+| gen_ai.agent.name | [adk_a2a], [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
 | gen_ai.conversation.id | [adk_a2a], [google-adk] |
 | gen_ai.data_source.id | (none) |
 | gen_ai.output.type | (none) |
@@ -23,7 +24,6 @@
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.agent.name | [adk_a2a], [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
 | gen_ai.request.frequency_penalty | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
 | gen_ai.request.max_tokens | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
 | gen_ai.request.model | [adk_a2a], [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
