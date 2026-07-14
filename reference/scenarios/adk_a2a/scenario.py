@@ -1,9 +1,9 @@
 """A2A + `gen_ai.main_agent` showcase driven by a real Google ADK agent.
 
 This scenario only sets up the OTel pipeline and the process Resource
-(`gen_ai.main_agent.*`, derived from env with fallback to the served AgentCard). 
-Everything else is a real Google ADK agent served over A2A via ``to_a2a`` and 
-invoked by an A2A client --\ ADK's own instrumentation emits the spans.
+(`gen_ai.main_agent.*`, derived from env with fallback to the served AgentCard).
+Everything else is a real Google ADK agent served over A2A via ``to_a2a`` and
+invoked by an A2A client -- ADK's own instrumentation emits the spans.
 """
 
 import asyncio
@@ -59,9 +59,10 @@ async def run():
 
     # Serve the real ADK agent over A2A and invoke it
     app = to_a2a(agent, agent_card=card, host=AGENT_HOST, port=80, protocol="http")
-    async with app.router.lifespan_context(app), httpx.AsyncClient(
-        transport=httpx.ASGITransport(app=app), base_url=AGENT_BASE_URL
-    ) as httpx_client:
+    async with (
+        app.router.lifespan_context(app),
+        httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url=AGENT_BASE_URL) as httpx_client,
+    ):
         print("  [a2a_showcase] A2A client invoking the ADK agent over ASGI transport")
         client = A2AClient(httpx_client, agent_card=card)
         request = SendMessageRequest(
