@@ -28,7 +28,7 @@
 **Span status** SHOULD follow the [Recording Errors]({{ params.upstream_docs_base }}/docs/general/recording-errors.md) document.{% endif %}
 {%- if span.entity_associations is sequence %}
 
-**Entity Associations** SHOULD be associated with one of the following entities:
+**Entity Associations** The span SHOULD be associated with one of the following entities:
 
 {% for e in span.entity_associations %}
 {%- if entity_registry -%}

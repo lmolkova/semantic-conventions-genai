@@ -481,7 +481,7 @@ Examples: LangChain agents, CrewAI agents.
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/general/recording-errors.md) document.
 
-**Entity Associations** SHOULD be associated with one of the following entities:
+**Entity Associations** The span SHOULD be associated with one of the following entities:
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
@@ -711,7 +711,7 @@ that is separate from individual agents, so they SHOULD report `invoke_workflow`
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/general/recording-errors.md) document.
 
-**Entity Associations** SHOULD be associated with one of the following entities:
+**Entity Associations** The span SHOULD be associated with one of the following entities:
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
@@ -844,7 +844,7 @@ reasoning or normal inference.
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/general/recording-errors.md) document.
 
-**Entity Associations** SHOULD be associated with one of the following entities:
+**Entity Associations** The span SHOULD be associated with one of the following entities:
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
