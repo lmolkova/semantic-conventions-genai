@@ -854,7 +854,6 @@ instrumentations do not cover.
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
-
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
 **Attributes:**

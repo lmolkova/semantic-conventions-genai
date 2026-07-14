@@ -489,7 +489,6 @@ Examples: LangChain agents, CrewAI agents.
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
-
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
 **Attributes:**
@@ -719,7 +718,6 @@ that is separate from individual agents, so they SHOULD report `invoke_workflow`
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
-
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
 **Attributes:**
@@ -853,7 +851,6 @@ reasoning or normal inference.
 **Entity Associations** The span SHOULD be associated with one of the following entities:
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
-
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
