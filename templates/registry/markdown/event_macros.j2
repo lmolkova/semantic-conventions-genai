@@ -1,6 +1,7 @@
 {# v2 event objects expose: name, brief, note, stability, attributes. #}
 {% import 'stability.j2' as stability %}
 {% import 'entity_macros.j2' as entities %}
+{% import 'signal_requirement_level.j2' as sr %}
 {% macro header(event, entity_registry=none) -%}
 **Status:** {{ stability.badge(event.stability, event.deprecated, event.brief) }}
 
@@ -21,5 +22,7 @@ The event SHOULD be associated with one of the following entities:
 {%- endif -%}
 {% endfor %}
 {% endif %}
+
+{{ sr.render(event.requirement_level) }}
 
 {% endmacro %}

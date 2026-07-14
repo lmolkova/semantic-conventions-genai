@@ -4,6 +4,7 @@
    (e.g. "**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`."). #}
 {% import 'stability.j2' as stability %}
 {% import 'entity_macros.j2' as entities %}
+{% import 'signal_requirement_level.j2' as sr %}
 
 {# Span-name rendering is disabled until weaver PR 1401 ships:
    https://github.com/open-telemetry/weaver/pull/1401
@@ -38,5 +39,7 @@
 {%- endif -%}
 {% endfor %}
 {% endif %}
+
+{{ sr.render(span.requirement_level) }}
 
 {% endmacro %}

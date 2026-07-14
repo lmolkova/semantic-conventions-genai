@@ -49,6 +49,8 @@ Semantic conventions for individual GenAI systems and frameworks MAY specify dif
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/general/recording-errors.md) document.
 
+**Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -199,6 +201,8 @@ Examples: OpenAI Assistants API, AWS Bedrock Agents.
 **Span kind** SHOULD be `CLIENT`.
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/general/recording-errors.md) document.
+
+**Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
 **Attributes:**
 
@@ -486,6 +490,8 @@ Examples: LangChain agents, CrewAI agents.
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
+**Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -716,6 +722,8 @@ that is separate from individual agents, so they SHOULD report `invoke_workflow`
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
 
+**Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -848,6 +856,8 @@ reasoning or normal inference.
 
 - [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
 
+
+**Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/signal-requirement-level.md).
 
 **Attributes:**
 
