@@ -45,6 +45,9 @@ def _load_groups() -> dict[str, dict]:
         for entity in doc.get("entities", []) or []:
             if "type" in entity:
                 groups[f"entity.{entity['type']}"] = entity
+        for metric in doc.get("metrics", []) or []:
+            if "name" in metric:
+                groups[f"metric.{metric['name']}"] = metric
     return groups
 
 
@@ -263,8 +266,18 @@ ENTITY_SPECS: dict[str, AttributeSpec] = {
     ),
 }
 
-# No METRIC_SPECS yet: gen_ai.* metrics are deliberately omitted from the reference
-# coverage matrix because the two non-streaming metrics
-# (`gen_ai.client.operation.duration`, `gen_ai.client.token.usage`) are
-# derivable from data already present on inference spans (span start/end and
-# `gen_ai.usage.{input,output}_tokens`). Reference scenarios emit spans only.
+# The `gen_ai.client.operation.duration` and `gen_ai.client.token.usage`
+# metrics are deliberately omitted: they are trivially derivable from the same
+# information already present on spans.
+METRIC_SPECS: dict[str, AttributeSpec] = {
+    "gen_ai.invoke_agent.inference_calls": _from_yaml(
+        _groups,
+        "metric.gen_ai.invoke_agent.inference_calls",
+        label="Invoke Agent Inference Calls",
+    ),
+    "gen_ai.invoke_agent.tool_calls": _from_yaml(
+        _groups,
+        "metric.gen_ai.invoke_agent.tool_calls",
+        label="Invoke Agent Tool Calls",
+    ),
+}

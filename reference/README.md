@@ -47,4 +47,11 @@ Run `uv run update-reports` to regenerate.
 | Entity | Libraries |
 | --- | --- |
 | [Main Agent](reports/gen-ai-main-agent-entity.md) | adk_a2a |
+
+### Metrics
+
+| Metric | Libraries |
+| --- | --- |
+| [Invoke Agent Inference Calls](reports/gen-ai-invoke-agent-inference-calls-metric.md) | google-adk |
+| [Invoke Agent Tool Calls](reports/gen-ai-invoke-agent-tool-calls-metric.md) | google-adk |
 <!-- status:end -->

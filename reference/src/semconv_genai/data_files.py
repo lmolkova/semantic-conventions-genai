@@ -28,6 +28,7 @@ from semconv_genai.parse_results import (
 from semconv_genai.semconv_model import (
     ENTITY_SPECS,
     EVENT_SPECS,
+    METRIC_SPECS,
     SPAN_SPECS,
 )
 
@@ -56,6 +57,12 @@ EVENT_TYPE_ORDER = [
 # Display order for entity types in reports.
 ENTITY_TYPE_ORDER = [
     "gen_ai.main_agent",
+]
+
+# Display order for metric types in reports.
+METRIC_TYPE_ORDER = [
+    "gen_ai.invoke_agent.inference_calls",
+    "gen_ai.invoke_agent.tool_calls",
 ]
 
 _REQUIREMENT_LEVELS = (
@@ -189,6 +196,28 @@ def _build_entity_type_present_names(result: ScenarioResult) -> dict[str, list[s
     return sparse
 
 
+def _metric_type_present_attributes(
+    result: ScenarioResult,
+    metric_name: str,
+    level: RequirementLevel,
+) -> set[str]:
+    """Return attrs present for a metric type at the requested requirement level."""
+    all_present = _present_attributes(result)
+    if level is RequirementLevel.REQUIRED:
+        return result.detected.metric_attrs.get(metric_name, all_present)
+    return result.detected.metric_any_attrs.get(metric_name, all_present)
+
+
+def _build_metric_type_present_names(result: ScenarioResult) -> dict[str, list[str]]:
+    """Return sparse per-metric-type attribute lists for detected metrics."""
+    merged = merge_signal_counts(result.observed.metrics, result.detected.metrics)
+    return _build_signal_type_present_names(
+        METRIC_SPECS,
+        merged,
+        lambda name, level: _metric_type_present_attributes(result, name, level),
+    )
+
+
 # ── Scenario data types and generation ──────────────────────────────
 
 
@@ -198,10 +227,11 @@ class ScenarioDataEntry:
     spans: dict[str, dict[str, str]]
     events: dict[str, dict[str, str]]
     entities: dict[str, dict[str, str]]
+    metrics: dict[str, dict[str, str]]
 
 
 def _normalize_generated_scenario_payload(data: dict[str, object]) -> dict[str, object]:
-    """Drop empty top-level objects and sort span attribute names alphabetically."""
+    """Drop empty top-level objects and sort signal attribute names alphabetically."""
     normalized: dict[str, object] = {}
     spans = data.get("spans")
     if isinstance(spans, dict) and spans:
@@ -218,6 +248,11 @@ def _normalize_generated_scenario_payload(data: dict[str, object]) -> dict[str, 
         normalized["entities"] = {
             name: sorted(attrs) if isinstance(attrs, (list, set)) else [] for name, attrs in entities.items()
         }
+    metrics = data.get("metrics")
+    if isinstance(metrics, dict) and metrics:
+        normalized["metrics"] = {
+            name: sorted(attrs) if isinstance(attrs, (list, set)) else [] for name, attrs in metrics.items()
+        }
     return normalized
 
 
@@ -226,6 +261,7 @@ def _build_single_scenario_data(result: ScenarioResult) -> tuple[dict[str, objec
     spans = _build_span_type_present_names(result)
     event_present = _build_event_type_present_names(result)
     entity_present = _build_entity_type_present_names(result)
+    metrics = _build_metric_type_present_names(result)
 
     data: dict[str, object] = {}
     if spans:
@@ -234,8 +270,11 @@ def _build_single_scenario_data(result: ScenarioResult) -> tuple[dict[str, objec
         data["events"] = event_present
     if entity_present:
         data["entities"] = entity_present
+    if metrics:
+        data["metrics"] = metrics
 
-    return _normalize_generated_scenario_payload(data), bool(spans) or bool(event_present) or bool(entity_present)
+    has_relevant_data = bool(spans) or bool(event_present) or bool(entity_present) or bool(metrics)
+    return _normalize_generated_scenario_payload(data), has_relevant_data
 
 
 def write_generated_scenario_data(library: str) -> Path:
@@ -285,6 +324,7 @@ def _normalize_scenario_data_entry(entry: dict[str, object], library: str) -> Sc
         spans=_normalize_attr_data(entry.get("spans"), SPAN_SPECS),
         events=_normalize_attr_data(entry.get("events"), EVENT_SPECS),
         entities=_normalize_attr_data(entry.get("entities"), ENTITY_SPECS),
+        metrics=_normalize_attr_data(entry.get("metrics"), METRIC_SPECS),
     )
 
 
