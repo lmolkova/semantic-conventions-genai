@@ -3,21 +3,27 @@
 
 # MCP
 
-## [Spans](/docs/registry/mcp/spans.md)
+## Table of contents
 
-| Type | Stability | Description |
-| --- | --- | --- |
-| [`mcp.client`](/docs/registry/mcp/spans.md#mcp-client) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the MCP call from the client side. |
-| [`mcp.server`](/docs/registry/mcp/spans.md#mcp-server) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the processing of the MCP request or notification initiated by the peer. |
+- [Metrics](#metrics)
+- [Spans](#spans)
+- [Attributes](#attributes)
 
-## [Metrics](/docs/registry/mcp/metrics.md)
+## Metrics
 
 | Name | Stability | Description |
 | --- | --- | --- |
-| [`mcp.client.operation.duration`](/docs/registry/mcp/metrics.md#mcp-client-operation-duration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP request or notification as observed on the sender from the time it was sent until the response or ack is received. |
-| [`mcp.client.session.duration`](/docs/registry/mcp/metrics.md#mcp-client-session-duration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP client. |
-| [`mcp.server.operation.duration`](/docs/registry/mcp/metrics.md#mcp-server-operation-duration) | ![Development](https://img.shields.io/badge/-development-blue) | MCP request or notification duration as observed on the receiver from the time it was received until the result or ack is sent. |
-| [`mcp.server.session.duration`](/docs/registry/mcp/metrics.md#mcp-server-session-duration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP server. |
+| [`mcp.client.operation.duration`](/docs/registry/mcp/metrics.md#mcpclientoperationduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP request or notification as observed on the sender from the time it was sent until the response or ack is received. |
+| [`mcp.client.session.duration`](/docs/registry/mcp/metrics.md#mcpclientsessionduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP client. |
+| [`mcp.server.operation.duration`](/docs/registry/mcp/metrics.md#mcpserveroperationduration) | ![Development](https://img.shields.io/badge/-development-blue) | MCP request or notification duration as observed on the receiver from the time it was received until the result or ack is sent. |
+| [`mcp.server.session.duration`](/docs/registry/mcp/metrics.md#mcpserversessionduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP server. |
+
+## Spans
+
+| Type | Stability | Description |
+| --- | --- | --- |
+| [`mcp.client`](/docs/registry/mcp/spans.md#mcpclient) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the MCP call from the client side. |
+| [`mcp.server`](/docs/registry/mcp/spans.md#mcpserver) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the processing of the MCP request or notification initiated by the peer. |
 
 ## Attributes
 
@@ -25,10 +31,10 @@ Attributes defined in the `mcp` namespace. Application developers are encouraged
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="mcp-method-name" href="#mcp-method-name">`mcp.method.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the request or notification method. | `notifications/cancelled`; `initialize`; `notifications/initialized` |
-| <a id="mcp-protocol-version" href="#mcp-protocol-version">`mcp.protocol.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The [version](https://modelcontextprotocol.io/specification/versioning) of the Model Context Protocol used. | `2025-06-18` |
-| <a id="mcp-resource-uri" href="#mcp-resource-uri">`mcp.resource.uri`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The value of the resource uri. [1] | `postgres://database/customers/schema`; `file:///home/user/documents/report.pdf` |
-| <a id="mcp-session-id" href="#mcp-session-id">`mcp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Identifies [MCP session](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#session-management). | `191c4850af6c49e08843a3f6c80e5046` |
+| <a id="mcp-method-name">`mcp.method.name`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The name of the request or notification method. | `notifications/cancelled`; `initialize`; `notifications/initialized` |
+| <a id="mcp-protocol-version">`mcp.protocol.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The [version](https://modelcontextprotocol.io/specification/versioning) of the Model Context Protocol used. | `2025-06-18` |
+| <a id="mcp-resource-uri">`mcp.resource.uri`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The value of the resource uri. [1] | `postgres://database/customers/schema`; `file:///home/user/documents/report.pdf` |
+| <a id="mcp-session-id">`mcp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Identifies [MCP session](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#session-management). | `191c4850af6c49e08843a3f6c80e5046` |
 
 
 **[1] `mcp.resource.uri`:** This is a URI of the resource provided in the following requests or notifications: `resources/read`, `resources/subscribe`, `resources/unsubscribe`, or `notifications/resources/updated`.

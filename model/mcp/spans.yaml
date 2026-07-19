@@ -34,11 +34,7 @@ spans:
       or notification or by the MCP server when server initiates the operation.
       It covers the time to receive the response or ack from the peer.
 
-      **Span status** SHOULD be set to `ERROR` when `error.type` attribute is present.
       The status description SHOULD match the `JSONRPCError.message` if the message is available.
-
-      Refer to the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/general/recording-errors.md) document
-      for more details.
 
       MCP tool call execution spans are compatible with GenAI [execute_tool spans](/docs/gen-ai/gen-ai-spans.md#execute-tool-span).
 
@@ -95,11 +91,7 @@ spans:
       It's reported by the MCP server when client initiates the request
       (or notification) or by the MCP client when server initiates the operation.
 
-      **Span status** SHOULD be set to `ERROR` when `error.type` attribute is present.
       The status description SHOULD match the `JSONRPCError.message` if the message is available.
-
-      Refer to the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/general/recording-errors.md) document
-      for more details.
     stability: development
     attributes:
       - ref_group: trace.mcp.common.attributes

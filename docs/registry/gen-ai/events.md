@@ -3,11 +3,11 @@
 
 # Gen AI events
 
-- [`gen_ai.client.inference.operation.details`](#gen-ai-client-inference-operation-details)
-- [`gen_ai.client.operation.exception`](#gen-ai-client-operation-exception)
-- [`gen_ai.evaluation.result`](#gen-ai-evaluation-result)
+- [`gen_ai.client.inference.operation.details`](#gen_aiclientinferenceoperationdetails)
+- [`gen_ai.client.operation.exception`](#gen_aiclientoperationexception)
+- [`gen_ai.evaluation.result`](#gen_aievaluationresult)
 
-## <a id="gen-ai-client-inference-operation-details" href="#gen-ai-client-inference-operation-details">`gen_ai.client.inference.operation.details`</a>
+## `gen_ai.client.inference.operation.details`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -300,7 +300,7 @@ When the attribute is recorded on events, it MUST be recorded in structured form
 
 **[29]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-client-operation-exception" href="#gen-ai-client-operation-exception">`gen_ai.client.operation.exception`</a>
+## `gen_ai.client.operation.exception`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -336,7 +336,7 @@ exception instead. For example, in Go, errors created with `fmt.Errorf`
 using `%w` MAY be unwrapped when the wrapper type does not help
 classify the failure.
 
-## <a id="gen-ai-evaluation-result" href="#gen-ai-evaluation-result">`gen_ai.evaluation.result`</a>
+## `gen_ai.evaluation.result`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 

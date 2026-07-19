@@ -3,12 +3,12 @@
 
 # MCP metrics
 
-- [`mcp.client.operation.duration`](#mcp-client-operation-duration)
-- [`mcp.client.session.duration`](#mcp-client-session-duration)
-- [`mcp.server.operation.duration`](#mcp-server-operation-duration)
-- [`mcp.server.session.duration`](#mcp-server-session-duration)
+- [`mcp.client.operation.duration`](#mcpclientoperationduration)
+- [`mcp.client.session.duration`](#mcpclientsessionduration)
+- [`mcp.server.operation.duration`](#mcpserveroperationduration)
+- [`mcp.server.session.duration`](#mcpserversessionduration)
 
-## <a id="mcp-client-operation-duration" href="#mcp-client-operation-duration">`mcp.client.operation.duration`</a>
+## `mcp.client.operation.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -153,7 +153,7 @@ Examples:
 | `udp` | UDP | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | `unix` | Unix domain socket | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
-## <a id="mcp-client-session-duration" href="#mcp-client-session-duration">`mcp.client.session.duration`</a>
+## `mcp.client.session.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -227,7 +227,7 @@ is HTTP. It SHOULD be set to `pipe` if the transport is stdio.
 | `udp` | UDP | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | `unix` | Unix domain socket | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
-## <a id="mcp-server-operation-duration" href="#mcp-server-operation-duration">`mcp.server.operation.duration`</a>
+## `mcp.server.operation.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -366,7 +366,7 @@ Examples:
 | `udp` | UDP | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 | `unix` | Unix domain socket | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
-## <a id="mcp-server-session-duration" href="#mcp-server-session-duration">`mcp.server.session.duration`</a>
+## `mcp.server.session.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |

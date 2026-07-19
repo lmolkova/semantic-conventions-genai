@@ -44,15 +44,16 @@ retries.
 
 This span represents a client call to Generative AI model or service that generates a response or requests a tool call based on the input prompt.
 
-**Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
-call to models running in the same process. It's RECOMMENDED to use `CLIENT` kind
+The span kind MAY be set to `INTERNAL` on spans representing calls to models
+running in the same process. It's RECOMMENDED to use `CLIENT` kind
 when the GenAI system being instrumented usually runs in a different process than its
 client or when the GenAI call happens over instrumented protocol such as HTTP.
 
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
-Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+
+**Span kind** SHOULD be `CLIENT`.
 
 **Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
@@ -673,8 +674,8 @@ Use `update_memory` when the caller requests modification of known existing memo
 Use `upsert_memory` when the caller invokes a public API that may create, update, or consolidate
 memory records without the caller choosing which.
 
-**Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
-calls to memory systems running in the same process. It's RECOMMENDED to use `CLIENT` kind
+The span kind MAY be set to `INTERNAL` on spans representing calls to memory
+systems running in the same process. It's RECOMMENDED to use `CLIENT` kind
 when the memory system being instrumented usually runs in a different process than its
 client or when the memory call happens over instrumented protocol such as HTTP.
 
@@ -684,6 +685,8 @@ the operation intends to delete all memory records in the specified store.
 **Span name** SHOULD be `{gen_ai.operation.name}`.
 
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+
+**Span kind** SHOULD be `CLIENT`.
 
 **Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 

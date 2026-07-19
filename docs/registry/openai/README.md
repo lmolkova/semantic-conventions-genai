@@ -3,16 +3,20 @@
 
 # OpenAI
 
+## Table of contents
+
+- [Attributes](#attributes)
+
 ## Attributes
 
 Attributes defined in the `openai` namespace. Application developers are encouraged to reuse existing attributes; see these [naming recommendations](https://opentelemetry.io/docs/specs/semconv/general/naming/#recommendations-for-application-developers) regarding attribute selection and naming for custom use cases.
 
 | Key | Stability | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- |
-| <a id="openai-api-type" href="#openai-api-type">`openai.api.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of OpenAI API being used. | `chat_completions`; `responses` |
-| <a id="openai-request-service-tier" href="#openai-request-service-tier">`openai.request.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier requested. May be a specific tier, default, or auto. | `auto`; `default` |
-| <a id="openai-response-service-tier" href="#openai-response-service-tier">`openai.response.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier used for the response. | `scale`; `default` |
-| <a id="openai-response-system-fingerprint" href="#openai-response-system-fingerprint">`openai.response.system_fingerprint`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
+| <a id="openai-api-type">`openai.api.type`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The type of OpenAI API being used. | `chat_completions`; `responses` |
+| <a id="openai-request-service-tier">`openai.request.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier requested. May be a specific tier, default, or auto. | `auto`; `default` |
+| <a id="openai-response-service-tier">`openai.response.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier used for the response. | `scale`; `default` |
+| <a id="openai-response-system-fingerprint">`openai.response.system_fingerprint`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
 
 
 ---

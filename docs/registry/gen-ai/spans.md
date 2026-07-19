@@ -3,18 +3,18 @@
 
 # Gen AI spans
 
-- [`gen_ai.create_agent.client`](#gen-ai-create-agent-client)
-- [`gen_ai.embeddings.client`](#gen-ai-embeddings-client)
-- [`gen_ai.execute_tool.internal`](#gen-ai-execute-tool-internal)
-- [`gen_ai.inference.client`](#gen-ai-inference-client)
-- [`gen_ai.invoke_agent.client`](#gen-ai-invoke-agent-client)
-- [`gen_ai.invoke_agent.internal`](#gen-ai-invoke-agent-internal)
-- [`gen_ai.invoke_workflow.internal`](#gen-ai-invoke-workflow-internal)
-- [`gen_ai.memory.client`](#gen-ai-memory-client)
-- [`gen_ai.plan.internal`](#gen-ai-plan-internal)
-- [`gen_ai.retrieval.client`](#gen-ai-retrieval-client)
+- [`gen_ai.create_agent.client`](#gen_aicreate_agentclient)
+- [`gen_ai.embeddings.client`](#gen_aiembeddingsclient)
+- [`gen_ai.execute_tool.internal`](#gen_aiexecute_toolinternal)
+- [`gen_ai.inference.client`](#gen_aiinferenceclient)
+- [`gen_ai.invoke_agent.client`](#gen_aiinvoke_agentclient)
+- [`gen_ai.invoke_agent.internal`](#gen_aiinvoke_agentinternal)
+- [`gen_ai.invoke_workflow.internal`](#gen_aiinvoke_workflowinternal)
+- [`gen_ai.memory.client`](#gen_aimemoryclient)
+- [`gen_ai.plan.internal`](#gen_aiplaninternal)
+- [`gen_ai.retrieval.client`](#gen_airetrievalclient)
 
-## <a id="gen-ai-create-agent-client" href="#gen-ai-create-agent-client">`gen_ai.create_agent.client`</a>
+## `gen_ai.create_agent.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -155,7 +155,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 **[11]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-embeddings-client" href="#gen-ai-embeddings-client">`gen_ai.embeddings.client`</a>
+## `gen_ai.embeddings.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -298,7 +298,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 **[22]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-execute-tool-internal" href="#gen-ai-execute-tool-internal">`gen_ai.execute_tool.internal`</a>
+## `gen_ai.execute_tool.internal`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -415,21 +415,22 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `update_memory` | Update existing memory records | ![Development](https://img.shields.io/badge/-development-blue) |
 | `upsert_memory` | Create or update memory records without the caller choosing which | ![Development](https://img.shields.io/badge/-development-blue) |
 
-## <a id="gen-ai-inference-client" href="#gen-ai-inference-client">`gen_ai.inference.client`</a>
+## `gen_ai.inference.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
 This span represents a client call to Generative AI model or service that generates a response or requests a tool call based on the input prompt.
 
-**Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
-call to models running in the same process. It's RECOMMENDED to use `CLIENT` kind
+The span kind MAY be set to `INTERNAL` on spans representing calls to models
+running in the same process. It's RECOMMENDED to use `CLIENT` kind
 when the GenAI system being instrumented usually runs in a different process than its
 client or when the GenAI call happens over instrumented protocol such as HTTP.
 
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
-Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+
+**Span kind** SHOULD be `CLIENT`.
 
 **Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
@@ -725,7 +726,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 **[56]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-invoke-agent-client" href="#gen-ai-invoke-agent-client">`gen_ai.invoke_agent.client`</a>
+## `gen_ai.invoke_agent.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -999,7 +1000,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 **[78]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-invoke-agent-internal" href="#gen-ai-invoke-agent-internal">`gen_ai.invoke_agent.internal`</a>
+## `gen_ai.invoke_agent.internal`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -1211,7 +1212,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `speech` | Speech | ![Development](https://img.shields.io/badge/-development-blue) |
 | `text` | Plain text | ![Development](https://img.shields.io/badge/-development-blue) |
 
-## <a id="gen-ai-invoke-workflow-internal" href="#gen-ai-invoke-workflow-internal">`gen_ai.invoke_workflow.internal`</a>
+## `gen_ai.invoke_workflow.internal`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -1329,7 +1330,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `update_memory` | Update existing memory records | ![Development](https://img.shields.io/badge/-development-blue) |
 | `upsert_memory` | Create or update memory records without the caller choosing which | ![Development](https://img.shields.io/badge/-development-blue) |
 
-## <a id="gen-ai-memory-client" href="#gen-ai-memory-client">`gen_ai.memory.client`</a>
+## `gen_ai.memory.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -1347,8 +1348,8 @@ Use `update_memory` when the caller requests modification of known existing memo
 Use `upsert_memory` when the caller invokes a public API that may create, update, or consolidate
 memory records without the caller choosing which.
 
-**Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
-calls to memory systems running in the same process. It's RECOMMENDED to use `CLIENT` kind
+The span kind MAY be set to `INTERNAL` on spans representing calls to memory
+systems running in the same process. It's RECOMMENDED to use `CLIENT` kind
 when the memory system being instrumented usually runs in a different process than its
 client or when the memory call happens over instrumented protocol such as HTTP.
 
@@ -1358,6 +1359,8 @@ the operation intends to delete all memory records in the specified store.
 **Span name** SHOULD be `{gen_ai.operation.name}`.
 
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+
+**Span kind** SHOULD be `CLIENT`.
 
 **Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
@@ -1491,7 +1494,7 @@ When the attribute is recorded on events, it MUST be recorded in structured form
 
 **[113]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-plan-internal" href="#gen-ai-plan-internal">`gen_ai.plan.internal`</a>
+## `gen_ai.plan.internal`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
@@ -1569,7 +1572,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 | `update_memory` | Update existing memory records | ![Development](https://img.shields.io/badge/-development-blue) |
 | `upsert_memory` | Create or update memory records without the caller choosing which | ![Development](https://img.shields.io/badge/-development-blue) |
 
-## <a id="gen-ai-retrieval-client" href="#gen-ai-retrieval-client">`gen_ai.retrieval.client`</a>
+## `gen_ai.retrieval.client`
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 

@@ -3,18 +3,18 @@
 
 # Gen AI metrics
 
-- [`gen_ai.client.operation.duration`](#gen-ai-client-operation-duration)
-- [`gen_ai.client.operation.time_per_output_chunk`](#gen-ai-client-operation-time-per-output-chunk)
-- [`gen_ai.client.operation.time_to_first_chunk`](#gen-ai-client-operation-time-to-first-chunk)
-- [`gen_ai.client.token.usage`](#gen-ai-client-token-usage)
-- [`gen_ai.execute_tool.duration`](#gen-ai-execute-tool-duration)
-- [`gen_ai.invoke_agent.duration`](#gen-ai-invoke-agent-duration)
-- [`gen_ai.server.request.duration`](#gen-ai-server-request-duration)
-- [`gen_ai.server.time_per_output_token`](#gen-ai-server-time-per-output-token)
-- [`gen_ai.server.time_to_first_token`](#gen-ai-server-time-to-first-token)
-- [`gen_ai.workflow.duration`](#gen-ai-workflow-duration)
+- [`gen_ai.client.operation.duration`](#gen_aiclientoperationduration)
+- [`gen_ai.client.operation.time_per_output_chunk`](#gen_aiclientoperationtime_per_output_chunk)
+- [`gen_ai.client.operation.time_to_first_chunk`](#gen_aiclientoperationtime_to_first_chunk)
+- [`gen_ai.client.token.usage`](#gen_aiclienttokenusage)
+- [`gen_ai.execute_tool.duration`](#gen_aiexecute_toolduration)
+- [`gen_ai.invoke_agent.duration`](#gen_aiinvoke_agentduration)
+- [`gen_ai.server.request.duration`](#gen_aiserverrequestduration)
+- [`gen_ai.server.time_per_output_token`](#gen_aiservertime_per_output_token)
+- [`gen_ai.server.time_to_first_token`](#gen_aiservertime_to_first_token)
+- [`gen_ai.workflow.duration`](#gen_aiworkflowduration)
 
-## <a id="gen-ai-client-operation-duration" href="#gen-ai-client-operation-duration">`gen_ai.client.operation.duration`</a>
+## `gen_ai.client.operation.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -125,7 +125,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[10]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-client-operation-time-per-output-chunk" href="#gen-ai-client-operation-time-per-output-chunk">`gen_ai.client.operation.time_per_output_chunk`</a>
+## `gen_ai.client.operation.time_per_output_chunk`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -223,7 +223,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[18]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-client-operation-time-to-first-chunk" href="#gen-ai-client-operation-time-to-first-chunk">`gen_ai.client.operation.time_to_first_chunk`</a>
+## `gen_ai.client.operation.time_to_first_chunk`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -321,7 +321,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[26]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-client-token-usage" href="#gen-ai-client-token-usage">`gen_ai.client.token.usage`</a>
+## `gen_ai.client.token.usage`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -427,7 +427,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 | `input` | Input tokens (prompt, input, etc.) | ![Development](https://img.shields.io/badge/-development-blue) |
 | `output` | Output tokens (completion, response, etc.) | ![Development](https://img.shields.io/badge/-development-blue) |
 
-## <a id="gen-ai-execute-tool-duration" href="#gen-ai-execute-tool-duration">`gen_ai.execute_tool.duration`</a>
+## `gen_ai.execute_tool.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -466,7 +466,7 @@ Datastore: A tool used by the agent to access and query structured or unstructur
 | --- | --- | --- |
 | `_OTHER` | A fallback error value to be used when the instrumentation doesn't define a custom value. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
-## <a id="gen-ai-invoke-agent-duration" href="#gen-ai-invoke-agent-duration">`gen_ai.invoke_agent.duration`</a>
+## `gen_ai.invoke_agent.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -510,7 +510,7 @@ Instrumentations SHOULD document the list of errors they report.
 | --- | --- | --- |
 | `_OTHER` | A fallback error value to be used when the instrumentation doesn't define a custom value. | ![Stable](https://img.shields.io/badge/-stable-lightgreen) |
 
-## <a id="gen-ai-server-request-duration" href="#gen-ai-server-request-duration">`gen_ai.server.request.duration`</a>
+## `gen_ai.server.request.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -619,7 +619,7 @@ Instrumentations SHOULD document the list of errors they report.
 
 **[47]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-server-time-per-output-token" href="#gen-ai-server-time-per-output-token">`gen_ai.server.time_per_output_token`</a>
+## `gen_ai.server.time_per_output_token`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -715,7 +715,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[55]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-server-time-to-first-token" href="#gen-ai-server-time-to-first-token">`gen_ai.server.time_to_first_token`</a>
+## `gen_ai.server.time_to_first_token`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
@@ -811,7 +811,7 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 
 **[63]:** Used when accessing the 'aiplatform.googleapis.com' endpoint.
 
-## <a id="gen-ai-workflow-duration" href="#gen-ai-workflow-duration">`gen_ai.workflow.duration`</a>
+## `gen_ai.workflow.duration`
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |

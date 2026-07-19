@@ -125,11 +125,7 @@ It's reported by the MCP client when it initiates the request
 or notification or by the MCP server when server initiates the operation.
 It covers the time to receive the response or ack from the peer.
 
-**Span status** SHOULD be set to `ERROR` when `error.type` attribute is present.
 The status description SHOULD match the `JSONRPCError.message` if the message is available.
-
-Refer to the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/general/recording-errors.md) document
-for more details.
 
 MCP tool call execution spans are compatible with GenAI [execute_tool spans](/docs/gen-ai/gen-ai-spans.md#execute-tool-span).
 
@@ -152,6 +148,8 @@ to avoid high cardinality span names.
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
 
 **Span kind** SHOULD be `CLIENT`.
+
+**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
@@ -351,11 +349,7 @@ This span describes the processing of the MCP request or notification initiated 
 It's reported by the MCP server when client initiates the request
 (or notification) or by the MCP client when server initiates the operation.
 
-**Span status** SHOULD be set to `ERROR` when `error.type` attribute is present.
 The status description SHOULD match the `JSONRPCError.message` if the message is available.
-
-Refer to the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/general/recording-errors.md) document
-for more details.
 
 **Span name** SHOULD follow the format `{mcp.method.name} {target}`
 where target SHOULD match `{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when
@@ -369,6 +363,8 @@ to avoid high cardinality span names.
 Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
 
 **Span kind** SHOULD be `SERVER`.
+
+**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
