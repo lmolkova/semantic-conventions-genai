@@ -20,14 +20,6 @@ WEAVER := docker run --rm \
 	-e HOME=/tmp \
 	$(WEAVER_IMAGE)
 
-# EXPERIMENT: drive doc generation from the shared markdown template package
-# (open-telemetry/opentelemetry-weaver-packages) instead of a forked copy under
-# ./templates. The `.weaver.toml` acronym/text-map merge these targets rely on is
-# not in the pinned weaver release yet, so the doc targets use a locally-built
-# weaver from ../weaver rather than the $(WEAVER) docker image.
-WEAVER_LOCAL := ../weaver/target/debug/weaver
-DOCS_TEMPLATES := ../opentelemetry-weaver-packages/templates/docs
-
 # Local cache of policies fetched from upstream (gitignored)
 LOCAL_POLICIES := .build/weaver-policies
 LOCAL_POLICY_STAMP := $(LOCAL_POLICIES)/.$(POLICY_REPO_REF)
@@ -136,11 +128,21 @@ check-policies: $(LOCAL_POLICY_STAMP) $(SC_UPSTREAM_STAMP)
 # the auto-generated per-namespace spans.md/metrics.md/events.md would be
 # redundant. Attribute (rendered into each namespace README) and entity pages
 # stay on.
+#
+# EXPERIMENT: this and generate-docs run otel/weaver:main, not the pinned
+# $(WEAVER) image -- the `.weaver.toml` acronym/text-map merge they rely on is
+# not in a weaver release yet.
 generate-registry: $(SC_UPSTREAM_STAMP)
-	$(WEAVER_LOCAL) registry generate \
+	docker run --rm \
+		-u $(shell id -u):$(shell id -g) \
+		-v "$(CURDIR):/workspace" \
+		-w /workspace \
+		-e HOME=/tmp \
+		otel/weaver:main \
+		registry generate \
 		-r ./model \
 		--v2 \
-		-t $(DOCS_TEMPLATES) \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@4016b1b8cd97bf8930889575370e226172a75328[templates/docs]' \
 		--param registry_base_url=/docs/registry \
 		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
 		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
@@ -155,10 +157,16 @@ generate-registry: $(SC_UPSTREAM_STAMP)
 # same shared package and params as generate-registry so embedded tables match
 # the generated pages.
 generate-docs: $(SC_UPSTREAM_STAMP)
-	$(WEAVER_LOCAL) registry update-markdown \
+	docker run --rm \
+		-u $(shell id -u):$(shell id -g) \
+		-v "$(CURDIR):/workspace" \
+		-w /workspace \
+		-e HOME=/tmp \
+		otel/weaver:main \
+		registry update-markdown \
 		-r ./model \
 		--v2 \
-		-t $(DOCS_TEMPLATES) \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@4016b1b8cd97bf8930889575370e226172a75328[templates/docs]' \
 		--target markdown \
 		--param registry_base_url=/docs/registry \
 		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
