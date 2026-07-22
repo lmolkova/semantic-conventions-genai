@@ -142,7 +142,7 @@ generate-registry: $(SC_UPSTREAM_STAMP)
 		registry generate \
 		-r ./model \
 		--v2 \
-		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@4016b1b8cd97bf8930889575370e226172a75328[templates/docs]' \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@51724825d73e5204138e0101541dd0b74bc0cbbf[templates/docs]' \
 		--param registry_base_url=/docs/registry \
 		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
 		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
@@ -166,7 +166,7 @@ generate-docs: $(SC_UPSTREAM_STAMP)
 		registry update-markdown \
 		-r ./model \
 		--v2 \
-		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@4016b1b8cd97bf8930889575370e226172a75328[templates/docs]' \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@51724825d73e5204138e0101541dd0b74bc0cbbf[templates/docs]' \
 		--target markdown \
 		--param registry_base_url=/docs/registry \
 		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
