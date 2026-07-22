@@ -3,8 +3,6 @@
 
 # OpenAI
 
-## Table of contents
-
 - [Attributes](#attributes)
 
 ## Attributes
@@ -17,7 +15,6 @@ Attributes defined in the `openai` namespace. Application developers are encoura
 | <a id="openai-request-service-tier">`openai.request.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier requested. May be a specific tier, default, or auto. | `auto`; `default` |
 | <a id="openai-response-service-tier">`openai.response.service_tier`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The service tier used for the response. | `scale`; `default` |
 | <a id="openai-response-system-fingerprint">`openai.response.system_fingerprint`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
-
 
 ---
 

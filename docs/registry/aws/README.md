@@ -3,8 +3,6 @@
 
 # AWS
 
-## Table of contents
-
 - [Attributes](#attributes)
 
 ## Attributes
@@ -15,4 +13,3 @@ Attributes defined in the `aws` namespace. Application developers are encouraged
 | --- | --- | --- | --- | --- |
 | <a id="aws-bedrock-guardrail-id">`aws.bedrock.guardrail.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of the AWS Bedrock Guardrail. A [guardrail](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html) helps safeguard and prevent unwanted behavior from model responses or user messages. | `sgi5gkybzqak` |
 | <a id="aws-bedrock-knowledge-base-id">`aws.bedrock.knowledge_base.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The unique identifier of the AWS Bedrock Knowledge base. A [knowledge base](https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html) is a bank of information that can be queried by models to generate more relevant responses and augment prompts. | `XFWUPB9PAW` |
-

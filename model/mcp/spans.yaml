@@ -20,7 +20,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD follow the format `{mcp.method.name} {target}`
+        Span name SHOULD follow the format `{mcp.method.name} {target}`
         where target SHOULD match `{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when
         applicable.
         If there is no low-cardinality `target` available, the Span name SHOULD be `{mcp.method.name}`.
@@ -78,7 +78,7 @@ spans:
     kind: server
     name:
       note: |
-        **Span name** SHOULD follow the format `{mcp.method.name} {target}`
+        Span name SHOULD follow the format `{mcp.method.name} {target}`
         where target SHOULD match `{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when
         applicable.
         If there is no low-cardinality `target` available, the Span name SHOULD be `{mcp.method.name}`.

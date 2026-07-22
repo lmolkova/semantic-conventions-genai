@@ -16,6 +16,6 @@ in a namespace are also available on the namespace page.
 Currently, the following namespaces exist:
 
 - [AWS](/docs/registry/aws/README.md)
-- [Gen AI](/docs/registry/gen-ai/README.md)
+- [GenAI](/docs/registry/gen-ai/README.md)
 - [MCP](/docs/registry/mcp/README.md)
 - [OpenAI](/docs/registry/openai/README.md)

@@ -42,14 +42,15 @@ Describes GenAI agent creation and is usually applicable when working with remot
 
 The `gen_ai.operation.name` SHOULD be `create_agent`.
 
-**Span name** SHOULD be `create_agent {gen_ai.agent.name}`.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `create_agent {gen_ai.agent.name}`.
 Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `CLIENT`.
+**Span kind:** SHOULD be `CLIENT`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
@@ -57,14 +58,14 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
 | [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.agent.description`](/docs/registry/gen-ai/README.md#gen-ai-agent-description) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If provided by the application. | string | The free-form description of the GenAI agent created during this operation. | `Helps with math problems`; `Generates fiction stories` |
 | [`gen_ai.agent.id`](/docs/registry/gen-ai/README.md#gen-ai-agent-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable. | string | The stable unique identifier of the GenAI agent created during this operation. [4] | `asst_5j66UpCpwteGg4YSxUnt7lPY`; `arn:aws:bedrock:us-east-1:123:agent/42`; `urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456` |
 | [`gen_ai.agent.name`](/docs/registry/gen-ai/README.md#gen-ai-agent-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If provided by the application. | string | The human-readable name of the GenAI agent created during this operation. | `Math Tutor`; `Fiction Writer` |
 | [`gen_ai.agent.version`](/docs/registry/gen-ai/README.md#gen-ai-agent-version) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If provided by the application. | string | The version of the GenAI agent created during this operation. | `1.0.0`; `2025-05-01` |
 | [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [5] | `gpt-4` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [6] | `80`; `8080`; `443` |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [7] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
+| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [6] | `80`; `8080`; `443` |
+| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [7] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 | [`gen_ai.system_instructions`](/docs/registry/gen-ai/README.md#gen-ai-system-instructions) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The system message or instructions provided to the GenAI model separately from the chat history. [8] | <pre>[<br>  {<br>    "type": "text",<br>    "content": "You are an Agent that greet users, always use greetings tool to respond"<br>  }<br>]</pre>; <pre>[<br>  {<br>    "type": "text",<br>    "content": "You are a language translator."<br>  },<br>  {<br>    "type": "text",<br>    "content": "Your mission is to translate text in English to French."<br>  }<br>]</pre> |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
@@ -111,8 +112,8 @@ and SHOULD be provided **at span creation time** (if provided at all):
 * [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name)
 * [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name)
 * [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model)
-* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
-* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
+* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
+* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
 
 ---
 
@@ -194,15 +195,16 @@ The `gen_ai.operation.name` SHOULD be `invoke_agent`.
 
 Examples: OpenAI Assistants API, AWS Bedrock Agents.
 
-**Span name** SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
 When `gen_ai.agent.name` is not available, it SHOULD be `invoke_agent`.
 Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `CLIENT`.
+**Span kind:** SHOULD be `CLIENT`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
@@ -210,7 +212,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
 | [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.agent.description`](/docs/registry/gen-ai/README.md#gen-ai-agent-description) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The free-form description of the invoked GenAI agent. | `Helps with math problems`; `Generates fiction stories` |
 | [`gen_ai.agent.id`](/docs/registry/gen-ai/README.md#gen-ai-agent-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable. | string | The stable unique identifier of the invoked GenAI agent. [4] | `asst_5j66UpCpwteGg4YSxUnt7lPY`; `arn:aws:bedrock:us-east-1:123:agent/42`; `urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456` |
 | [`gen_ai.agent.name`](/docs/registry/gen-ai/README.md#gen-ai-agent-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the invoked GenAI agent. | `Math Tutor`; `Fiction Writer` |
@@ -220,7 +222,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | [`gen_ai.output.type`](/docs/registry/gen-ai/README.md#gen-ai-output-type) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [7] | string | Represents the content type requested by the client. [8] | `text`; `json`; `image` |
 | [`gen_ai.request.choice.count`](/docs/registry/gen-ai/README.md#gen-ai-request-choice-count) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available, in the request, and !=1. | int | The target number of candidate completions to return. | `3` |
 | [`gen_ai.request.seed`](/docs/registry/gen-ai/README.md#gen-ai-request-seed) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable and if the request includes a seed. | int | Requests with same seed value more likely to return same result. | `100` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [9] | `80`; `8080`; `443` |
+| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [9] | `80`; `8080`; `443` |
 | [`gen_ai.request.frequency_penalty`](/docs/registry/gen-ai/README.md#gen-ai-request-frequency-penalty) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The frequency penalty setting for the GenAI request. | `0.1` |
 | [`gen_ai.request.max_tokens`](/docs/registry/gen-ai/README.md#gen-ai-request-max-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The maximum number of tokens the model generates for a request. | `100` |
 | [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If applicable. | string | The name of the GenAI model configured for the agent. [10] | `gpt-4` |
@@ -233,7 +235,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | [`gen_ai.usage.cache_read.input_tokens`](/docs/registry/gen-ai/README.md#gen-ai-usage-cache-read-input-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of input tokens served from a provider-managed cache. [12] | `50` |
 | [`gen_ai.usage.input_tokens`](/docs/registry/gen-ai/README.md#gen-ai-usage-input-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI input (prompt). [13] | `100` |
 | [`gen_ai.usage.output_tokens`](/docs/registry/gen-ai/README.md#gen-ai-usage-output-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI response (completion). [14] | `180` |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [15] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
+| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [15] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 | [`gen_ai.input.messages`](/docs/registry/gen-ai/README.md#gen-ai-input-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The chat history provided to the model as an input. [16] | <pre>[<br>  {<br>    "role": "user",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "Weather in Paris?"<br>      }<br>    ]<br>  },<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "tool_call",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "name": "get_weather",<br>        "arguments": {<br>          "location": "Paris"<br>        }<br>      }<br>    ]<br>  },<br>  {<br>    "role": "tool",<br>    "parts": [<br>      {<br>        "type": "tool_call_response",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "response": "rainy, 57°F"<br>      }<br>    ]<br>  }<br>]</pre> |
 | [`gen_ai.output.messages`](/docs/registry/gen-ai/README.md#gen-ai-output-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [17] | <pre>[<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>      }<br>    ],<br>    "finish_reason": "stop"<br>  }<br>]</pre> |
 | [`gen_ai.system_instructions`](/docs/registry/gen-ai/README.md#gen-ai-system-instructions) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The system message or instructions provided to the GenAI model separately from the chat history. [18] | <pre>[<br>  {<br>    "type": "text",<br>    "content": "You are an Agent that greet users, always use greetings tool to respond"<br>  }<br>]</pre>; <pre>[<br>  {<br>    "type": "text",<br>    "content": "You are a language translator."<br>  },<br>  {<br>    "type": "text",<br>    "content": "Your mission is to translate text in English to French."<br>  }<br>]</pre> |
@@ -383,8 +385,8 @@ and SHOULD be provided **at span creation time** (if provided at all):
 * [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name)
 * [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name)
 * [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model)
-* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
-* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
+* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
+* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
 
 ---
 
@@ -477,22 +479,23 @@ The `gen_ai.operation.name` SHOULD be `invoke_agent`.
 
 Examples: LangChain agents, CrewAI agents.
 
-**Span name** SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
 When `gen_ai.agent.name` is not available, it SHOULD be `invoke_agent`.
 Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `INTERNAL`.
+**Span kind:** SHOULD be `INTERNAL`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.agent.description`](/docs/registry/gen-ai/README.md#gen-ai-agent-description) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The free-form description of the invoked GenAI agent. | `Helps with math problems`; `Generates fiction stories` |
 | [`gen_ai.agent.name`](/docs/registry/gen-ai/README.md#gen-ai-agent-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the invoked GenAI agent. | `Math Tutor`; `Fiction Writer` |
 | [`gen_ai.conversation.id`](/docs/registry/gen-ai/README.md#gen-ai-conversation-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [3] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
@@ -705,20 +708,21 @@ and report `invoke_agent` spans, so `invoke_workflow` SHOULD NOT be reported by 
 Conversely, frameworks like CrewAI have a distinct concept of crew (similar to workflow)
 that is separate from individual agents, so they SHOULD report `invoke_workflow` spans.
 
-**Span name** SHOULD be `invoke_workflow {gen_ai.workflow.name}`.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `invoke_workflow {gen_ai.workflow.name}`.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `INTERNAL`.
+**Span kind:** SHOULD be `INTERNAL`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.workflow.name`](/docs/registry/gen-ai/README.md#gen-ai-workflow-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | Human-readable name of the GenAI workflow provided by the application. [3] | `multi_agent_rag`; `customer_support_pipeline` |
 | [`gen_ai.input.messages`](/docs/registry/gen-ai/README.md#gen-ai-input-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The chat history provided to the model as an input. [4] | <pre>[<br>  {<br>    "role": "user",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "Weather in Paris?"<br>      }<br>    ]<br>  },<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "tool_call",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "name": "get_weather",<br>        "arguments": {<br>          "location": "Paris"<br>        }<br>      }<br>    ]<br>  },<br>  {<br>    "role": "tool",<br>    "parts": [<br>      {<br>        "type": "tool_call_response",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "response": "rainy, 57°F"<br>      }<br>    ]<br>  }<br>]</pre> |
 | [`gen_ai.output.messages`](/docs/registry/gen-ai/README.md#gen-ai-output-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [5] | <pre>[<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>      }<br>    ],<br>    "finish_reason": "stop"<br>  }<br>]</pre> |
@@ -834,20 +838,21 @@ that the operation being instrumented is planning or task decomposition, and SHO
 NOT be reported when the instrumentation cannot distinguish planning from generic
 reasoning or normal inference.
 
-**Span name** SHOULD be `plan {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available. When `gen_ai.agent.name` is not available, it SHOULD be `plan`.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `plan {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available. When `gen_ai.agent.name` is not available, it SHOULD be `plan`.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `INTERNAL`.
+**Span kind:** SHOULD be `INTERNAL`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.agent.name`](/docs/registry/gen-ai/README.md#gen-ai-agent-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the agent performing the planning. | `Math Tutor`; `Fiction Writer` |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.

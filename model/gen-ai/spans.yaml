@@ -157,7 +157,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
+        Span name SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
     brief: >
       This span represents a client call to Generative AI model or service that generates
       a response or requests a tool call based on the input prompt.
@@ -273,7 +273,7 @@ spans:
     kind: client
     name:
       note: >
-        **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
+        Span name SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
     brief: >
       Describes GenAI embeddings span - a request to a Generative AI model or service
       that generates an embeddings based on the input.
@@ -309,7 +309,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.data_source.id}`. Semantic conventions
+        Span name SHOULD be `{gen_ai.operation.name} {gen_ai.data_source.id}`. Semantic conventions
         for individual GenAI providers and retrievers MAY specify different span name format.
     brief: >
       Describes GenAI retrieval span - a request to a Generative AI service or framework
@@ -339,7 +339,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD be `{gen_ai.operation.name}`.
+        Span name SHOULD be `{gen_ai.operation.name}`.
     brief: >
       Describes a memory operation, including memory store lifecycle operations and memory record operations.
     note: |
@@ -390,7 +390,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD be `create_agent {gen_ai.agent.name}`.
+        Span name SHOULD be `create_agent {gen_ai.agent.name}`.
         Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
     brief: >
       Describes GenAI agent creation and is usually applicable when working
@@ -440,7 +440,7 @@ spans:
     kind: client
     name:
       note: |
-        **Span name** SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
+        Span name SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
         When `gen_ai.agent.name` is not available, it SHOULD be `invoke_agent`.
         Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
     brief: >
@@ -483,7 +483,7 @@ spans:
     kind: internal
     name:
       note: |
-        **Span name** SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
+        Span name SHOULD be `invoke_agent {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
         When `gen_ai.agent.name` is not available, it SHOULD be `invoke_agent`.
         Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
     brief: >
@@ -507,7 +507,7 @@ spans:
     kind: internal
     name:
       note: >
-        **Span name** SHOULD be `execute_tool {gen_ai.tool.name}`.
+        Span name SHOULD be `execute_tool {gen_ai.tool.name}`.
     brief: Describes tool execution span.
     note: |
       `gen_ai.operation.name` SHOULD be `execute_tool`.
@@ -548,7 +548,7 @@ spans:
     kind: internal
     name:
       note: >
-        **Span name** SHOULD be `invoke_workflow {gen_ai.workflow.name}`.
+        Span name SHOULD be `invoke_workflow {gen_ai.workflow.name}`.
     brief: >
       Represents an operation that executes a coordinated process composed of multiple agents
       or other operations involving generative AI.
@@ -582,7 +582,7 @@ spans:
     kind: internal
     name:
       note: >
-        **Span name** SHOULD be `plan {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
+        Span name SHOULD be `plan {gen_ai.agent.name}` if `gen_ai.agent.name` is readily available.
         When `gen_ai.agent.name` is not available, it SHOULD be `plan`.
     brief: >
       Represents an agent planning or task decomposition phase.

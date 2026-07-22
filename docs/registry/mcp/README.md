@@ -3,8 +3,6 @@
 
 # MCP
 
-## Table of contents
-
 - [Metrics](#metrics)
 - [Spans](#spans)
 - [Attributes](#attributes)
@@ -35,7 +33,6 @@ Attributes defined in the `mcp` namespace. Application developers are encouraged
 | <a id="mcp-protocol-version">`mcp.protocol.version`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The [version](https://modelcontextprotocol.io/specification/versioning) of the Model Context Protocol used. | `2025-06-18` |
 | <a id="mcp-resource-uri">`mcp.resource.uri`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | The value of the resource uri. [1] | `postgres://database/customers/schema`; `file:///home/user/documents/report.pdf` |
 | <a id="mcp-session-id">`mcp.session.id`</a> | ![Development](https://img.shields.io/badge/-development-blue) | string | Identifies [MCP session](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#session-management). | `191c4850af6c49e08843a3f6c80e5046` |
-
 
 **[1] `mcp.resource.uri`:** This is a URI of the resource provided in the following requests or notifications: `resources/read`, `resources/subscribe`, `resources/unsubscribe`, or `notifications/resources/updated`.
 

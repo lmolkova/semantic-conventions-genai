@@ -36,13 +36,14 @@ Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and o
 
 `gen_ai.provider.name` MUST be set to `"openai"` and SHOULD be provided **at span creation time**.
 
-**Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
+**Span name:** MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+Span name SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
 
-Span names MUST follow the overall [guidelines for span names](https://opentelemetry.io/docs/specs/otel/trace/api/#span).
+**Requirement Level:** `Recommended`
 
-**Span kind** SHOULD be `CLIENT`.
+**Span kind:** SHOULD be `CLIENT`.
 
-**Span status** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
+**Span status:** SHOULD follow the [Recording Errors](https://opentelemetry.io/docs/specs/semconv/general/recording-errors/) document.
 
 **Attributes:**
 
@@ -50,7 +51,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
 | [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the GenAI model a request is being made to. [2] | `gpt-4` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.conversation.id`](/docs/registry/gen-ai/README.md#gen-ai-conversation-id) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [4] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
 | [`gen_ai.output.type`](/docs/registry/gen-ai/README.md#gen-ai-output-type) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | Represents the content type requested by the client. [6] | `text`; `json`; `image` |
 | [`gen_ai.prompt.name`](/docs/registry/gen-ai/README.md#gen-ai-prompt-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` when a named prompt template is used | string | The name of the prompt that uniquely identifies it. | `analyze-code` |
@@ -61,7 +62,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | [`gen_ai.request.top_k`](/docs/registry/gen-ai/README.md#gen-ai-request-top-k) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable. | int | The top-K sampling setting for the GenAI request: restricts token generation at each step to the K most likely next tokens. [10] | `40` |
 | [`openai.request.service_tier`](/docs/registry/openai/README.md#openai-request-service-tier) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [11] | string | The service tier requested. May be a specific tier, default, or auto. | `auto`; `default` |
 | [`openai.response.service_tier`](/docs/registry/openai/README.md#openai-response-service-tier) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [12] | string | The service tier used for the response. | `scale`; `default` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [13] | `80`; `8080`; `443` |
+| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [13] | `80`; `8080`; `443` |
 | [`gen_ai.conversation.compacted`](/docs/registry/gen-ai/README.md#gen-ai-conversation-compacted) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` when available | boolean | Indicates whether the effective conversation context used for this operation is a compacted view of a prior conversation. [14] | `true` |
 | [`gen_ai.request.frequency_penalty`](/docs/registry/gen-ai/README.md#gen-ai-request-frequency-penalty) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The frequency penalty setting for the GenAI request. | `0.1` |
 | [`gen_ai.request.max_tokens`](/docs/registry/gen-ai/README.md#gen-ai-request-max-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The maximum number of tokens the model generates for a request. | `100` |
@@ -81,7 +82,7 @@ Span names MUST follow the overall [guidelines for span names](https://opentelem
 | [`gen_ai.usage.reasoning.output_tokens`](/docs/registry/gen-ai/README.md#gen-ai-usage-reasoning-output-tokens) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` When applicable. | int | The number of output tokens used for reasoning (e.g. chain-of-thought, extended thinking). [21] | `50` |
 | [`openai.api.type`](/docs/registry/openai/README.md#openai-api-type) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The type of OpenAI API being used. | `chat_completions`; `responses` |
 | [`openai.response.system_fingerprint`](/docs/registry/openai/README.md#openai-response-system-fingerprint) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [22] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
+| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [22] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 | [`gen_ai.input.messages`](/docs/registry/gen-ai/README.md#gen-ai-input-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The chat history provided to the model as an input. [23] | <pre>[<br>  {<br>    "role": "user",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "Weather in Paris?"<br>      }<br>    ]<br>  },<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "tool_call",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "name": "get_weather",<br>        "arguments": {<br>          "location": "Paris"<br>        }<br>      }<br>    ]<br>  },<br>  {<br>    "role": "tool",<br>    "parts": [<br>      {<br>        "type": "tool_call_response",<br>        "id": "call_VSPygqKTWdrhaFErNvMV18Yl",<br>        "response": "rainy, 57°F"<br>      }<br>    ]<br>  }<br>]</pre> |
 | [`gen_ai.output.messages`](/docs/registry/gen-ai/README.md#gen-ai-output-messages) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Messages returned by the model where each message represents a specific model response (choice, candidate). [24] | <pre>[<br>  {<br>    "role": "assistant",<br>    "parts": [<br>      {<br>        "type": "text",<br>        "content": "The weather in Paris is currently rainy with a temperature of 57°F."<br>      }<br>    ],<br>    "finish_reason": "stop"<br>  }<br>]</pre> |
 | [`gen_ai.prompt.variable`](/docs/registry/gen-ai/README.md#gen-ai-prompt-variable) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | string | The variables supplied to the prompt template, the `<key>` being the variable name, the value being the variable value. [25] | `Alice`; `French` |
@@ -250,8 +251,8 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 * [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name)
 * [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model)
-* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
-* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md)
+* [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
+* [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md)
 
 ---
 
@@ -340,6 +341,8 @@ Reports the usage of tokens following the common [gen_ai.client.token.usage](./g
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `gen_ai.client.token.usage` | Histogram | `{token}` | OpenAI-specific extension to `gen_ai.client.token.usage`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. | ![Development](https://img.shields.io/badge/-development-blue) | |
 
+**Requirement Level:** `Recommended`
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
@@ -348,11 +351,11 @@ Reports the usage of tokens following the common [gen_ai.client.token.usage](./g
 | [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
 | [`gen_ai.token.type`](/docs/registry/gen-ai/README.md#gen-ai-token-type) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The type of token being counted. | `input`; `output` |
 | [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [3] | `gpt-4` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [4] | `80`; `8080`; `443` |
+| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [4] | `80`; `8080`; `443` |
 | [`gen_ai.response.model`](/docs/registry/gen-ai/README.md#gen-ai-response-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
 | [`openai.response.service_tier`](/docs/registry/openai/README.md#openai-response-service-tier) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The service tier used for the response. | `scale`; `default` |
 | [`openai.response.system_fingerprint`](/docs/registry/openai/README.md#openai-response-system-fingerprint) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [5] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
+| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [5] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -459,19 +462,21 @@ Measures the to complete an operation following the common [gen_ai.client.operat
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `gen_ai.client.operation.duration` | Histogram | `s` | OpenAI-specific extension to `gen_ai.client.operation.duration`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. | ![Development](https://img.shields.io/badge/-development-blue) | |
 
+**Requirement Level:** `Recommended`
+
 **Attributes:**
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/gen-ai/README.md#gen-ai-operation-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `text_completion` |
-| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
+| [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
 | [`gen_ai.provider.name`](/docs/registry/gen-ai/README.md#gen-ai-provider-name) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [3] | string | The Generative AI provider as identified by the client or server instrumentation. [4] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
 | [`gen_ai.request.model`](/docs/registry/gen-ai/README.md#gen-ai-request-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [5] | `gpt-4` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [6] | `80`; `8080`; `443` |
+| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [6] | `80`; `8080`; `443` |
 | [`gen_ai.response.model`](/docs/registry/gen-ai/README.md#gen-ai-response-model) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
 | [`openai.response.service_tier`](/docs/registry/openai/README.md#openai-response-service-tier) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The service tier used for the response. | `scale`; `default` |
 | [`openai.response.system_fingerprint`](/docs/registry/openai/README.md#openai-response-system-fingerprint) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | A fingerprint to track any eventual change in the Generative AI environment. | `fp_44709d6fcb` |
-| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [7] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
+| [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [7] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
