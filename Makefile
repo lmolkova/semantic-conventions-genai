@@ -60,10 +60,6 @@ SC_UPSTREAM_MIGRATED_GROUPS := aws/registry.yaml:registry.aws.bedrock
 .PHONY: check-policies generate-registry generate-docs generate-json-schemas generate-all clean filter-upstream package-dev \
 	generate-reference-reports
 
-# Pinned upstream GitHub URL base, passed to templates as `upstream_docs_base`
-# so cross-registry links to upstream pages resolve to the pinned version.
-UPSTREAM_DOCS_BASE := https://github.com/open-telemetry/semantic-conventions/blob/$(SEMCONV_VERSION)
-
 # Release version = last path segment of the top-level schema_url in
 # model/manifest.yaml. E.g. `gen-ai-dev/1.42.0-dev` -> `1.42.0-dev`.
 VERSION := $(shell awk '/^schema_url:/ { n = split($$2, parts, "/"); print parts[n]; exit }' model/manifest.yaml)
@@ -128,24 +124,13 @@ check-policies: $(LOCAL_POLICY_STAMP) $(SC_UPSTREAM_STAMP)
 # the auto-generated per-namespace spans.md/metrics.md/events.md would be
 # redundant. Attribute (rendered into each namespace README) and entity pages
 # stay on.
-#
-# EXPERIMENT: this and generate-docs run otel/weaver:main, not the pinned
-# $(WEAVER) image -- the `.weaver.toml` acronym/text-map merge they rely on is
-# not in a weaver release yet.
 generate-registry: $(SC_UPSTREAM_STAMP)
-	docker run --rm \
-		-u $(shell id -u):$(shell id -g) \
-		-v "$(CURDIR):/workspace" \
-		-w /workspace \
-		-e HOME=/tmp \
-		otel/weaver:main \
+	$(WEAVER) \
 		registry generate \
 		-r ./model \
 		--v2 \
-		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@51724825d73e5204138e0101541dd0b74bc0cbbf[templates/docs]' \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@efb37360206e24b856ef79844fd670ae7e33fba8[templates/docs]' \
 		--param registry_base_url=/docs/registry \
-		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
-		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
 		--param generate_span_registry=true \
 		--param generate_metric_registry=true \
 		--param generate_event_registry=true \
@@ -157,20 +142,13 @@ generate-registry: $(SC_UPSTREAM_STAMP)
 # same shared package and params as generate-registry so embedded tables match
 # the generated pages.
 generate-docs: $(SC_UPSTREAM_STAMP)
-	docker run --rm \
-		-u $(shell id -u):$(shell id -g) \
-		-v "$(CURDIR):/workspace" \
-		-w /workspace \
-		-e HOME=/tmp \
-		otel/weaver:main \
+	$(WEAVER) \
 		registry update-markdown \
 		-r ./model \
 		--v2 \
-		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@51724825d73e5204138e0101541dd0b74bc0cbbf[templates/docs]' \
+		-t 'https://github.com/lmolkova/opentelemetry-weaver-packages.git@efb37360206e24b856ef79844fd670ae7e33fba8[templates/docs]' \
 		--target markdown \
 		--param registry_base_url=/docs/registry \
-		--param upstream_docs_base_url=$(UPSTREAM_DOCS_BASE) \
-		--param 'upstream_docs_attribute_path=/docs/registry/attributes/{namespace}.md' \
 		docs
 
 # Regenerate the JSON schemas under model/gen-ai/ from the pydantic models in
