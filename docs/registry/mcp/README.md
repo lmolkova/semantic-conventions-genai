@@ -3,25 +3,7 @@
 
 # MCP
 
-- [Metrics](#metrics)
-- [Spans](#spans)
 - [Attributes](#attributes)
-
-## Metrics
-
-| Name | Stability | Description |
-| --- | --- | --- |
-| [`mcp.client.operation.duration`](/docs/registry/mcp/metrics.md#mcpclientoperationduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP request or notification as observed on the sender from the time it was sent until the response or ack is received. |
-| [`mcp.client.session.duration`](/docs/registry/mcp/metrics.md#mcpclientsessionduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP client. |
-| [`mcp.server.operation.duration`](/docs/registry/mcp/metrics.md#mcpserveroperationduration) | ![Development](https://img.shields.io/badge/-development-blue) | MCP request or notification duration as observed on the receiver from the time it was received until the result or ack is sent. |
-| [`mcp.server.session.duration`](/docs/registry/mcp/metrics.md#mcpserversessionduration) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP server. |
-
-## Spans
-
-| Type | Stability | Description |
-| --- | --- | --- |
-| [`mcp.client`](/docs/registry/mcp/spans.md#mcpclient) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the MCP call from the client side. |
-| [`mcp.server`](/docs/registry/mcp/spans.md#mcpserver) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the processing of the MCP request or notification initiated by the peer. |
 
 ## Attributes
 

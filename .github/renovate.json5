@@ -24,7 +24,31 @@
       ]
     },
     {
-      // update otel in override-dependencies 
+      // Bare semconv version (no `v`) in schema_url values. `extractVersion`
+      // strips the tag's leading `v` so the URLs stay well-formed.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.weaver\\.toml$/",
+        "/^model/manifest\\.yaml$/"
+      ],
+      "extractVersion": "^v(?<version>.*)$",
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+[^\\n]*?https://opentelemetry\\.io/schemas/(?<currentValue>\\d[^\"\\s]*)"
+      ]
+    },
+    {
+      // `v`-prefixed semconv version in the upstream docs link in .weaver.toml.
+      // Same line as the bare one above, so it needs its own manager.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.weaver\\.toml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+[^\\n]*?semantic-conventions/blob/(?<currentValue>v\\d[^/]*)/"
+      ]
+    },
+    {
+      // update otel in override-dependencies
       "customType": "regex",
       "managerFilePatterns": [
         "/^reference/scenarios/.*/pyproject\\.toml$/"

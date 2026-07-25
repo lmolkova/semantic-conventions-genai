@@ -14,7 +14,8 @@ gen_ai = "GenAI"
 
 # Where each dependency's attributes are documented, keyed by the dependency's
 # `schema_url` in model/manifest.yaml. Attributes we import from upstream link
-# here; ones from an unlisted dependency render unlinked. Keep the version in
-# the url in sync with SEMCONV_VERSION in versions.env.
+# here; ones from an unlisted dependency render unlinked. Both versions below
+# track SEMCONV_VERSION via renovate (see .github/renovate.json5).
 [template.text_maps.upstream_docs]
-"https://opentelemetry.io/schemas/1.41.0" = "https://github.com/open-telemetry/semantic-conventions/blob/v1.42.0/docs/registry/attributes/{namespace}.md"
+# renovate: datasource=github-tags depName=open-telemetry/semantic-conventions versioning=semver-coerced
+"https://opentelemetry.io/schemas/1.43.0" = "https://github.com/open-telemetry/semantic-conventions/blob/v1.43.0/docs/registry/attributes/{namespace}.md"
