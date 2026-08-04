@@ -15,26 +15,14 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^versions\\.env$/"
+        "/^versions\\.env$/",
+        "/^model/manifest\\.yaml$/"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+WEAVER_VERSION=(?<currentValue>\\S+)",
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+SEMCONV_VERSION=(?<currentValue>\\S+)",
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+POLICY_REPO_URL=(?<packageName>\\S+)\\s+POLICY_REPO_REF=(?<currentValue>\\S+)"
-      ]
-    },
-    {
-      // Bump the pinned upstream semconv git tag in the model manifest
-      // dependency. Keep the adjacent schema_url version in sync manually.
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^model/manifest\\.yaml$/"
-      ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "open-telemetry/semantic-conventions",
-      "versioningTemplate": "semver-coerced",
-      "matchStrings": [
-        "semantic-conventions\\.git@(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\[model\\]"
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+POLICY_REPO_URL=(?<packageName>\\S+)\\s+POLICY_REPO_REF=(?<currentValue>\\S+)",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+- schema_url: https://opentelemetry\\.io/schemas/(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) versioning=(?<versioning>\\S+)\\s+- schema_url: \\S+\\s+registry_path:.*?\\.git@(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\[model\\]"
       ]
     },
     {
@@ -51,6 +39,14 @@
     }
   ],
   "packageRules": [
+    {
+      // Bump the manifest git tag and its adjacent schema_url together.
+      "description": "Group upstream semantic-conventions manifest pins",
+      "matchDepNames": [
+        "open-telemetry/semantic-conventions"
+      ],
+      "groupName": "upstream semantic-conventions"
+    },
     {
       "description": "Allow opentelemetry-semantic-conventions pre-releases",
       "matchDepNames": [

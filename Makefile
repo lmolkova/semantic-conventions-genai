@@ -4,7 +4,7 @@
 # the otel/weaver container image if a local weaver installation is not found.
 
 # Shared external version pins. Override on the command line when needed, e.g.
-# `make check-policies SEMCONV_VERSION=v1.40.0`.
+# `make check-policies WEAVER_VERSION=v0.25.0`.
 VERSION_PINS_FILE := versions.env
 include $(VERSION_PINS_FILE)
 
@@ -45,6 +45,10 @@ BASELINE_REGISTRY := https://github.com/trask/semantic-conventions-genai.git[mod
 
 .PHONY: check-policies generate-registry generate-docs generate-json-schemas generate-all clean package-dev \
 	generate-reference-reports
+
+# Upstream semantic-conventions version, derived from the pinned git tag in the
+# model/manifest.yaml dependency (the single source of truth for that version).
+SEMCONV_VERSION := $(shell grep -oE 'semantic-conventions\.git@v[0-9]+\.[0-9]+\.[0-9]+' model/manifest.yaml | sed 's/.*@//')
 
 # Pinned upstream GitHub URL base, passed to templates as `upstream_docs_base`
 # so cross-registry links to upstream pages resolve to the pinned version.
