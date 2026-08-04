@@ -161,10 +161,6 @@ jobs:
 
       - uses: ./.github/actions/setup-reference-tooling
 
-      - name: Materialize upstream semconv dependency
-        working-directory: .
-        run: make filter-upstream
-
       - name: Run implementation scenario
         env:
           SCENARIO_LIB: ${{ matrix.scenario.lib }}

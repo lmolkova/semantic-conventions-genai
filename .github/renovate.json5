@@ -24,6 +24,20 @@
       ]
     },
     {
+      // Bump the pinned upstream semconv git tag in the model manifest
+      // dependency. Keep the adjacent schema_url version in sync manually.
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^model/manifest\\.yaml$/"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "open-telemetry/semantic-conventions",
+      "versioningTemplate": "semver-coerced",
+      "matchStrings": [
+        "semantic-conventions\\.git@(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\[model\\]"
+      ]
+    },
+    {
       // update otel in override-dependencies 
       "customType": "regex",
       "managerFilePatterns": [
