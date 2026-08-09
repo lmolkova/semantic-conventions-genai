@@ -11,3 +11,20 @@ env:
 scenarios:
   reference:
     run: uv run --frozen --python 3.12 --project . python scenario.py
+    expected_violations:
+      # TODO: update mock to return model and responseId in converse and invoke responses
+      - id: genai_expected_attribute_missing
+        context:
+          operation: chat
+          missing_attribute: gen_ai.response.id
+        reason: Bedrock Converse API response does not include a response ID; mock omits it.
+      - id: genai_expected_attribute_missing
+        context:
+          operation: chat
+          missing_attribute: gen_ai.response.model
+        reason: Bedrock Converse API response does not include a model field; mock omits it.
+      - id: genai_expected_attribute_missing
+        context:
+          operation: embeddings
+          missing_attribute: gen_ai.response.model
+        reason: Bedrock invoke_model response does not include a model field; mock omits it.

@@ -11,3 +11,26 @@ env:
 scenarios:
   reference:
     run: uv run --frozen --python 3.12 --project . python scenario.py
+    expected_violations:
+      # TODO: update mock to return modelVersion and responseId in streaming chunks
+      - id: genai_expected_attribute_missing
+        context:
+          operation: chat
+          missing_attribute: gen_ai.response.id
+        reason: Mock streaming chunks do not include responseId; non-streaming spans capture it correctly.
+      - id: genai_expected_attribute_missing
+        context:
+          operation: chat
+          missing_attribute: gen_ai.response.model
+        reason: Mock streaming chunks do not include modelVersion; non-streaming spans capture it correctly.
+      # TODO: update mock to return modelVersion and usageMetadata in batchEmbedContents response
+      - id: genai_expected_attribute_missing
+        context:
+          operation: embeddings
+          missing_attribute: gen_ai.response.model
+        reason: EmbedContentResponse does not expose model version; mock batchEmbedContents response omits modelVersion.
+      - id: genai_expected_attribute_missing
+        context:
+          operation: embeddings
+          missing_attribute: gen_ai.usage.input_tokens
+        reason: EmbedContentResponse does not expose usage metadata; mock batchEmbedContents response omits usageMetadata mapping.
