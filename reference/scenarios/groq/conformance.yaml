@@ -17,9 +17,9 @@ scenarios:
         context:
           operation: chat
           missing_attribute: gen_ai.usage.input_tokens
-        reason: Groq streaming does not return usage without stream_options; mock does not include usage in streaming chunks.
+        reason: Mock needs to include usage in streaming chunks.
       - id: genai_expected_attribute_missing
         context:
           operation: chat
           missing_attribute: gen_ai.usage.output_tokens
-        reason: Groq streaming does not return usage without stream_options; mock does not include usage in streaming chunks.
+        reason: Mock needs to include usage in streaming chunks.

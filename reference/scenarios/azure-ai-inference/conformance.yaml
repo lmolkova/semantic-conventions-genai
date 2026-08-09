@@ -17,9 +17,9 @@ scenarios:
         context:
           operation: chat
           missing_attribute: gen_ai.usage.input_tokens
-        reason: Azure AI Inference streaming does not return usage data in chunks without stream_options support.
+        reason: Mock needs to include usage in streaming chunks.
       - id: genai_expected_attribute_missing
         context:
           operation: chat
           missing_attribute: gen_ai.usage.output_tokens
-        reason: Azure AI Inference streaming does not return usage data in chunks without stream_options support.
+        reason: Mock needs to include usage in streaming chunks.

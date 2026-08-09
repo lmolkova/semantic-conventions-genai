@@ -282,7 +282,11 @@ def run_agent_reference():
                                 {
                                     "role": "assistant",
                                     "parts": [{"type": "text", "content": last_text}],
-                                    "finish_reason": str(finish_reason).lower() if finish_reason is not None else None,
+                                    **(
+                                        {"finish_reason": str(finish_reason).lower()}
+                                        if finish_reason is not None
+                                        else {}
+                                    ),
                                 }
                             ]
                         )

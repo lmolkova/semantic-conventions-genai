@@ -17,9 +17,9 @@ scenarios:
         context:
           operation: chat
           missing_attribute: gen_ai.response.id
-        reason: Vertex AI streaming chunks do not include responseId; response.to_dict() key mapping needs verification.
+        reason: Mock needs to return responseId in streaming chunks; also verify response.to_dict() key.
       - id: genai_expected_attribute_missing
         context:
           operation: chat
           missing_attribute: gen_ai.response.model
-        reason: Vertex AI streaming chunks do not include modelVersion.
+        reason: Mock needs to return modelVersion in streaming chunks.

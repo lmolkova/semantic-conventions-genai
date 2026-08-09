@@ -225,8 +225,9 @@ def run_responses_compaction_reference(client):
         if response.usage:
             span.set_attribute("gen_ai.usage.input_tokens", response.usage.input_tokens)
             span.set_attribute("gen_ai.usage.output_tokens", response.usage.output_tokens)
-        if response.status == "completed":
-            span.set_attribute("gen_ai.response.finish_reasons", ["stop"])
+        finish_reason = _fetch_response_finish_reason(response)
+        if finish_reason is not None:
+            span.set_attribute("gen_ai.response.finish_reasons", [finish_reason])
 
         event_attrs = {
             "gen_ai.operation.name": "chat",
@@ -316,8 +317,9 @@ def run_responses_continuation_reference(client):
         if response.usage:
             span.set_attribute("gen_ai.usage.input_tokens", response.usage.input_tokens)
             span.set_attribute("gen_ai.usage.output_tokens", response.usage.output_tokens)
-        if response.status == "completed":
-            span.set_attribute("gen_ai.response.finish_reasons", ["stop"])
+        finish_reason = _fetch_response_finish_reason(response)
+        if finish_reason is not None:
+            span.set_attribute("gen_ai.response.finish_reasons", [finish_reason])
 
         event_attrs = {
             "gen_ai.operation.name": "chat",
@@ -638,6 +640,7 @@ def run_responses_with_prompt_template_reference(client):
                     if getattr(content, "type", None) == "output_text":
                         output_text = getattr(content, "text", None)
                         break
+        resp_finish_reason = _fetch_response_finish_reason(resp)
         if output_text:
             span.set_attribute(
                 "gen_ai.output.messages",
@@ -646,7 +649,7 @@ def run_responses_with_prompt_template_reference(client):
                         {
                             "role": "assistant",
                             "parts": [{"type": "text", "content": output_text}],
-                            "finish_reason": "stop" if resp.status == "completed" else resp.status,
+                            **({"finish_reason": resp_finish_reason} if resp_finish_reason is not None else {}),
                         }
                     ]
                 ),
@@ -654,8 +657,8 @@ def run_responses_with_prompt_template_reference(client):
         if resp.usage:
             span.set_attribute("gen_ai.usage.input_tokens", resp.usage.input_tokens)
             span.set_attribute("gen_ai.usage.output_tokens", resp.usage.output_tokens)
-        if resp.status == "completed":
-            span.set_attribute("gen_ai.response.finish_reasons", ["stop"])
+        if resp_finish_reason is not None:
+            span.set_attribute("gen_ai.response.finish_reasons", [resp_finish_reason])
 
         event_attrs = {
             "gen_ai.operation.name": "chat",
@@ -666,8 +669,8 @@ def run_responses_with_prompt_template_reference(client):
             "gen_ai.response.id": resp.id,
             "gen_ai.response.model": resp.model,
         }
-        if resp.status == "completed":
-            event_attrs["gen_ai.response.finish_reasons"] = ["stop"]
+        if resp_finish_reason is not None:
+            event_attrs["gen_ai.response.finish_reasons"] = [resp_finish_reason]
         for var_name, var_value in prompt_variables.items():
             event_attrs[f"gen_ai.prompt.variable.{var_name}"] = var_value
         if output_text:
@@ -676,7 +679,7 @@ def run_responses_with_prompt_template_reference(client):
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": output_text}],
-                        "finish_reason": "stop" if resp.status == "completed" else resp.status,
+                        **({"finish_reason": resp_finish_reason} if resp_finish_reason is not None else {}),
                     }
                 ]
             )

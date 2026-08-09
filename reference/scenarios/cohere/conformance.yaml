@@ -17,9 +17,9 @@ scenarios:
         context:
           operation: chat
           missing_attribute: gen_ai.response.model
-        reason: Cohere v2 chat response does not include a model field; mock omits it too.
+        reason: Mock needs to return model in chat response.
       - id: genai_expected_attribute_missing
         context:
           operation: embeddings
           missing_attribute: gen_ai.response.model
-        reason: Cohere v2 embed response does not include a model field; mock omits it too.
+        reason: Mock needs to return model in embed response.

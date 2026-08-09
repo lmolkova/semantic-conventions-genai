@@ -17,14 +17,14 @@ scenarios:
         context:
           operation: chat
           missing_attribute: gen_ai.response.id
-        reason: Bedrock Converse API response does not include a response ID; mock omits it.
+        reason: Mock needs to return responseId in converse response.
       - id: genai_expected_attribute_missing
         context:
           operation: chat
           missing_attribute: gen_ai.response.model
-        reason: Bedrock Converse API response does not include a model field; mock omits it.
+        reason: Mock needs to return model in converse response.
       - id: genai_expected_attribute_missing
         context:
           operation: embeddings
           missing_attribute: gen_ai.response.model
-        reason: Bedrock invoke_model response does not include a model field; mock omits it.
+        reason: Mock needs to return model in invoke_model response.

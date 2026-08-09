@@ -16,7 +16,7 @@ scenarios:
         context:
           operation: execute_tool
           missing_attribute: gen_ai.tool.call.id
-        reason: CrewAI does not expose the LLM tool call ID at the point of tool execution; the ID is only available in the LLM response before the tool is invoked.
+        reason: Tool call ID not accessible at execution point in CrewAI.
       # TODO: relax gen_ai.output.messages schema to make finish_reason optional
       - id: genai_content_schema
-        reason: CrewAI crew.kickoff() returns CrewOutput with no finish_reason; the crew-level workflow has no status field to derive it from.
+        reason: crew.kickoff() exposes no finish_reason; make finish_reason optional in schema.

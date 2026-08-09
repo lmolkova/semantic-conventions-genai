@@ -12,22 +12,6 @@ scenarios:
   reference:
     run: uv run --frozen --python 3.12 --project . python scenario.py
     expected_violations:
-      # Memory operations are experimental and not yet in the semconv operation name enum
+      # TODO: add memory ops to _known_operation_names in the conformance runner's genai_span_validation.rego
       - id: genai_operation_name_unknown
-        context: {operation: create_memory}
-        reason: Memory operation conventions are experimental; create_memory is not yet a documented enum value.
-      - id: genai_operation_name_unknown
-        context: {operation: create_memory_store}
-        reason: Memory operation conventions are experimental; create_memory_store is not yet a documented enum value.
-      - id: genai_operation_name_unknown
-        context: {operation: delete_memory}
-        reason: Memory operation conventions are experimental; delete_memory is not yet a documented enum value.
-      - id: genai_operation_name_unknown
-        context: {operation: delete_memory_store}
-        reason: Memory operation conventions are experimental; delete_memory_store is not yet a documented enum value.
-      - id: genai_operation_name_unknown
-        context: {operation: search_memory}
-        reason: Memory operation conventions are experimental; search_memory is not yet a documented enum value.
-      - id: genai_operation_name_unknown
-        context: {operation: update_memory}
-        reason: Memory operation conventions are experimental; update_memory is not yet a documented enum value.
+        reason: Add memory ops to _known_operation_names in genai_span_validation.rego.

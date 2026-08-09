@@ -16,4 +16,4 @@ scenarios:
         context:
           operation: retrieval
           missing_attribute: server.address
-        reason: In-memory Haystack retriever has no network server address.
+        reason: In-memory retriever has no server address.

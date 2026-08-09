@@ -14,14 +14,14 @@ scenarios:
     expected_violations:
       # Native telemetry gaps - issues in the library's own instrumentation
       - id: genai_content_schema
-        reason: Agent Framework native telemetry omits finish_reason from output messages.
+        reason: Library omits finish_reason; fix in library.
       - id: genai_span_kind_unexpected
-        reason: Agent Framework native telemetry emits chat spans with INTERNAL kind instead of CLIENT.
+        reason: Library uses INTERNAL instead of CLIENT; fix in library.
       - id: missing_attribute
-        reason: Agent Framework uses proprietary attribute namespaces (agent_framework.*, edge_group.*, executor.*, message.*, workflow.*) not in the OTel registry.
+        reason: Library uses proprietary namespaces not in the registry; fix in library.
       - id: type_mismatch
-        reason: Agent Framework native telemetry sets gen_ai.response.finish_reasons as a string instead of string[].
+        reason: Library sets finish_reasons as string, not string[]; fix in library.
       - id: unit_mismatch
-        reason: Agent Framework native telemetry uses 'tokens' instead of '{token}' for token count metrics.
+        reason: Library uses 'tokens' instead of '{token}'; fix in library.
       - id: missing_metric
-        reason: Agent Framework emits custom metrics not defined in the OTel GenAI registry.
+        reason: Library emits custom metrics outside the registry; fix in library.

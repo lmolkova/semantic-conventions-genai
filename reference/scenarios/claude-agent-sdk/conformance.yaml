@@ -16,4 +16,4 @@ scenarios:
         context:
           operation: chat
           missing_attribute: server.address
-        reason: Claude Agent SDK communicates via a local CLI subprocess, not a network server.
+        reason: SDK communicates via local CLI, not a network server.
