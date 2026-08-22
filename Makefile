@@ -18,9 +18,10 @@ ifeq ($(LOCAL_RAW_VERSION),)
 else
     LOCAL_VERSION := $(shell echo "$(LOCAL_RAW_VERSION)" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?' | head -n1)
     REPO_VERSION := $(shell echo "$(WEAVER_VERSION)" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?' | head -n1)
-    IS_LOWER := $(shell awk -v v1="$(LOCAL_VERSION)" -v v2="$(REPO_VERSION)" 'BEGIN { split(v1, a, "."); split(v2, b, "."); for (i = 1; i <= 3; i++) { if (a[i]+0 < b[i]+0) { print "yes"; exit }; if (a[i]+0 > b[i]+0) { print "no"; exit } }; print "no" }')
+    # A non-semver pin (e.g. `main`) can't be compared against a local install.
+    IS_LOWER := $(if $(REPO_VERSION),$(shell awk -v v1="$(LOCAL_VERSION)" -v v2="$(REPO_VERSION)" 'BEGIN { split(v1, a, "."); split(v2, b, "."); for (i = 1; i <= 3; i++) { if (a[i]+0 < b[i]+0) { print "yes"; exit }; if (a[i]+0 > b[i]+0) { print "no"; exit } }; print "no" }'),yes)
     ifeq ($(IS_LOWER),yes)
-        $(warning local weaver version $(LOCAL_VERSION) is lower than required $(REPO_VERSION). Falling back to Docker.)
+        $(warning local weaver $(LOCAL_VERSION) does not match the pinned $(WEAVER_VERSION). Falling back to Docker.)
         USE_DOCKER := 1
     else
         USE_DOCKER := 0
