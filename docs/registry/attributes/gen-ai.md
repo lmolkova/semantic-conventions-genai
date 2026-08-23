@@ -311,7 +311,7 @@ Function: A tool executed on the client-side, where the agent generates paramete
   Client-side operations are actions taken on the user's end or within the client application.
 Datastore: A tool used by the agent to access and query structured or unstructured external data for retrieval-augmented tasks or knowledge updates.
 
-**[32] `gen_ai.usage.audio.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+**[32] `gen_ai.usage.audio.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` and in `gen_ai.usage.audio.input_tokens` attributes.
 
 **[33] `gen_ai.usage.audio.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
 
@@ -321,7 +321,7 @@ Datastore: A tool used by the agent to access and query structured or unstructur
 
 **[36] `gen_ai.usage.cache_write.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
 
-**[37] `gen_ai.usage.image.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+**[37] `gen_ai.usage.image.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` and in `gen_ai.usage.image.input_tokens` attributes.
 
 **[38] `gen_ai.usage.image.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
 
@@ -337,6 +337,14 @@ token counts (for example, Cohere exposes both `usage.billed_units` and
 `usage.tokens`), instrumentations SHOULD report the billed count so the
 value matches the units the customer is charged for.
 
+Detailed usage attributes are subsets of total and aggregate counts. For example,
+if a request has 100 text tokens (40 cached) and 200 image tokens:
+- `gen_ai.usage.input_tokens`: 300
+- `gen_ai.usage.cache_read.input_tokens`: 40
+- `gen_ai.usage.text.input_tokens`: 100
+- `gen_ai.usage.text.cache_read.input_tokens`: 40
+- `gen_ai.usage.image.input_tokens`: 200
+
 **[41] `gen_ai.usage.output_tokens`:** When the provider reports both billed token counts and model-consumed
 token counts (for example, Cohere exposes both `usage.billed_units` and
 `usage.tokens`), instrumentations SHOULD report the billed count so the
@@ -344,7 +352,7 @@ value matches the units the customer is charged for.
 
 **[42] `gen_ai.usage.reasoning.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
 
-**[43] `gen_ai.usage.text.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
+**[43] `gen_ai.usage.text.cache_read.input_tokens`:** The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` and in `gen_ai.usage.text.input_tokens` attributes.
 
 **[44] `gen_ai.usage.text.input_tokens`:** The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
 
