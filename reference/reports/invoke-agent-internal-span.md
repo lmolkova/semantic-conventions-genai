@@ -6,14 +6,14 @@
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.operation.name | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.operation.name | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 
 ## Conditionally Required
 
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.agent.description | [agent-framework], [autogen] |
-| gen_ai.agent.name | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.agent.name | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 | gen_ai.conversation.id | [google-adk] |
 | gen_ai.data_source.id | (none) |
 | gen_ai.output.type | (none) |
@@ -26,7 +26,7 @@
 | --- | --- |
 | gen_ai.request.frequency_penalty | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
 | gen_ai.request.max_tokens | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
-| gen_ai.request.model | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.request.model | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 | gen_ai.request.presence_penalty | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
 | gen_ai.request.stop_sequences | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
 | gen_ai.request.temperature | [agent-framework], [autogen], [crewai], [google-adk], [pydantic-ai] |
@@ -37,32 +37,29 @@
 | gen_ai.usage.audio.output_tokens | (none) |
 | gen_ai.usage.cache_read.input_tokens | [agent-framework] |
 | gen_ai.usage.cache_write.input_tokens | (none) |
-| gen_ai.usage.document.cache_read.input_tokens | (none) |
-| gen_ai.usage.document.input_tokens | (none) |
 | gen_ai.usage.image.cache_read.input_tokens | (none) |
 | gen_ai.usage.image.input_tokens | (none) |
 | gen_ai.usage.image.output_tokens | (none) |
-| gen_ai.usage.input_tokens | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
-| gen_ai.usage.output_tokens | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.usage.input_tokens | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
+| gen_ai.usage.output_tokens | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 | gen_ai.usage.text.cache_read.input_tokens | (none) |
 | gen_ai.usage.text.input_tokens | (none) |
 | gen_ai.usage.text.output_tokens | (none) |
 | gen_ai.usage.tool.input_tokens | (none) |
-| gen_ai.usage.video.cache_read.input_tokens | (none) |
-| gen_ai.usage.video.input_tokens | (none) |
 
 ## Opt-In
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.input.messages | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
-| gen_ai.output.messages | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
-| gen_ai.system_instructions | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
-| gen_ai.tool.definitions | [agent-framework], [autogen], [crewai], [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.input.messages | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
+| gen_ai.output.messages | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
+| gen_ai.system_instructions | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
+| gen_ai.tool.definitions | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 
 [agent-framework]: ../scenarios/agent-framework/scenario.py
 [autogen]: ../scenarios/autogen/scenario.py
 [crewai]: ../scenarios/crewai/scenario.py
 [google-adk]: ../scenarios/google-adk/scenario.py
+[langchain]: ../scenarios/langchain/scenario.py
 [openai-agents]: ../scenarios/openai-agents/scenario.py
 [pydantic-ai]: ../scenarios/pydantic-ai/scenario.py

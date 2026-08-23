@@ -75,20 +75,6 @@ attributes:
       The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
     examples: [120]
     stability: development
-  - key: gen_ai.usage.video.input_tokens
-    type: int
-    brief: The number of video input tokens.
-    note: >
-      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
-    examples: [1024]
-    stability: development
-  - key: gen_ai.usage.document.input_tokens
-    type: int
-    brief: The number of document input tokens (e.g. PDF and other file inputs).
-    note: >
-      The value SHOULD be included in `gen_ai.usage.input_tokens` attribute.
-    examples: [512]
-    stability: development
   # Per-modality output token counts. Each is a subset of gen_ai.usage.output_tokens.
   - key: gen_ai.usage.text.output_tokens
     type: int
@@ -111,10 +97,6 @@ attributes:
       The value SHOULD be included in `gen_ai.usage.output_tokens` attribute.
     examples: [240]
     stability: development
-  # There is no `gen_ai.usage.video.output_tokens`: no video-generation API
-  # exposes a token count today (Sora, Veo, and similar bill per second of
-  # output), so there is nothing to populate it with.
-  #
   # Per-modality cache-read token counts. Each is a subset of the
   # corresponding `gen_ai.usage.<modality>.input_tokens` and of
   # `gen_ai.usage.cache_read.input_tokens`.
@@ -139,20 +121,6 @@ attributes:
       The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
     examples: [60]
     stability: development
-  - key: gen_ai.usage.video.cache_read.input_tokens
-    type: int
-    brief: The number of video input tokens served from a provider-managed cache.
-    note: >
-      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
-    examples: [512]
-    stability: development
-  - key: gen_ai.usage.document.cache_read.input_tokens
-    type: int
-    brief: The number of document input tokens served from a provider-managed cache.
-    note: >
-      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens` attribute.
-    examples: [256]
-    stability: development
   - key: gen_ai.token.modality
     type:
       members:
@@ -168,14 +136,6 @@ attributes:
           stability: development
           value: "audio"
           brief: 'Audio tokens.'
-        - id: video
-          stability: development
-          value: "video"
-          brief: 'Video tokens.'
-        - id: document
-          stability: development
-          value: "document"
-          brief: 'Document tokens (e.g. PDF and other file inputs).'
         - id: unknown
           stability: development
           value: "unknown"

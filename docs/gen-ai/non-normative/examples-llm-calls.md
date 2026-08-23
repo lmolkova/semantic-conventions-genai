@@ -352,20 +352,21 @@ They are likely to be siblings if there is an encompassing span.
 
 **GenAI client span 1:**
 
-| Property                         | Value                                                                  |
-| -------------------------------- | ---------------------------------------------------------------------- |
-| Span name                        | `"chat gpt-4"`                                                         |
-| `gen_ai.provider.name`           | `"openai"`                                                             |
-| `gen_ai.operation.name`          | `"chat"`                                                               |
-| `gen_ai.request.model`           | `"gpt-4"`                                                              |
-| `gen_ai.request.max_tokens`      | `200`                                                                  |
-| `gen_ai.request.top_p`           | `1.0`                                                                  |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                             |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                                         |
-| `gen_ai.usage.output_tokens`     | `17`                                                                   |
-| `gen_ai.usage.input_tokens`      | `47`                                                                   |
-| `gen_ai.response.finish_reasons` | `["tool_calls"]`                                                       |
-| `gen_ai.tool.definitions`        | [`gen_ai.tool.definitions`](#gen-ai-tool-definitions-tool-call-span-0) |
+| Property                                      | Value                                                                  |
+| --------------------------------------------- | ---------------------------------------------------------------------- |
+| Span name                                     | `"chat gpt-4"`                                                         |
+| `gen_ai.provider.name`                        | `"openai"`                                                             |
+| `gen_ai.operation.name`                       | `"chat"`                                                               |
+| `gen_ai.request.model`                        | `"gpt-4"`                                                              |
+| `gen_ai.request.max_tokens`                   | `200`                                                                  |
+| `gen_ai.request.top_p`                        | `1.0`                                                                  |
+| `gen_ai.response.id`                          | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                             |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                                                         |
+| `gen_ai.usage.input_tokens`                   | `47`                                                                   |
+| `gen_ai.usage.output_tokens`                  | `17`                                                                   |
+| `gen_ai.usage.cache_write.input_tokens`       | `47`                                                                   |
+| `gen_ai.response.finish_reasons`              | `["tool_calls"]`                                                       |
+| `gen_ai.tool.definitions`                     | [`gen_ai.tool.definitions`](#gen-ai-tool-definitions-tool-call-span-0) |
 
 <span id="gen-ai-tool-definitions-tool-call-span-0">`gen_ai.tool.definitions` value</span>
 
@@ -392,18 +393,20 @@ If tool call is [instrumented according to execute-tool span definition](/docs/g
 
 **GenAI client span 2:**
 
-| Property                         | Value                                      |
-| -------------------------------- | ------------------------------------------ |
-| Span name                        | `"chat gpt-4"`                             |
-| `gen_ai.provider.name`           | `"openai"`                                 |
-| `gen_ai.request.model`           | `"gpt-4"`                                  |
-| `gen_ai.request.max_tokens`      | `200`                                      |
-| `gen_ai.request.top_p`           | `1.0`                                      |
-| `gen_ai.response.id`             | `"chatcmpl-call_VSPygqKTWdrhaFErNvMV18Yl"` |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                             |
-| `gen_ai.usage.output_tokens`     | `52`                                       |
-| `gen_ai.usage.input_tokens`      | `97`                                       |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                 |
+| Property                                      | Value                                      |
+| --------------------------------------------- | ------------------------------------------ |
+| Span name                                     | `"chat gpt-4"`                             |
+| `gen_ai.provider.name`                        | `"openai"`                                 |
+| `gen_ai.request.model`                        | `"gpt-4"`                                  |
+| `gen_ai.request.max_tokens`                   | `200`                                      |
+| `gen_ai.request.top_p`                        | `1.0`                                      |
+| `gen_ai.response.id`                          | `"chatcmpl-call_VSPygqKTWdrhaFErNvMV18Yl"` |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                             |
+| `gen_ai.usage.input_tokens`                   | `97`                                       |
+| `gen_ai.usage.output_tokens`                  | `52`                                       |
+| `gen_ai.usage.cache_read.input_tokens`        | `47`                                       |
+| `gen_ai.usage.cache_write.input_tokens`       | `50`                                       |
+| `gen_ai.response.finish_reasons`              | `["stop"]`                                 |
 
 ### GenAI client spans when content capturing is enabled on span attributes
 
@@ -420,11 +423,12 @@ They are likely to be siblings if there is an encompassing span.
 | `gen_ai.request.model`           | `"gpt-4"`                                                              |
 | `gen_ai.request.max_tokens`      | `200`                                                                  |
 | `gen_ai.request.top_p`           | `1.0`                                                                  |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                             |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                                         |
-| `gen_ai.usage.output_tokens`     | `17`                                                                   |
-| `gen_ai.usage.input_tokens`      | `47`                                                                   |
-| `gen_ai.response.finish_reasons` | `["tool_calls"]`                                                       |
+| `gen_ai.response.id`                          | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                             |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                                                         |
+| `gen_ai.usage.input_tokens`                   | `47`                                                                   |
+| `gen_ai.usage.output_tokens`                  | `17`                                                                   |
+| `gen_ai.usage.cache_write.input_tokens`       | `47`                                                                   |
+| `gen_ai.response.finish_reasons`              | `["tool_calls"]`                                                       |
 | `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-tool-call-span-1)     |
 | `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-tool-call-span-1)   |
 | `gen_ai.tool.definitions`        | [`gen_ai.tool.definitions`](#gen-ai-tool-definitions-tool-call-span-1) |
@@ -519,11 +523,13 @@ If tool call is [instrumented according to execute-tool span definition](/docs/g
 | `gen_ai.request.model`           | `"gpt-4"`                                                            |
 | `gen_ai.request.max_tokens`      | `200`                                                                |
 | `gen_ai.request.top_p`           | `1.0`                                                                |
-| `gen_ai.response.id`             | `"chatcmpl-call_VSPygqKTWdrhaFErNvMV18Yl"`                           |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                                       |
-| `gen_ai.usage.output_tokens`     | `52`                                                                 |
-| `gen_ai.usage.input_tokens`      | `97`                                                                 |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                                           |
+| `gen_ai.response.id`                          | `"chatcmpl-call_VSPygqKTWdrhaFErNvMV18Yl"`                           |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                                                       |
+| `gen_ai.usage.input_tokens`                   | `97`                                                                 |
+| `gen_ai.usage.output_tokens`                  | `52`                                                                 |
+| `gen_ai.usage.cache_read.input_tokens`        | `47`                                                                 |
+| `gen_ai.usage.cache_write.input_tokens`       | `50`                                                                 |
+| `gen_ai.response.finish_reasons`              | `["stop"]`                                                           |
 | `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-tool-call-span-2)   |
 | `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-tool-call-span-2) |
 
@@ -608,8 +614,9 @@ Span:
 | `gen_ai.request.model`           | `"gpt-4"`                                                        |
 | `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                       |
 | `gen_ai.response.model`          | `"gpt-4-0613"`                                                   |
-| `gen_ai.usage.output_tokens`     | `10`                                                             |
 | `gen_ai.usage.input_tokens`      | `28`                                                             |
+| `gen_ai.usage.output_tokens`     | `10`                                                             |
+| `gen_ai.usage.cache_write.input_tokens` | `28`                                                      |
 | `gen_ai.response.finish_reasons` | `["stop"]`                                                       |
 | `gen_ai.system_instructions`     | [`gen_ai.system_instructions`](#gen-ai-system-instructions)      |
 | `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-instructions)   |
@@ -781,11 +788,13 @@ sequenceDiagram
 | `gen_ai.request.model`           | `"gpt-4"`                                                          |
 | `gen_ai.request.max_tokens`      | `200`                                                              |
 | `gen_ai.request.top_p`           | `1.0`                                                              |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                         |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                                     |
-| `gen_ai.usage.output_tokens`     | `44`                                                               |
-| `gen_ai.usage.input_tokens`      | `385`                                                              |
-| `gen_ai.response.finish_reasons` | `["stop"]`                                                         |
+| `gen_ai.response.id`                          | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                         |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                                                     |
+| `gen_ai.usage.input_tokens`                   | `385`                                                              |
+| `gen_ai.usage.output_tokens`                  | `44`                                                               |
+| `gen_ai.usage.cache_read.input_tokens`        | `128`                                                              |
+| `gen_ai.usage.cache_write.input_tokens`       | `257`                                                              |
+| `gen_ai.response.finish_reasons`              | `["stop"]`                                                         |
 | `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-built-in-tools)   |
 | `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-built-in-tools) |
 
@@ -886,11 +895,12 @@ sequenceDiagram
 | `gen_ai.request.model`           | `"gpt-4"`                                                   |
 | `gen_ai.request.max_tokens`      | `200`                                                       |
 | `gen_ai.request.top_p`           | `1.0`                                                       |
-| `gen_ai.response.id`             | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                  |
-| `gen_ai.response.model`          | `"gpt-4-0613"`                                              |
-| `gen_ai.usage.output_tokens`     | `77`                                                        |
-| `gen_ai.usage.input_tokens`      | `52`                                                        |
-| `gen_ai.response.finish_reasons` | `["stop", "stop"]`                                          |
+| `gen_ai.response.id`                          | `"chatcmpl-9J3uIL87gldCFtiIbyaOvTeYBRA3l"`                  |
+| `gen_ai.response.model`                       | `"gpt-4-0613"`                                              |
+| `gen_ai.usage.input_tokens`                   | `52`                                                        |
+| `gen_ai.usage.output_tokens`                  | `77`                                                        |
+| `gen_ai.usage.cache_read.input_tokens`        | `32`                                                        |
+| `gen_ai.response.finish_reasons`              | `["stop", "stop"]`                                          |
 | `gen_ai.input.messages`          | [`gen_ai.input.messages`](#gen-ai-input-messages-choices)   |
 | `gen_ai.output.messages`         | [`gen_ai.output.messages`](#gen-ai-output-messages-choices) |
 
