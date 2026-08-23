@@ -131,19 +131,6 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai.inference_usage
-  - name: gen_ai.client.inference.usage.tool.input_tokens
-    requirement_level: recommended
-    instrument: counter
-    unit: "{token}"
-    brief: 'The number of input tokens from tool results (outputs of tool executions) that are provided back to the model as input.'
-    note: >
-      This value is a subset of `gen_ai.client.inference.usage.input_tokens`.
-    stability: development
-    annotations:
-      code_generation:
-        metric_value_type: int
-    attributes:
-      - ref_group: metric_attributes.gen_ai.inference_usage
   - name: gen_ai.client.inference.usage.reasoning.output_tokens
     requirement_level: recommended
     instrument: counter

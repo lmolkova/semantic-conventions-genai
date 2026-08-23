@@ -36,7 +36,6 @@
 | gen_ai.usage.cache_write.input_tokens | (none) |
 | gen_ai.usage.input_tokens | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
 | gen_ai.usage.output_tokens | [agent-framework], [autogen], [crewai], [google-adk], [langchain], [openai-agents], [pydantic-ai] |
-| gen_ai.usage.tool.input_tokens | (none) |
 
 ## Opt-In
 
