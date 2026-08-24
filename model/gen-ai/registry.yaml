@@ -405,7 +405,7 @@ attributes:
     note: >
       When the provider does not break usage down by modality and the modality
       cannot be reliably determined, instrumentations SHOULD report the tokens
-      under the `unknown` modality rather than guessing.
+      under the `unknown` modality.
     examples: ['text', 'image', 'audio']
     stability: development
   - key: gen_ai.conversation.id

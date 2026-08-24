@@ -1,6 +1,5 @@
 file_format: definition/2
 attribute_groups:
-  # Attributes for the per-modality inference usage counters.
   - id: metric_attributes.gen_ai.inference_usage
     visibility: internal
     attributes:
@@ -8,19 +7,6 @@ attribute_groups:
       - ref: gen_ai.token.modality
         requirement_level: required
 metrics:
-  # Per-operation token usage histograms.
-  #
-  # These describe the distribution of tokens per inference operation using
-  # separate instruments for input, output, and total so that each can be
-  # aggregated meaningfully. They carry minimal attributes and
-  # are NOT broken down by modality, cache, or phase.
-  #
-  # These cover inference operations only. Embeddings token usage is not
-  # covered here yet: the removed `gen_ai.client.token.usage` histogram was
-  # operation-agnostic, so embeddings metrics are temporarily uncovered
-  # pending a dedicated `gen_ai.client.embeddings.usage.*` instrument in a
-  # follow-up. Embeddings span attributes (`gen_ai.usage.input_tokens`) are
-  # unchanged.
   - name: gen_ai.client.inference.usage.operation.input_tokens
     requirement_level: recommended
     instrument: histogram
@@ -56,26 +42,7 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
-  - name: gen_ai.client.inference.usage.operation.total_tokens
-    requirement_level: recommended
-    instrument: histogram
-    unit: "{token}"
-    brief: 'The total number of input and output tokens used per inference operation.'
-    note: *token_usage_note
-    stability: development
-    annotations:
-      code_generation:
-        metric_value_type: int
-    attributes:
-      - ref_group: metric_attributes.gen_ai
 
-  # Per-modality inference usage counters.
-  #
-  # Monotonic counters let consumers aggregate token spend (for example to
-  # attribute cost) across all inference operations. Each token category 
-  # has its own instrument so that a plain sum of
-  # a single metric is always meaningful, and every counter is broken down by
-  # `gen_ai.token.modality`.
   - name: gen_ai.client.inference.usage.input_tokens
     requirement_level: recommended
     instrument: counter
@@ -153,11 +120,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.operation.output_tokens
     ref: gen_ai.client.inference.usage.operation.output_tokens
     brief: >
@@ -166,24 +129,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
-  - id: openai.client.inference.usage.operation.total_tokens
-    ref: gen_ai.client.inference.usage.operation.total_tokens
-    brief: >
-      OpenAI-specific extension to `gen_ai.client.inference.usage.operation.total_tokens`. Adds
-      `openai.response.service_tier` and `openai.response.system_fingerprint`
-      when the provider is `openai`.
-    stability: development
-    attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.input_tokens
     ref: gen_ai.client.inference.usage.input_tokens
     brief: >
@@ -192,11 +138,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.output_tokens
     ref: gen_ai.client.inference.usage.output_tokens
     brief: >
@@ -205,11 +147,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.cache_read.input_tokens
     ref: gen_ai.client.inference.usage.cache_read.input_tokens
     brief: >
@@ -218,11 +156,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.cache_write.input_tokens
     ref: gen_ai.client.inference.usage.cache_write.input_tokens
     brief: >
@@ -231,11 +165,7 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
   - id: openai.client.inference.usage.reasoning.output_tokens
     ref: gen_ai.client.inference.usage.reasoning.output_tokens
     brief: >
@@ -244,8 +174,4 @@ metric_refinements:
       when the provider is `openai`.
     stability: development
     attributes:
-      # - ref_group: metric_attributes.openai - does not work, https://github.com/open-telemetry/weaver/issues/1411
-      - ref: openai.response.service_tier
-        requirement_level: recommended
-      - ref: openai.response.system_fingerprint
-        requirement_level: recommended
+      - ref_group: metric_attributes.openai
