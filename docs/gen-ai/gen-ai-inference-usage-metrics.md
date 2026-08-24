@@ -36,24 +36,35 @@ Two families of token usage instruments are defined:
   sum of a single counter is always meaningful. The `cache_read`,
   `cache_write`, and `reasoning` counters report subsets of the `input_tokens`
   and `output_tokens` counters.
+  Use counters for total token usage and rate, cost approximation, and the
+  breakdown by modality.
 - Per-operation **histograms** (`gen_ai.client.inference.usage.operation.*`)
   describe how token usage is distributed across inference operations. Input
   and output are separate instruments.
+  Use histograms to find outliers and to monitor the shape of input and output
+  token usage.
 
-Note that the `gen_ai.client.inference.usage.operation.input_tokens` and
-`gen_ai.client.inference.usage.operation.output_tokens` histograms are
-deliberately not broken down by modality. 
+> [!NOTE]
+> 
+> The `gen_ai.client.inference.usage.operation.input_tokens` and
+> `gen_ai.client.inference.usage.operation.output_tokens` histograms are
+> deliberately not broken down by modality: percentiles across modalities do
+> not add up.
 
-> [!IMPORTANT]
-> Percentiles do not add up. `p95(input) + p95(output)` is not the p95 of total
-> tokens - the call with the largest input is usually not the call with the
-> largest output, so the sum describes no call that ever happened.
->
-> For tokens usage rate and totals use `gen_ai.client.inference.usage.*`
-> counters.
+A query like this one looks correct:
+
+```promql
+histogram_quantile(0.95,
+  sum(rate({"gen_ai.client.inference.usage.operation.input_tokens"}[5m]))
+)
+```
+
+But if modality is added as a dimension, it produces meaningless results: for
+100 identical operations with 300 input tokens each (100 text and 200 image),
+it would return 200.
 
 For the full reasoning behind this split, see
-[Token usage metrics design](non-normative/usage-metrics-design.md).
+[Token usage metrics design](/docs/gen-ai/non-normative/usage-metrics-design.md).
 
 ### Metric: `gen_ai.client.inference.usage.operation.input_tokens`
 
