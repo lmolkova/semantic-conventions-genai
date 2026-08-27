@@ -49,8 +49,13 @@ Run `uv run update-reports` to regenerate.
 
 | Metric | Libraries |
 | --- | --- |
-| [Client Inference Operation Input Tokens](reports/gen-ai-client-inference-usage-operation-input-tokens-metric.md) | (none) |
-| [Client Inference Operation Output Tokens](reports/gen-ai-client-inference-usage-operation-output-tokens-metric.md) | (none) |
+| [Client Inference Operation Input Tokens](reports/gen-ai-client-inference-usage-operation-input-tokens-metric.md) | openai |
+| [Client Inference Operation Output Tokens](reports/gen-ai-client-inference-usage-operation-output-tokens-metric.md) | openai |
+| [Client Inference Input Tokens](reports/gen-ai-client-inference-usage-input-tokens-metric.md) | openai |
+| [Client Inference Output Tokens](reports/gen-ai-client-inference-usage-output-tokens-metric.md) | openai |
+| [Client Inference Cache Read Input Tokens](reports/gen-ai-client-inference-usage-cache-read-input-tokens-metric.md) | openai |
+| [Client Inference Cache Write Input Tokens](reports/gen-ai-client-inference-usage-cache-write-input-tokens-metric.md) | openai |
+| [Client Inference Reasoning Output Tokens](reports/gen-ai-client-inference-usage-reasoning-output-tokens-metric.md) | openai |
 | [Client Operation Duration](reports/gen-ai-client-operation-duration-metric.md) | agent-framework, anthropic |
 | [Invoke Agent Inference Calls](reports/gen-ai-invoke-agent-inference-calls-metric.md) | google-adk |
 | [Invoke Agent Tool Calls](reports/gen-ai-invoke-agent-tool-calls-metric.md) | google-adk |
