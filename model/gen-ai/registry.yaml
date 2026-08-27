@@ -661,11 +661,26 @@ attributes:
           value: "delete_memory_store"
           brief: 'Delete or deprovision a memory store'
           stability: development
+        - id: run_step
+          value: "run_step"
+          brief: 'A generic internal operation or step within a GenAI workflow or agent'
+          stability: development
     brief: The name of the operation being performed.
-    note: >
+    note: |
       If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic
       conventions for specific GenAI system and use system-specific name in the instrumentation.
       If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+
+
+      When instrumenting generic operations that don't have a specialized span defined,
+      instrumentations SHOULD set `gen_ai.operation.name` to an idiomatic, low-cardinality 
+      operation identifier (e.g. static workflow node name, function name in the user code or a 
+      static callback name in a framework such as `before_tool_call`).
+
+      When no low-carinality operation name is available, insturmentations SHOULD use `run_step`
+      as a fallback. 
+      Instrumentations MUST NOT use values with unknown cardinality such as input that is provided by users
+      in runtime.
     stability: development
   - key: gen_ai.output.type
     type:

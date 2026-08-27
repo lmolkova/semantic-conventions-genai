@@ -248,6 +248,29 @@ metrics:
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref_group: attributes.gen_ai.execute_tool.common
+  - name: gen_ai.operation.duration
+    requirement_level: opt_in
+    annotations:
+      code_generation:
+        metric_value_type: double
+    brief: 'Duration of an internal GenAI operation.'
+    note: |
+      This metric SHOULD be recorded for all internal GenAI operations,
+      including generic operations (`run_step`) and specialized
+      internal operations (such as `execute_tool`, `invoke_agent`, etc.).
+    instrument: histogram
+    unit: "s"
+    stability: development
+    attributes:
+      - ref_group: attributes.gen_ai.error
+      - ref: gen_ai.operation.name
+        requirement_level: required
+      - ref: gen_ai.agent.name
+        requirement_level:
+          conditionally_required: When applicable.
+      - ref: gen_ai.workflow.name
+        requirement_level:
+          conditionally_required: When applicable.
 
 metric_refinements:
   - id: openai.client.token.usage

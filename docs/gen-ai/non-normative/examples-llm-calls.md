@@ -17,6 +17,8 @@
 - [Tool calls (built-in)](#tool-calls-built-in)
 - [Chat completion with multiple choices](#chat-completion-with-multiple-choices)
   - [GenAI client span when content capturing is enabled on span attributes](#genai-client-span-when-content-capturing-is-enabled-on-span-attributes-1)
+- [LangGraph workflow with custom node and agent](#langgraph-workflow-with-custom-node-and-agent)
+  - [GenAI spans when content capturing is enabled on span attributes](#genai-spans-when-content-capturing-is-enabled-on-span-attributes)
 
 <!-- tocstop -->
 
@@ -944,3 +946,132 @@ sequenceDiagram
   }
 ]
 ```
+
+## LangGraph workflow with custom node and agent
+
+This example covers a LangGraph workflow that executes an arbitrary user code node making HTTP requests followed by an agent node:
+
+```python
+import os
+import requests
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage
+from langgraph.graph import StateGraph, START, END
+from langgraph.prebuilt import create_react_agent
+from typing import TypedDict
+
+class State(TypedDict):
+    query: str
+    context: str
+    messages: list
+
+model = ChatOpenAI(model="gpt-4o")
+
+def fetch_data(state: State):
+    # Arbitrary custom workflow node
+    response = requests.get(f"https://api.example.com/data?q={state['query']}")
+    return {"context": response.text}
+
+def prepare_context(state: State):
+    # Custom prompt modifier for the agent reading local files
+    docs = []
+    for filename in os.listdir("./docs"):
+        with open(os.path.join("./docs", filename)) as f:
+            docs.append(f.read())
+    system_prompt = f"Context: {state['context']}\n" + "\n".join(docs)
+    return [SystemMessage(content=system_prompt)] + state["messages"]
+
+researcher = create_react_agent(
+    model,
+    tools=[],
+    name="researcher",
+    prompt=prepare_context,
+)
+
+# Main workflow
+builder = StateGraph(State)
+builder.add_node("fetch_data", fetch_data)
+builder.add_node("researcher", researcher)
+builder.add_edge(START, "fetch_data")
+builder.add_edge("fetch_data", "researcher")
+builder.add_edge("researcher", END)
+
+graph = builder.compile(name="research")
+graph.invoke({"query": "example query", "messages": []})
+```
+
+```mermaid
+%%{init:
+{
+  "sequence": { "messageAlign": "left", "htmlLabels":true },
+  "themeVariables": { "noteBkgColor" : "green", "noteTextColor": "black", "activationBkgColor": "green", "htmlLabels":true }
+}
+}%%
+sequenceDiagram
+    participant A as Application
+    participant W as Workflow
+    participant AG as Agent
+    participant M as Model
+    A->>+W: invoke_workflow research
+    W->>+W: fetch_data
+    deactivate W
+    W->>+AG: invoke_agent researcher
+    AG->>+AG: prepare_context
+    deactivate AG
+    AG->>+M: chat gpt-4o
+    M-->>-AG: response
+    AG-->>-W: agent result
+    W-->>-A: workflow result
+```
+
+### GenAI spans
+
+Detailed attributes are omitted for brevity.
+
+**Workflow span:**
+
+| Property | Value |
+| --- | --- |
+| Span name | `"invoke_workflow research"` |
+| Span kind | `INTERNAL` |
+| `gen_ai.operation.name` | `"invoke_workflow"` |
+| `gen_ai.workflow.name` | `"research"` |
+
+**Custom node span (`fetch_data`):**
+
+| Property | Value |
+| --- | --- |
+| Span name | `"fetch_data"` |
+| Span kind | `INTERNAL` |
+| `gen_ai.operation.name` | `"fetch_data"` |
+| `gen_ai.workflow.name` | `"research"` |
+
+**Agent span:**
+
+| Property | Value |
+| --- | --- |
+| Span name | `"invoke_agent researcher"` |
+| Span kind | `INTERNAL` |
+| `gen_ai.operation.name` | `"invoke_agent"` |
+| `gen_ai.agent.name` | `"researcher"` |
+| `gen_ai.workflow.name` | `"research"` |
+
+**Generic agent step span (`prepare_context`):**
+
+| Property | Value |
+| --- | --- |
+| Span name | `"prepare_context"` |
+| Span kind | `INTERNAL` |
+| `gen_ai.operation.name` | `"prepare_context"` |
+| `gen_ai.agent.name` | `"researcher"` |
+
+**GenAI client span:**
+
+| Property | Value |
+| --- | --- |
+| Span name | `"chat gpt-4o"` |
+| Span kind | `CLIENT` |
+| `gen_ai.provider.name` | `"openai"` |
+| `gen_ai.operation.name` | `"chat"` |
+| `gen_ai.request.model` | `"gpt-4o"` |
+

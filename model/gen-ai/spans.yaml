@@ -694,6 +694,55 @@ spans:
         requirement_level:
           conditionally_required: When available.
 
+  - type: gen_ai.operation.internal
+    requirement_level: recommended
+    kind: internal
+    name:
+      note: >
+        **Span name** SHOULD be `{gen_ai.operation.name}`.
+        Semantic conventions for individual GenAI systems and frameworks MAY 
+        specify different span name format.
+    brief: >
+      Represents a generic internal GenAI operation that does not have a specialized span convention.
+    note: |
+      The `gen_ai.operation.name` SHOULD be an idiomatic name of the operation
+      (such as a workflow node name, `parse_output`, `trim_messages`, `chunk_documents`, `rerank_documents`)
+      or `run_step` as a fallback when no specific name is known.
+
+      These operations are defined through extensibility points and frequently execute 
+      arbitrary application or third-party code.  
+      Instrumentations SHOULD record them as spans when they have reasons 
+      to believe the operation could implement complex logic that may 
+      involve remote or long operations.
+
+      Instrumentations SHOULD NOT report this span for well-known 
+      operations that have specialized spans defined and single instrumentation 
+      MUST NOT report this span along with specialized one.  
+
+      Examples of operations that qualify for this span:
+
+      - **Generic workflow and graph nodes**: LangGraph nodes, Google ADK workflow nodes, CrewAI flow steps.
+      - **Document parsing and chunking**: LlamaIndex `NodeParser.get_nodes_from_documents()`.
+      - **Post-retrieval processing**: LlamaIndex `BaseNodePostprocessor.postprocess_nodes()` 
+        re-ranking, filtering, or deduplicating retrieved nodes.
+        
+    stability: development
+    attributes:
+      - ref_group: attributes.gen_ai.error
+      - ref: gen_ai.operation.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.conversation.id
+        requirement_level:
+          conditionally_required: If and only if the instrumented library has one readily available, or the user application provides one through OpenTelemetry context or library-specific mechanisms.
+      - ref: gen_ai.workflow.name
+        requirement_level:
+          conditionally_required: When the operation is executed in the context of a workflow.
+      - ref: gen_ai.agent.name
+        brief: The human-readable name of the agent performing the operation.
+        requirement_level:
+          conditionally_required: When applicable.
+
 span_refinements:
   - id: openai.inference.client
     ref: gen_ai.inference.client
