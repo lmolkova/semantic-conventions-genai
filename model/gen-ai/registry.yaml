@@ -629,6 +629,10 @@ attributes:
           value: "invoke_workflow"
           brief: 'Invoke GenAI workflow'
           stability: development
+        - id: handle_turn
+          value: "handle_turn"
+          brief: 'Handle one request to the agentic system - the outermost GenAI operation in a process'
+          stability: development
         - id: plan
           value: "plan"
           brief: 'Agent planning or task decomposition phase'
@@ -1004,6 +1008,29 @@ attributes:
       > [!Warning]
       > This attribute may contain sensitive information.
     examples: ["Alice", "French"]
+    stability: development
+  - key: gen_ai.main_agent.name
+    type: string
+    brief: >
+      Human-readable name of the agent, workflow, or other entity that owns the turn.
+    note: |
+      The main agent is what the caller of the agentic system talks to, regardless of
+      whether it is implemented as a single agent, a workflow, or a custom orchestration.
+
+      Instrumentations SHOULD set this attribute on the `handle_turn` span and SHOULD propagate it
+      to GenAI operations nested under the turn within the same process, so that spans and
+      metrics can be attributed to the system that produced them.
+
+      Applications that run a single main agent MAY describe it with the `gen_ai.main_agent`
+      entity, which carries the same name at the process level. When both are present, the value
+      reported by the instrumentation and the one configured by the application are expected to
+      match.
+
+      Instrumentations often cannot determine the main agent name. In those cases it is expected
+      to be available through the entity attributes instead.
+
+      This attribute MUST have low cardinality.
+    examples: ["customer_support", "research_assistant"]
     stability: development
   - key: gen_ai.workflow.name
     type: string
