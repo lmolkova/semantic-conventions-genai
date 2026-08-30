@@ -934,3 +934,4 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 <!-- endweaver -->
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
+[ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters
