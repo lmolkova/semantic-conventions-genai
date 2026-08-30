@@ -627,7 +627,7 @@ attributes:
           stability: development
         - id: invoke_workflow
           value: "invoke_workflow"
-          brief: 'Invoke GenAI workflow'
+          brief: 'Invoke a GenAI workflow, graph, or crew coordinating several agents. Reported on `invoke_agent` spans and metrics.'
           stability: development
         - id: handle_turn
           value: "handle_turn"

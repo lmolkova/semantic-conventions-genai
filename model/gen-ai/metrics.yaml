@@ -137,7 +137,8 @@ metrics:
       agent invocation.
 
       Recorded for every agent invocation at any nesting depth, including workflows,
-      graphs, and crews. Values are inclusive of nested work, so consumers SHOULD
+      graphs, and crews, which are reported with `gen_ai.operation.name` set to
+      `invoke_workflow`. Values are inclusive of nested work, so consumers SHOULD
       filter by `gen_ai.agent.name` or `gen_ai.main_agent.name` rather than aggregate
       across them. Use `gen_ai.handle_turn.duration` for end-to-end system latency.
 
@@ -153,6 +154,8 @@ metrics:
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref_group: attributes.gen_ai.invoked_agent.internal.common
+      - ref: gen_ai.operation.name
+        requirement_level: recommended
       - ref: gen_ai.main_agent.name
         requirement_level:
           conditionally_required: When available.

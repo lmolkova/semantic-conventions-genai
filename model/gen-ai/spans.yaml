@@ -519,7 +519,9 @@ spans:
     brief: >
       Describes GenAI agent invocation over a remote service.
     note: |
-      The `gen_ai.operation.name` SHOULD be `invoke_agent`.
+      The `gen_ai.operation.name` SHOULD be `invoke_agent`. Callers do not observe the internal
+      structure of a remote agentic system, so `invoke_workflow` is not used on this span even
+      when the remote system is implemented as a workflow.
 
       Examples: OpenAI Assistants API, AWS Bedrock Agents.
     stability: development
