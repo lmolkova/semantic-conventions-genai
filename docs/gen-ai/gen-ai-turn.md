@@ -265,7 +265,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 **[1]:** Measured from the point where the agentic system starts handling a request to the point where it produces its final response or fails.
 This is the system-level latency metric: exactly one value is recorded per request, no matter how many agents, workflows, or inference calls the request fans out into. Use `gen_ai.invoke_agent.duration` to measure individual agent and workflow invocations.
-This metric is reported in addition to `gen_ai.invoke_agent.duration`, including when a single agent handles the request end to end and the two record the same duration. This keeps system-level queries independent of how the system is implemented internally.
+This metric is reported in addition to `gen_ai.invoke_agent.duration`, including when a single agent handles the request end to end and the two record the same duration.
 This metric SHOULD be reported under the same conditions as the `gen_ai.handle_turn.internal` span: only when the instrumentation can reliably bound a request to the agentic system and no other GenAI turn operation is present in the context. This keeps exactly one measurement per request when several instrumented frameworks or agents are nested. The metric value SHOULD be the same as the span duration.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).

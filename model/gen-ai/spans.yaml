@@ -519,9 +519,8 @@ spans:
     brief: >
       Describes GenAI agent invocation over a remote service.
     note: |
-      The `gen_ai.operation.name` SHOULD be `invoke_agent`. Callers do not observe the internal
-      structure of a remote agentic system, so `invoke_workflow` is not used on this span even
-      when the remote system is implemented as a workflow.
+      The `gen_ai.operation.name` SHOULD be `invoke_agent`, including when the remote system is
+      implemented as a workflow.
 
       Examples: OpenAI Assistants API, AWS Bedrock Agents.
     stability: development
@@ -567,11 +566,9 @@ spans:
     note: |
       The `gen_ai.operation.name` SHOULD be `invoke_agent` when the invoked entity is an agent
       and `invoke_workflow` when it is a workflow, graph, or crew coordinating several agents.
-      The two are the same operation: which one applies depends on the API shape the framework
-      exposes, and callers of the agentic system SHOULD NOT be expected to distinguish them.
 
-      Nested and outermost invocations are distinguished by span hierarchy - the outermost one
-      is a child of the `turn` span - not by the operation name.
+      This span is reported at any nesting depth. The outermost invocation is reported as a child
+      of the `handle_turn` span.
 
       Examples: LangChain agents, CrewAI agents, LangGraph graphs, CrewAI crews.
     stability: development
