@@ -570,7 +570,28 @@ spans:
       This span is reported at any nesting depth. The outermost invocation is reported as a child
       of the `handle_turn` span.
 
-      Examples: LangChain agents, CrewAI agents, LangGraph graphs, CrewAI crews.
+      A workflow invocation that covers the whole request SHOULD NOT be reported as a separate
+      span: the `handle_turn` span represents it and carries `gen_ai.workflow.name`. Workflows
+      defined by the application and nested inside another invocation, for example a sub-graph
+      invoked as a node of another graph, SHOULD be reported.
+
+      A workflow invocation that is an internal implementation detail of another operation, for
+      example an agent or tool that spins up a runner to delegate to a sub-agent, SHOULD NOT be
+      reported.
+
+      Framework-specific semantic conventions SHOULD define which operations to report as
+      workflows and MAY specify heuristics to distinguish them from standalone agent invocations
+      and internal operations.
+
+      Examples of agent invocations: LangChain agents, CrewAI agents, ADK agents.
+
+      Examples of workflow invocations in different frameworks include:
+
+      - **ADK**: [`Runner.run(...)`](https://adk.dev/workflows/) with multi-agent or graph workflow.
+      - **CrewAI**: [`Crew.kickoff()`](https://docs.crewai.com/concepts/crews)
+      - **LangChain / LangGraph**: [`*Graph*.invoke(...)`](https://reference.langchain.com/python/langgraph/graphs)
+      - **Microsoft Agent Framework**: [`Workflow*.run(...)`](https://learn.microsoft.com/agent-framework/workflows/)
+      - **OpenAI Agents**: [`Runner.run(starting_agent=...)`](https://openai.github.io/openai-agents-python/ref/run/#agents.run.Runner.run) with handoffs, sub-agents, or agents-as-tools.
     stability: development
     attributes:
       - ref_group: attributes.gen_ai.invoke_agent.common

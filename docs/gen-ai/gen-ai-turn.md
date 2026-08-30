@@ -36,7 +36,7 @@ handle_turn support_assistant
     └── chat
 ```
 
-The turn does not replace the operations underneath it. When a single agent handles the request
+The turn does not replace the agents underneath it. When a single agent handles the request
 end to end, both spans are still reported and have the same duration:
 
 ```
@@ -50,6 +50,20 @@ and cost the same way regardless of whether the system is one agent, a graph, or
 chain - and keeps those queries working when the implementation changes between them. Agent
 invocations remain separately observable through `invoke_agent` spans and
 `gen_ai.invoke_agent.duration` metric; see [Agent spans](gen-ai-agent-spans.md).
+
+Workflows are different: a workflow that covers the whole request adds nothing the turn does not
+already say, so it is not reported separately. The turn carries `gen_ai.workflow.name` instead.
+Workflows nested inside another invocation, such as a sub-graph used as a node of a larger
+graph, are reported as `invoke_agent` spans with `gen_ai.operation.name` set to
+`invoke_workflow`:
+
+```
+handle_turn research_pipeline        # gen_ai.workflow.name = research_pipeline
+├── invoke_agent planner
+└── invoke_workflow gather_sources   # nested sub-graph
+    ├── invoke_agent web_search
+    └── invoke_agent summarizer
+```
 
 Operations nested under the turn carry `gen_ai.main_agent.name`, so their spans and metrics can
 be attributed to the system that produced them without traversing traces.
@@ -88,9 +102,10 @@ The entity that owns the turn may be an agent, a workflow, or an application-spe
 entry point. `gen_ai.main_agent.name` identifies it in all cases; `gen_ai.agent.name` and
 `gen_ai.workflow.name` describe what it is when applicable.
 
-The turn span is reported independently of what handles the request, including when a
-single agent handles it end to end. In that case the `invoke_agent` span for that agent
-is reported as a child of the turn span and the two have the same duration.
+The turn span is reported independently of what handles the request. When a single agent
+handles it end to end, the `invoke_agent` span for that agent is reported as a child of the
+turn span and the two have the same duration. When a workflow handles it end to end, the
+turn span carries `gen_ai.workflow.name` and no separate workflow span is reported.
 
 **Span name** SHOULD be `handle_turn {gen_ai.main_agent.name}` if `gen_ai.main_agent.name` is readily available. When it is not available, it SHOULD be `handle_turn`.
 

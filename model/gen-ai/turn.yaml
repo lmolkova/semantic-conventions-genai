@@ -33,9 +33,10 @@ spans:
       entry point. `gen_ai.main_agent.name` identifies it in all cases; `gen_ai.agent.name` and
       `gen_ai.workflow.name` describe what it is when applicable.
 
-      The turn span is reported independently of what handles the request, including when a
-      single agent handles it end to end. In that case the `invoke_agent` span for that agent
-      is reported as a child of the turn span and the two have the same duration.
+      The turn span is reported independently of what handles the request. When a single agent
+      handles it end to end, the `invoke_agent` span for that agent is reported as a child of the
+      turn span and the two have the same duration. When a workflow handles it end to end, the
+      turn span carries `gen_ai.workflow.name` and no separate workflow span is reported.
     stability: development
     attributes:
       - ref_group: attributes.gen_ai.error
