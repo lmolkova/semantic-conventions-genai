@@ -8,7 +8,6 @@
 | --- | --- |
 | gen_ai.operation.name | [anthropic], [google-genai], [openai] |
 | gen_ai.provider.name | [anthropic], [google-genai], [openai] |
-| gen_ai.token.modality | [anthropic], [google-genai], [openai] |
 
 ## Conditionally Required
 

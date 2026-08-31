@@ -44,8 +44,8 @@ records at most one measurement per operation.
 
 This design is valid and hard to misuse, but one instrument per modality per
 category multiplies quickly and histograms cost far more than counters. The
-`gen_ai.client.inference.usage.input_tokens` and
-`gen_ai.client.inference.usage.output_tokens` counters are broken down by
+`gen_ai.client.inference.usage.detailed.input_tokens` and
+`gen_ai.client.inference.usage.detailed.output_tokens` counters are broken down by
 modality instead. They don't have the histogram usability problem and they
 answer the common questions, cost approximation and the ratio between
 modalities, at a much lower telemetry volume.
@@ -69,8 +69,8 @@ no modality". It is the bucket that keeps the partition complete.
 of another attribute?**
 
 We could report cache and reasoning tokens on the
-`gen_ai.client.inference.usage.input_tokens` and
-`gen_ai.client.inference.usage.output_tokens` counters instead, adding a
+`gen_ai.client.inference.usage.detailed.input_tokens` and
+`gen_ai.client.inference.usage.detailed.output_tokens` counters instead, adding a
 `gen_ai.token.cache` attribute with values `read`, `write`, and `uncached`, and
 something similar for reasoning on the output side.
 
@@ -93,13 +93,13 @@ tokens split between text and image.
 
 Separate counters only carry the breakdown each provider actually reports:
 
-- `gen_ai.client.inference.usage.input_tokens`: 100 `text`, 200 `image`
-- `gen_ai.client.inference.usage.cache_read.input_tokens`: 280 `unknown`
+- `gen_ai.client.inference.usage.detailed.input_tokens`: 100 `text`, 200 `image`
+- `gen_ai.client.inference.usage.detailed.cache_read.input_tokens`: 280 `unknown`
 
 The other reason is flexibility. Providers keep adding dimensions that apply to
 one token category only. Anthropic splits cache writes by cache TTL, 5 minutes
 or 1 hour, and prices the two differently. 
-The `gen_ai.client.inference.usage.cache_write.input_tokens` instrument can
+The `gen_ai.client.inference.usage.detailed.cache_write.input_tokens` instrument can
 take a provider-specific TTL attribute later without touching anything else, and
 summing over that attribute still gives the cache-write total. On a shared
 counter the same attribute would appear on every input token, cached or not.
