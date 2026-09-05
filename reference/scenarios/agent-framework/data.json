@@ -230,14 +230,6 @@
     {
       "id": "missing_metric",
       "message": "Metric does not exist in the registry."
-    },
-    {
-      "id": "unit_mismatch",
-      "message": "Unit should be '{token}', but found 'tokens'.",
-      "context": {
-        "expected": "{token}",
-        "unit": "tokens"
-      }
     }
   ],
   "entities": {}

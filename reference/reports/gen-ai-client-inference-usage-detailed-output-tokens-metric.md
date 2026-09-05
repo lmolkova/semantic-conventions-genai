@@ -1,6 +1,6 @@
-# Client Inference Cache Read Input Tokens Metric
+# Client Inference Detailed Output Tokens Metric
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-inference-usage-metrics.md#metric-gen_aiclientinferenceusagecache_readinput_tokens)**
+> **[Semantic Convention](../../docs/gen-ai/gen-ai-inference-usage-metrics.md#metric-gen_aiclientinferenceusagedetailedoutput_tokens)**
 
 ## Required
 
