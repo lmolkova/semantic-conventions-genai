@@ -279,7 +279,6 @@ def run_chat():
             {
                 "role": "assistant",
                 "parts": [{"type": "text", "content": response.text}],
-                "finish_reason": str(response.candidates[0].finish_reason) if response.candidates else None,
             }
         ]
         _emit_inference_event(request_model, input_messages, output_messages, response, usage)
@@ -346,7 +345,6 @@ def run_interactions_continuation():
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": "This is a response from the mock interactions server."}],
-                        "finish_reason": "stop",
                     }
                 ]
             ),
@@ -451,7 +449,6 @@ def run_chat_tool_call():
                     if tool_call
                     else [{"type": "text", "content": response.text}]
                 ),
-                "finish_reason": str(response.candidates[0].finish_reason) if response.candidates else None,
             }
         ]
         _emit_inference_event(request_model, input_messages, output_messages, response, usage)
@@ -513,7 +510,6 @@ def run_chat_multimodal():
             {
                 "role": "assistant",
                 "parts": [{"type": "text", "content": response.text}],
-                "finish_reason": str(response.candidates[0].finish_reason) if response.candidates else None,
             }
         ]
         _emit_inference_event(request_model, input_messages, output_messages, response, usage)
@@ -566,7 +562,6 @@ def run_generate_media():
                 {
                     "role": "assistant",
                     "parts": output_parts,
-                    "finish_reason": str(response.candidates[0].finish_reason) if response.candidates else None,
                 }
             ]
             _emit_inference_event(request_model, input_messages, output_messages, response, usage)
