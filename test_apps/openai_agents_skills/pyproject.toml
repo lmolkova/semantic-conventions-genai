@@ -1,0 +1,16 @@
+[project]
+name = "openai-agents-skills-otel-test"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "openai-agents==0.22.0",
+    "opentelemetry-distro[otlp]==0.65b0",
+    "opentelemetry-instrumentation-genai-openai==1.1b0",
+    "opentelemetry-instrumentation-genai-openai-agents",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+opentelemetry-instrumentation-genai-openai-agents = { git = "https://github.com/open-telemetry/opentelemetry-python-genai.git", rev = "59e6efe6c0be45a9da78f8f3c21c5d6ac4488ed1", subdirectory = "instrumentation/opentelemetry-instrumentation-genai-openai-agents" }

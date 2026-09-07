@@ -248,6 +248,12 @@ metrics:
     attributes:
       - ref_group: attributes.gen_ai.error
       - ref_group: attributes.gen_ai.execute_tool.common
+      - ref: gen_ai.skill.name
+        requirement_level:
+          recommended: If the execution is explicitly associated with a skill and the set of skill names is expected to be bounded.
+      - ref: gen_ai.skill.resource.name
+        requirement_level:
+          recommended: If the tool accesses or executes a named skill resource and the set of resource names is expected to be bounded.
 
 metric_refinements:
   - id: openai.client.token.usage

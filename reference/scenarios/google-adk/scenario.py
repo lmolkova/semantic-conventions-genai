@@ -5,6 +5,7 @@ import contextlib
 import json
 import os
 import time
+from pathlib import Path
 
 from opentelemetry import trace as _trace
 from opentelemetry.sdk.trace import SpanProcessor
@@ -29,6 +30,11 @@ _tool_calls = _reference_meter.create_histogram(
     "gen_ai.invoke_agent.tool_calls",
     unit="{tool_call}",
     description="The number of tool calls a GenAI agent makes during a single invocation.",
+)
+_tool_duration = _reference_meter.create_histogram(
+    "gen_ai.execute_tool.duration",
+    unit="s",
+    description="The duration of a single tool execution.",
 )
 
 
@@ -379,6 +385,106 @@ def run_memory_reference():
     asyncio.run(_run())
 
 
+def run_skill_tools_reference():
+    """Scenario: ADK tools load a skill, read its resources, and run its script."""
+    from google.adk.agents import Agent
+    from google.adk.agents.invocation_context import InvocationContext
+    from google.adk.code_executors.unsafe_local_code_executor import UnsafeLocalCodeExecutor
+    from google.adk.sessions import InMemorySessionService
+    from google.adk.sessions.session import Session
+    from google.adk.skills import load_skill_from_dir
+    from google.adk.tools.skill_toolset import SkillToolset
+    from google.adk.tools.tool_context import ToolContext
+
+    print("  [skill_tools] ADK local skill tools (reference implementation)")
+
+    skill = load_skill_from_dir(Path(__file__).parent / "skills" / "arithmetic-report")
+    toolset = SkillToolset(skills=[skill], code_executor=UnsafeLocalCodeExecutor())
+
+    agent = Agent(name="skill_agent", model="gemini-2.0-flash", tools=[toolset])
+    session_service = InMemorySessionService()
+    session = Session(id="skill_session", app_name="test_app", user_id="test_user")
+    invocation_context = InvocationContext(
+        session_service=session_service,
+        invocation_id="skill_invocation",
+        agent=agent,
+        session=session,
+    )
+    tools = {tool.name: tool for tool in toolset._tools}
+
+    async def _run_tool(tool_name, args, span_name):
+        tool = tools[tool_name]
+        tool_context = ToolContext(
+            invocation_context,
+            function_call_id=f"call_{tool_name}",
+        )
+        span_attributes = {
+            "gen_ai.operation.name": "execute_tool",
+            "gen_ai.tool.name": tool.name,
+            "gen_ai.tool.type": "function",
+            "gen_ai.skill.description": skill.description,
+            "gen_ai.skill.name": args["skill_name"],
+        }
+        # ADK retains the original loader URI on the resolved Skill.
+        if skill._uri is not None:
+            span_attributes["gen_ai.skill.source.uri"] = skill._uri
+        metric_attributes = {
+            "gen_ai.tool.name": tool.name,
+            "gen_ai.tool.type": "function",
+            "gen_ai.agent.name": tool_context.agent_name,
+            "gen_ai.skill.name": args["skill_name"],
+        }
+        if "file_path" in args:
+            span_attributes["gen_ai.skill.resource.name"] = args["file_path"]
+            metric_attributes["gen_ai.skill.resource.name"] = args["file_path"]
+
+        started = time.perf_counter()
+        with _reference_tracer.start_as_current_span(span_name, attributes=span_attributes) as span:
+            span.set_attribute("gen_ai.agent.name", tool_context.agent_name)
+            span.set_attribute("gen_ai.tool.call.id", tool_context.function_call_id)
+            span.set_attribute("gen_ai.tool.description", tool.description)
+            span.set_attribute("gen_ai.tool.call.arguments", json.dumps(args))
+            result = await tool.run_async(args=args, tool_context=tool_context)
+            span.set_attribute("gen_ai.tool.call.result", json.dumps(result))
+        _tool_duration.record(time.perf_counter() - started, metric_attributes)
+        return result
+
+    async def _run():
+        await _run_tool(
+            "load_skill",
+            {"skill_name": skill.name},
+            f"load_skill {skill.name}",
+        )
+        await _run_tool(
+            "load_skill_resource",
+            {
+                "skill_name": skill.name,
+                "file_path": "references/output-format.md",
+            },
+            f"load_skill_resource {skill.name} references/output-format.md",
+        )
+        await _run_tool(
+            "load_skill_resource",
+            {
+                "skill_name": skill.name,
+                "file_path": "assets/report-template.txt",
+            },
+            f"load_skill_resource {skill.name} assets/report-template.txt",
+        )
+        result = await _run_tool(
+            "run_skill_script",
+            {
+                "skill_name": skill.name,
+                "file_path": "scripts/add.py",
+                "positional_args": ["37", "5"],
+            },
+            f"run_skill_script {skill.name} scripts/add.py",
+        )
+        print(f"    -> {result['stdout'].strip()}")
+
+    asyncio.run(_run())
+
+
 def main():
     print("=== Reference Implementation: Google ADK Reference Implementation ===")
 
@@ -389,6 +495,7 @@ def main():
 
     run_agent_reference()
     run_memory_reference()
+    run_skill_tools_reference()
 
     print(f"\n  [diagnostic] Spans generated: {span_counter.count}")
 

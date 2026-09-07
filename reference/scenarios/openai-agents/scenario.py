@@ -7,16 +7,28 @@ wrapped in a workflow span, against a mock OpenAI server, with manual OTel spans
 import asyncio
 import json
 import os
+import time
 
 import openai
 from agents import Agent, RunConfig, Runner, function_tool
 from agents.models.openai_chatcompletions import OpenAIChatCompletionsModel
 from agents.tool import FunctionTool, ToolContext
-from reference_shared import flush_and_shutdown, reference_tracer, setup_otel
+from reference_shared import (
+    flush_and_shutdown,
+    reference_meter,
+    reference_tracer,
+    setup_otel,
+)
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"] + "/v1"
 
 _reference_tracer = reference_tracer()
+_reference_meter = reference_meter()
+_tool_duration = _reference_meter.create_histogram(
+    "gen_ai.execute_tool.duration",
+    unit="s",
+    description="The duration of a single tool execution.",
+)
 
 
 @function_tool
@@ -174,6 +186,91 @@ async def run_workflow():
         print(f"    -> {str(result.final_output)[:60]}")
 
 
+async def run_shell_tool():
+    """Run an OpenAI Agents local ShellTool through the SDK execution boundary."""
+    from agents import (
+        RunContextWrapper,
+        ShellCallOutcome,
+        ShellCommandOutput,
+        ShellResult,
+        ShellTool,
+    )
+    from agents.lifecycle import RunHooksBase
+    from agents.run_internal.run_steps import ToolRunShellCall
+    from agents.run_internal.tool_actions import ShellAction
+    from openai.types.responses import ResponseFunctionShellToolCall
+    from openai.types.responses.response_function_shell_tool_call import Action
+
+    print("  [shell_tool] local shell command (reference implementation)")
+
+    async def execute_shell(request):
+        command = request.data.action.commands[0]
+        process = await asyncio.create_subprocess_shell(
+            command,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await process.communicate()
+        return ShellResult(
+            output=[
+                ShellCommandOutput(
+                    command=command,
+                    stdout=stdout.decode(),
+                    stderr=stderr.decode(),
+                    outcome=ShellCallOutcome(
+                        type="exit",
+                        exit_code=process.returncode,
+                    ),
+                )
+            ]
+        )
+
+    shell_tool = ShellTool(executor=execute_shell)
+    agent = Agent(name="shell-agent", tools=[shell_tool])
+    tool_call = ResponseFunctionShellToolCall(
+        id="shell_item",
+        call_id="shell_call",
+        action=Action(commands=["printf 'command completed\\n'"]),
+        status="completed",
+        type="shell_call",
+    )
+    arguments = {
+        "commands": tool_call.action.commands,
+        "timeout_ms": tool_call.action.timeout_ms,
+        "max_output_length": tool_call.action.max_output_length,
+    }
+    span_attributes = {
+        "gen_ai.operation.name": "execute_tool",
+        "gen_ai.tool.name": shell_tool.name,
+        "gen_ai.tool.type": shell_tool.type,
+    }
+    started = time.perf_counter()
+    with _reference_tracer.start_as_current_span(shell_tool.name, attributes=span_attributes) as span:
+        span.set_attribute("gen_ai.agent.name", agent.name)
+        span.set_attribute("gen_ai.tool.call.id", tool_call.call_id)
+        span.set_attribute("gen_ai.tool.call.arguments", json.dumps(arguments))
+        result = await ShellAction.execute(
+            agent=agent,
+            call=ToolRunShellCall(tool_call=tool_call, shell_tool=shell_tool),
+            hooks=RunHooksBase(),
+            context_wrapper=RunContextWrapper(context=None),
+            config=RunConfig(tracing_disabled=True),
+        )
+        shell_outputs = result.raw_item.get("shell_output", [])
+        if len(shell_outputs) == 1 and shell_outputs[0].get("exit_code") is not None:
+            span.set_attribute("process.exit.code", shell_outputs[0]["exit_code"])
+        span.set_attribute("gen_ai.tool.call.result", result.output)
+    _tool_duration.record(
+        time.perf_counter() - started,
+        {
+            "gen_ai.tool.name": shell_tool.name,
+            "gen_ai.tool.type": shell_tool.type,
+            "gen_ai.agent.name": agent.name,
+        },
+    )
+    print(f"    -> {result.output.splitlines()[-1]}")
+
+
 def main():
     print("=== Reference Implementation: OpenAI Agents Reference Implementation ===")
 
@@ -181,6 +278,7 @@ def main():
 
     asyncio.run(run_agent())
     asyncio.run(run_workflow())
+    asyncio.run(run_shell_tool())
 
     flush_and_shutdown(tp, lp, mp)
 

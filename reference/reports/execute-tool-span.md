@@ -14,11 +14,15 @@
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.agent.name | [google-adk], [openai-agents], [pydantic-ai] |
+| gen_ai.skill.name | [google-adk] |
+| gen_ai.skill.resource.name | [google-adk] |
 
 ## Recommended
 
 | Attribute | Supporting Libraries |
 | --- | --- |
+| gen_ai.skill.description | [google-adk] |
+| gen_ai.skill.source.uri | [google-adk] |
 | gen_ai.tool.call.id | [agent-framework], [autogen], [google-adk], [google-genai], [langchain], [llamaindex], [openai-agents], [openai-assistants], [pydantic-ai], [vertexai] |
 | gen_ai.tool.description | [agent-framework], [autogen], [crewai], [google-adk], [google-genai], [langchain], [llamaindex], [openai-agents], [openai-assistants], [pydantic-ai], [vertexai] |
 | gen_ai.tool.type | [agent-framework], [autogen], [crewai], [google-adk], [google-genai], [langchain], [llamaindex], [openai-agents], [openai-assistants], [pydantic-ai], [vertexai] |

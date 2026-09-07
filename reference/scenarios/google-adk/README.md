@@ -9,5 +9,5 @@ owns the agent, workflow, tool, and memory operations it runs directly.
 | inference (`chat`) | No — delegates to the model client (`google-genai`) | ✅ Correctly not emitted |
 | invoke_agent (internal) | Yes — agent run | ✅ Implemented |
 | invoke_workflow | Yes — workflow agents (e.g. `SequentialAgent`) | ✅ Implemented |
-| execute_tool | Yes — ADK runs the tool | ✅ Implemented |
+| execute_tool | Yes - ADK runs functions and specialized skill tools | ✅ Implemented |
 | memory | Yes — memory service upsert / search | ✅ Implemented |

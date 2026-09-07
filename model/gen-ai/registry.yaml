@@ -470,6 +470,48 @@ attributes:
     brief: The version of the GenAI agent.
     examples: ["1.0.0", "2025-05-01"]
     stability: development
+  - key: gen_ai.skill.description
+    type: string
+    brief: The description of the skill associated with the tool execution.
+    note: |
+      > [!WARNING]
+      > This attribute may contain sensitive information.
+    examples: ["Review code using the team's review policy."]
+    stability: development
+  - key: gen_ai.skill.name
+    type: string
+    brief: The name of the skill associated with the tool execution.
+    note: |
+      Instrumentations SHOULD obtain the association from tool call arguments,
+      the tool definition, or instrumented library state.
+    examples: ["data-analysis"]
+    stability: development
+  - key: gen_ai.skill.resource.name
+    type: string
+    brief: The skill-relative name of the resource accessed or executed by the tool.
+    note: |
+      This attribute records the logical, skill-relative resource name available
+      from the tool call or instrumented library state, for example
+      `scripts/analyze.py` or `references/schema.md`.
+
+      Instrumentations MUST NOT derive this attribute from arbitrary command text
+      or record a resolved absolute filesystem path.
+    examples: ["scripts/analyze.py", "references/schema.md"]
+    stability: development
+  - key: gen_ai.skill.source.uri
+    type: string
+    brief: The URI of the source from which the skill definition was loaded.
+    note: |
+      Instrumentations SHOULD record the original URI available to the skill loader
+      and MUST NOT replace it with a temporary or cache location.
+
+      > [!WARNING]
+      > This attribute may contain sensitive information.
+
+      Sensitive URI components, such as user information and access tokens in query
+      parameters, SHOULD be scrubbed when instrumentations can identify them.
+    examples: ["file:///opt/skills/code-review", "gs://example-skills/code-review", "https://skills.example.com/code-review.zip"]
+    stability: development
   - key: gen_ai.tool.name
     type: string
     brief: Name of the tool utilized by the agent.
