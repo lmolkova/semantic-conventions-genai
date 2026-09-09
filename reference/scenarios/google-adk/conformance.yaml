@@ -11,3 +11,19 @@ env:
 scenarios:
   reference:
     run: uv run --frozen --python 3.12 --project . python scenario.py
+    spans:
+      - match:
+          attributes:
+            gen_ai.tool.name: load_skill
+          kind: internal
+          type: gen_ai.execute_tool.load_skill.internal
+      - match:
+          attributes:
+            gen_ai.tool.name: load_skill_resource
+          kind: internal
+          type: gen_ai.execute_tool.read_skill_resource.internal
+      - match:
+          attributes:
+            gen_ai.tool.name: run_skill_script
+          kind: internal
+          type: gen_ai.execute_tool.command.internal
