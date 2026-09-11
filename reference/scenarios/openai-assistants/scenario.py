@@ -157,7 +157,7 @@ def run_invoke_agent(client):
                         "gen_ai.operation.name": "execute_tool",
                     }
                     with tracer.start_as_current_span(
-                        "execute_tool", kind=SpanKind.CLIENT, attributes=tool_span_attributes
+                        f"execute_tool {tool_name}", kind=SpanKind.CLIENT, attributes=tool_span_attributes
                     ) as tool_span:
                         tool_span.set_attribute("gen_ai.tool.name", tool_name)
                         tool_span.set_attribute(

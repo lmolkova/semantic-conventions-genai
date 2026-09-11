@@ -65,66 +65,113 @@
       "server.address"
     ]
   },
+  "entities": {},
   "findings": [
     {
       "id": "missing_attribute",
-      "message": "Attribute 'agent_framework.function.invocation.duration' does not exist in the registry.",
+      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.assistant.message",
       "context": {
-        "attribute_key": "agent_framework.function.invocation.duration"
+        "attribute_key": "gen_ai.system"
       }
+    },
+    {
+      "id": "missing_event",
+      "message": "Event 'gen_ai.assistant.message' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.assistant.message"
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.choice",
+      "context": {
+        "attribute_key": "gen_ai.system"
+      }
+    },
+    {
+      "id": "missing_event",
+      "message": "Event 'gen_ai.choice' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.choice"
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.system.message",
+      "context": {
+        "attribute_key": "gen_ai.system"
+      }
+    },
+    {
+      "id": "missing_event",
+      "message": "Event 'gen_ai.system.message' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.system.message"
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.tool.message",
+      "context": {
+        "attribute_key": "gen_ai.system"
+      }
+    },
+    {
+      "id": "missing_event",
+      "message": "Event 'gen_ai.tool.message' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.tool.message"
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.user.message",
+      "context": {
+        "attribute_key": "gen_ai.system"
+      }
+    },
+    {
+      "id": "missing_event",
+      "message": "Event 'gen_ai.user.message' does not exist in the registry.",
+      "signal_type": "log",
+      "signal_name": "gen_ai.user.message"
     },
     {
       "id": "missing_attribute",
       "message": "Attribute 'agent_framework.function.name' does not exist in the registry.",
+      "signal_type": "metric",
+      "signal_name": "agent_framework.function.invocation.duration",
       "context": {
         "attribute_key": "agent_framework.function.name"
       }
     },
     {
-      "id": "missing_attribute",
-      "message": "Attribute 'edge_group.delivered' does not exist in the registry.",
-      "context": {
-        "attribute_key": "edge_group.delivered"
-      }
+      "id": "missing_metric",
+      "message": "Metric does not exist in the registry.",
+      "signal_type": "metric",
+      "signal_name": "agent_framework.function.invocation.duration"
     },
     {
-      "id": "missing_attribute",
-      "message": "Attribute 'edge_group.delivery_status' does not exist in the registry.",
+      "id": "unit_mismatch",
+      "message": "Unit should be '{token}', but found 'tokens'.",
+      "signal_type": "metric",
+      "signal_name": "gen_ai.client.token.usage",
       "context": {
-        "attribute_key": "edge_group.delivery_status"
-      }
-    },
-    {
-      "id": "missing_attribute",
-      "message": "Attribute 'edge_group.id' does not exist in the registry.",
-      "context": {
-        "attribute_key": "edge_group.id"
-      }
-    },
-    {
-      "id": "missing_attribute",
-      "message": "Attribute 'edge_group.type' does not exist in the registry.",
-      "context": {
-        "attribute_key": "edge_group.type"
-      }
-    },
-    {
-      "id": "missing_attribute",
-      "message": "Attribute 'executor.id' does not exist in the registry.",
-      "context": {
-        "attribute_key": "executor.id"
-      }
-    },
-    {
-      "id": "missing_attribute",
-      "message": "Attribute 'executor.type' does not exist in the registry.",
-      "context": {
-        "attribute_key": "executor.type"
+        "expected": "{token}",
+        "unit": "tokens"
       }
     },
     {
       "id": "type_mismatch",
       "message": "Attribute 'gen_ai.response.finish_reasons' has type 'string'. Type should be 'string[]'.",
+      "signal_type": "span",
+      "signal_name": "chat gpt-4o-mini",
       "context": {
         "attribute_key": "gen_ai.response.finish_reasons",
         "attribute_type": "string",
@@ -133,28 +180,54 @@
     },
     {
       "id": "missing_attribute",
-      "message": "Attribute 'gen_ai.system' does not exist in the registry.",
-      "context": {
-        "attribute_key": "gen_ai.system"
-      }
-    },
-    {
-      "id": "missing_attribute",
       "message": "Attribute 'gen_ai.usage.cache_creation.input_tokens' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "chat gpt-4o-mini",
       "context": {
         "attribute_key": "gen_ai.usage.cache_creation.input_tokens"
       }
     },
     {
       "id": "missing_attribute",
-      "message": "Attribute 'message.payload_type' does not exist in the registry.",
+      "message": "Attribute 'edge_group.delivered' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
       "context": {
-        "attribute_key": "message.payload_type"
+        "attribute_key": "edge_group.delivered"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.delivery_status' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.delivery_status"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.type"
       }
     },
     {
       "id": "missing_attribute",
       "message": "Attribute 'message.source_id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
       "context": {
         "attribute_key": "message.source_id"
       }
@@ -162,13 +235,214 @@
     {
       "id": "missing_attribute",
       "message": "Attribute 'message.target_id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process InternalEdgeGroup",
       "context": {
         "attribute_key": "message.target_id"
       }
     },
     {
       "id": "missing_attribute",
+      "message": "Attribute 'edge_group.delivered' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process SingleEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.delivered"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.delivery_status' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process SingleEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.delivery_status"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process SingleEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'edge_group.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process SingleEdgeGroup",
+      "context": {
+        "attribute_key": "edge_group.type"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'message.source_id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "edge_group.process SingleEdgeGroup",
+      "context": {
+        "attribute_key": "message.source_id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'agent_framework.function.invocation.duration' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "execute_tool get_weather",
+      "context": {
+        "attribute_key": "agent_framework.function.invocation.duration"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'executor.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process reviewer",
+      "context": {
+        "attribute_key": "executor.id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'executor.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process reviewer",
+      "context": {
+        "attribute_key": "executor.type"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'message.payload_type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process reviewer",
+      "context": {
+        "attribute_key": "message.payload_type"
+      }
+    },
+    {
+      "id": "missing_attribute",
       "message": "Attribute 'message.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process reviewer",
+      "context": {
+        "attribute_key": "message.type"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'executor.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process writer",
+      "context": {
+        "attribute_key": "executor.id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'executor.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process writer",
+      "context": {
+        "attribute_key": "executor.type"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'message.payload_type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process writer",
+      "context": {
+        "attribute_key": "message.payload_type"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'message.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "executor.process writer",
+      "context": {
+        "attribute_key": "message.type"
+      }
+    },
+    {
+      "id": "type_mismatch",
+      "message": "Attribute 'gen_ai.response.finish_reasons' has type 'string'. Type should be 'string[]'.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent WeatherAgent",
+      "context": {
+        "attribute_key": "gen_ai.response.finish_reasons",
+        "attribute_type": "string",
+        "expected": "string[]"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.usage.cache_creation.input_tokens' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent WeatherAgent",
+      "context": {
+        "attribute_key": "gen_ai.usage.cache_creation.input_tokens"
+      }
+    },
+    {
+      "id": "type_mismatch",
+      "message": "Attribute 'gen_ai.response.finish_reasons' has type 'string'. Type should be 'string[]'.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent WeatherAgentChatCompletions",
+      "context": {
+        "attribute_key": "gen_ai.response.finish_reasons",
+        "attribute_type": "string",
+        "expected": "string[]"
+      }
+    },
+    {
+      "id": "type_mismatch",
+      "message": "Attribute 'gen_ai.response.finish_reasons' has type 'string'. Type should be 'string[]'.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent reviewer",
+      "context": {
+        "attribute_key": "gen_ai.response.finish_reasons",
+        "attribute_type": "string",
+        "expected": "string[]"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.usage.cache_creation.input_tokens' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent reviewer",
+      "context": {
+        "attribute_key": "gen_ai.usage.cache_creation.input_tokens"
+      }
+    },
+    {
+      "id": "type_mismatch",
+      "message": "Attribute 'gen_ai.response.finish_reasons' has type 'string'. Type should be 'string[]'.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent writer",
+      "context": {
+        "attribute_key": "gen_ai.response.finish_reasons",
+        "attribute_type": "string",
+        "expected": "string[]"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'gen_ai.usage.cache_creation.input_tokens' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "invoke_agent writer",
+      "context": {
+        "attribute_key": "gen_ai.usage.cache_creation.input_tokens"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'message.type' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "message.send",
       "context": {
         "attribute_key": "message.type"
       }
@@ -176,34 +450,26 @@
     {
       "id": "missing_attribute",
       "message": "Attribute 'workflow.definition' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.build",
       "context": {
         "attribute_key": "workflow.definition"
       }
     },
     {
       "id": "missing_attribute",
-      "message": "Attribute 'workflow.description' does not exist in the registry.",
-      "context": {
-        "attribute_key": "workflow.description"
-      }
-    },
-    {
-      "id": "missing_attribute",
       "message": "Attribute 'workflow.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.build",
       "context": {
         "attribute_key": "workflow.id"
       }
     },
     {
       "id": "missing_attribute",
-      "message": "Attribute 'workflow.name' does not exist in the registry.",
-      "context": {
-        "attribute_key": "workflow.name"
-      }
-    },
-    {
-      "id": "missing_attribute",
       "message": "Attribute 'workflow_builder.description' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.build",
       "context": {
         "attribute_key": "workflow_builder.description"
       }
@@ -211,42 +477,38 @@
     {
       "id": "missing_attribute",
       "message": "Attribute 'workflow_builder.name' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.build",
       "context": {
         "attribute_key": "workflow_builder.name"
       }
     },
     {
-      "id": "missing_event",
-      "message": "Event 'gen_ai.assistant.message' does not exist in the registry."
-    },
-    {
-      "id": "missing_event",
-      "message": "Event 'gen_ai.choice' does not exist in the registry."
-    },
-    {
-      "id": "missing_event",
-      "message": "Event 'gen_ai.system.message' does not exist in the registry."
-    },
-    {
-      "id": "missing_event",
-      "message": "Event 'gen_ai.tool.message' does not exist in the registry."
-    },
-    {
-      "id": "missing_event",
-      "message": "Event 'gen_ai.user.message' does not exist in the registry."
-    },
-    {
-      "id": "missing_metric",
-      "message": "Metric does not exist in the registry."
-    },
-    {
-      "id": "unit_mismatch",
-      "message": "Unit should be '{token}', but found 'tokens'.",
+      "id": "missing_attribute",
+      "message": "Attribute 'workflow.description' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.run",
       "context": {
-        "expected": "{token}",
-        "unit": "tokens"
+        "attribute_key": "workflow.description"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'workflow.id' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.run",
+      "context": {
+        "attribute_key": "workflow.id"
+      }
+    },
+    {
+      "id": "missing_attribute",
+      "message": "Attribute 'workflow.name' does not exist in the registry.",
+      "signal_type": "span",
+      "signal_name": "workflow.run",
+      "context": {
+        "attribute_key": "workflow.name"
       }
     }
-  ],
-  "entities": {}
+  ]
 }
