@@ -912,6 +912,7 @@ def _emit_fetch_response_span(client, response_id, starting_after=None):
     - `gen_ai.system_instructions` and `gen_ai.output.messages` are the content
       carried by the fetched response. The original input messages are NOT part
       of the fetched response object, so `gen_ai.input.messages` is not recorded.
+    - `gen_ai.request.stream` is recorded when the request is made in streaming mode.
     - `gen_ai.request.stream_cursor` is the resume cursor (OpenAI `starting_after`),
       a request-side parameter available at the call boundary, recorded only when
       the fetch resumes a streamed response from a prior position.
@@ -930,6 +931,7 @@ def _emit_fetch_response_span(client, response_id, starting_after=None):
         "openai.api.type": "responses",
     }
     if starting_after is not None:
+        span_attributes["gen_ai.request.stream"] = True
         span_attributes["gen_ai.request.stream_cursor"] = str(starting_after)
     if host:
         span_attributes["server.address"] = host
