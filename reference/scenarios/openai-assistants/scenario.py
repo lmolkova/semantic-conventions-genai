@@ -274,12 +274,10 @@ def run_invoke_agent_streaming(client):
             pass
 
         # In the Assistants API, usage and completion state are retrieved from the run
-        runs = client.beta.threads.runs.list(thread_id=thread.id)
-        if runs.data:
-            run = runs.data[0]
-            if run.usage:
-                span.set_attribute("gen_ai.usage.input_tokens", run.usage.prompt_tokens)
-                span.set_attribute("gen_ai.usage.output_tokens", run.usage.completion_tokens)
+        run = client.beta.threads.runs.retrieve(thread_id=thread.id, run_id="run-mock-001")
+        if run.usage:
+            span.set_attribute("gen_ai.usage.input_tokens", run.usage.prompt_tokens)
+            span.set_attribute("gen_ai.usage.output_tokens", run.usage.completion_tokens)
 
         messages = client.beta.threads.messages.list(thread_id=thread.id)
         assistant_messages = [m for m in messages.data if m.role == "assistant"]
