@@ -22,7 +22,7 @@
 | gen_ai.output.type | [azure-ai-foundry] |
 | gen_ai.request.choice.count | (none) |
 | gen_ai.request.seed | (none) |
-| gen_ai.request.stream | (none) |
+| gen_ai.request.stream | [google-genai], [openai-assistants] |
 | server.port | [aws-bedrock-agent], [azure-ai-foundry], [openai-assistants] |
 
 ## Recommended
