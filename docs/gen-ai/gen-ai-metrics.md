@@ -32,7 +32,7 @@ The conventions described in this section are specific to Generative AI client
 applications.
 
 For inference metrics (duration, time-to-first-chunk, time-per-output-chunk),
-see [Inference](inference.md#metrics).
+see [Client Inference](client-inference.md#metrics).
 
 **Disclaimer:** These are initial Generative AI client metric instruments
 and attributes but more may be added in the future.

@@ -17,7 +17,7 @@ GenAI instrumentations MAY capture user inputs sent to the model and responses r
 > [!Note]
 > Events are in-development and not yet available in some languages. Check [spec-compliance matrix](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/spec-compliance-matrix.md#logs) to see the implementation status in corresponding language.
 
-For events describing inference operations, see [Inference](inference.md#events).
+For events describing inference operations, see [Client Inference](client-inference.md#events).
 
 ## Event: `gen_ai.evaluation.result`
 

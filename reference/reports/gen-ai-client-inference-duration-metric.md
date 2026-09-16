@@ -1,6 +1,6 @@
 # Client Inference Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/inference.md#metric-gen_aiclientinferenceduration)**
+> **[Semantic Convention](../../docs/gen-ai/client-inference.md#metric-gen_aiclientinferenceduration)**
 
 ## Required
 

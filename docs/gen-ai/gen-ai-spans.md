@@ -34,9 +34,9 @@ If a transient issue happened and the request was retried automatically, the
 corresponding span SHOULD cover the duration of the logical operation with all
 retries.
 
-### Inference
+### Client Inference
 
-Inference span and metric conventions are defined in [Inference](inference.md).
+Inference span and metric conventions are defined in [Client Inference](client-inference.md).
 
 ### Embeddings
 

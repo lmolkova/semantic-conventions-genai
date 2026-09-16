@@ -1,8 +1,8 @@
 <!--- Hugo front matter used to generate the website version of this page:
-linkTitle: Inference
+linkTitle: Client Inference
 --->
 
-# Semantic conventions for generative AI inference
+# Semantic conventions for generative AI client inference
 
 **Status**: [Development][DocumentStatus]
 
