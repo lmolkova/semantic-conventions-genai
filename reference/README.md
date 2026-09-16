@@ -31,7 +31,7 @@ Run `uv run update-reports` to regenerate.
 | [Invoke Agent Internal](reports/invoke-agent-internal-span.md) | agent-framework, autogen, crewai, google-adk, langchain, openai-agents, pydantic-ai |
 | [Invoke Workflow](reports/invoke-workflow-span.md) | crewai, google-adk, langchain, openai-agents |
 | [Plan](reports/plan-span.md) | crewai, langchain |
-| [Inference](reports/inference-span.md) | agent-framework, anthropic, aws-bedrock, azure-ai-inference, azure-openai, claude-agent-sdk, cohere, google-genai, groq, litellm, mistralai, openai, vertexai |
+| [Inference](reports/inference-span.md) | agent-framework, anthropic, aws-bedrock, azure-ai-inference, azure-openai, claude-agent-sdk, cohere, google-genai, litellm, mistralai, openai, vertexai |
 | [Embeddings](reports/embeddings-span.md) | aws-bedrock, azure-ai-inference, azure-openai, cohere, google-genai, litellm, mistralai, openai |
 | [Retrieval](reports/retrieval-span.md) | haystack, langchain, llamaindex |
 | [Fetch Response](reports/fetch-response-span.md) | openai |
@@ -50,7 +50,8 @@ Run `uv run update-reports` to regenerate.
 | Metric | Libraries |
 | --- | --- |
 | [Client Token Usage](reports/gen-ai-client-token-usage-metric.md) | agent-framework, anthropic, groq |
-| [Client Operation Duration](reports/gen-ai-client-operation-duration-metric.md) | agent-framework, anthropic, groq |
+| [Client Operation Duration](reports/gen-ai-client-operation-duration-metric.md) | agent-framework, anthropic |
+| [Client Inference Duration](reports/gen-ai-client-inference-duration-metric.md) | groq |
 | [Invoke Agent Inference Calls](reports/gen-ai-invoke-agent-inference-calls-metric.md) | google-adk |
 | [Invoke Agent Tool Calls](reports/gen-ai-invoke-agent-tool-calls-metric.md) | google-adk |
 <!-- status:end -->

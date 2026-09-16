@@ -24,7 +24,7 @@
       "server.address",
       "server.port"
     ],
-    "gen_ai.inference.client": [
+    "gen_ai.client.inference": [
       "gen_ai.conversation.compacted",
       "gen_ai.input.messages",
       "gen_ai.operation.name",
