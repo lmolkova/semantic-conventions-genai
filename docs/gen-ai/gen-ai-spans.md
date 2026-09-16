@@ -36,7 +36,7 @@ retries.
 
 ### Inference
 
-Inference span and metric conventions are defined in [Inference](inference.md).->
+Inference span and metric conventions are defined in [Inference](inference.md).
 
 ### Embeddings
 

@@ -1167,4 +1167,4 @@ When the attribute is recorded on events, it MUST be recorded in structured form
 Semantic conventions for recording exceptions on Generative AI client operations are defined in [Generative AI exceptions](gen-ai-exceptions.md).
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
-[ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.56.0/specification/metrics/data-model.md#explicit-bucket-histogram
+[ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters
