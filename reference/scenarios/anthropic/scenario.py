@@ -11,7 +11,13 @@ import anthropic
 from opentelemetry.trace import SpanKind, StatusCode
 from opentelemetry.util.genai.handler import get_telemetry_handler
 from opentelemetry.util.genai.types import Blob, InputMessage, OutputMessage, Text
-from reference_shared import flush_and_shutdown, mock_server_host_port, reference_tracer, setup_otel
+from reference_shared import (
+    flush_and_shutdown,
+    inference_duration_view,
+    mock_server_host_port,
+    reference_tracer,
+    setup_otel,
+)
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 
@@ -401,7 +407,7 @@ def main():
     os.environ["OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT"] = "SPAN_AND_EVENT"
     os.environ["OTEL_INSTRUMENTATION_GENAI_EMIT_EVENT"] = "true"
 
-    tp, lp, mp = setup_otel()
+    tp, lp, mp = setup_otel(metric_views=(inference_duration_view(),))
     handler = get_telemetry_handler(
         tracer_provider=tp,
         meter_provider=mp,

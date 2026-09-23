@@ -6,22 +6,19 @@
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.operation.name | [agent-framework], [anthropic] |
+| gen_ai.operation.name | (none) |
 
 ## Conditionally Required
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.provider.name | [agent-framework], [anthropic] |
-| gen_ai.request.model | [agent-framework], [anthropic] |
-| server.port | [anthropic] |
+| gen_ai.provider.name | (none) |
+| gen_ai.request.model | (none) |
+| server.port | (none) |
 
 ## Recommended
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.response.model | [agent-framework], [anthropic] |
-| server.address | [agent-framework], [anthropic] |
-
-[agent-framework]: ../scenarios/agent-framework/scenario.py
-[anthropic]: ../scenarios/anthropic/scenario.py
+| gen_ai.response.model | (none) |
+| server.address | (none) |

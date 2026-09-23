@@ -48,11 +48,10 @@ _EVENTS = {
     "gen_ai.evaluation.result": "Evaluation Result",
 }
 
-# `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` are a
-# single-span read, unlike the `invoke_agent` counters below, which need each
-# call attributed to exactly one invocation across the call tree (#336). They
-# are tracked here because agent-framework and anthropic emit them; this list
-# records what the reference scenarios emit, not what instrumentations should emit.
+# Client duration and token usage describe individual calls, unlike the
+# `invoke_agent` counters below, which attribute each call to exactly one
+# invocation across the call tree (#336). Reports include metrics even when
+# no reference scenario emits them.
 _METRICS = {
     "gen_ai.client.token.usage": "Client Token Usage",
     "gen_ai.client.operation.duration": "Client Operation Duration",

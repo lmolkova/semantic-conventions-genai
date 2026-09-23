@@ -49,7 +49,7 @@
   },
   "events": {},
   "metrics": {
-    "gen_ai.client.operation.duration": [
+    "gen_ai.client.inference.duration": [
       "gen_ai.operation.name",
       "gen_ai.provider.name",
       "gen_ai.request.model",

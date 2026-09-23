@@ -6,21 +6,23 @@
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.operation.name | [groq] |
-| gen_ai.provider.name | [groq] |
+| gen_ai.operation.name | [agent-framework], [anthropic], [groq] |
+| gen_ai.provider.name | [agent-framework], [anthropic], [groq] |
 
 ## Conditionally Required
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.request.model | [groq] |
-| server.port | [groq] |
+| gen_ai.request.model | [agent-framework], [anthropic], [groq] |
+| server.port | [anthropic], [groq] |
 
 ## Recommended
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.response.model | [groq] |
-| server.address | [groq] |
+| gen_ai.response.model | [agent-framework], [anthropic], [groq] |
+| server.address | [agent-framework], [anthropic], [groq] |
 
+[agent-framework]: ../scenarios/agent-framework/scenario.py
+[anthropic]: ../scenarios/anthropic/scenario.py
 [groq]: ../scenarios/groq/scenario.py
