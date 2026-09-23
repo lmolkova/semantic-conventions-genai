@@ -50,10 +50,16 @@ _EVENTS = {
 
 # Client duration and token usage describe individual calls, unlike the
 # `invoke_agent` counters below, which attribute each call to exactly one
-# invocation across the call tree (#336). Reports include metrics even when
-# no reference scenario emits them.
+# invocation across the call tree (#336). Reports cover declared metrics even
+# when no reference scenario emits them; they do not prescribe instrumentation.
 _METRICS = {
-    "gen_ai.client.token.usage": "Client Token Usage",
+    "gen_ai.client.inference.usage.input_tokens": "Client Inference Usage Input Tokens",
+    "gen_ai.client.inference.usage.output_tokens": "Client Inference Usage Output Tokens",
+    "gen_ai.client.inference.usage.cache_read.input_tokens": "Client Inference Cache Read Input Tokens",
+    "gen_ai.client.inference.usage.cache_write.input_tokens": "Client Inference Cache Write Input Tokens",
+    "gen_ai.client.inference.usage.reasoning.output_tokens": "Client Inference Reasoning Output Tokens",
+    "gen_ai.client.inference.operation.input_tokens": "Client Inference Operation Input Tokens",
+    "gen_ai.client.inference.operation.output_tokens": "Client Inference Operation Output Tokens",
     "gen_ai.client.operation.duration": "Client Operation Duration",
     "gen_ai.client.inference.duration": "Client Inference Duration",
     "gen_ai.invoke_agent.inference_calls": "Invoke Agent Inference Calls",
