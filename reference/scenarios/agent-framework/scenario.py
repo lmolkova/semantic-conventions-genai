@@ -10,7 +10,6 @@ from typing import Annotated
 from opentelemetry import trace
 from reference_shared import flush_and_shutdown, inference_duration_view, setup_otel
 
-
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"] + "/v1"
 SKILLS_DIR = pathlib.Path(__file__).parent / "skills"
 # What the skill under SKILLS_DIR actually holds, keyed by the tool that takes it.
