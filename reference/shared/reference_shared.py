@@ -58,15 +58,14 @@ def mock_server_host_port(url: str) -> tuple[str | None, int | None]:
     return parsed.hostname, parsed.port
 
 
-def setup_otel(*, metric_views: tuple[View, ...] = ()):
+def setup_otel(resource: Resource | None = None, *, metric_views: tuple[View, ...] = ()):
     """Configure OTel SDK with OTLP exporters.
 
     Returns (TracerProvider, LoggerProvider, MeterProvider).
     """
+    if resource is None:
+        resource = Resource.get_empty()
     endpoint = os.environ["OTEL_EXPORTER_OTLP_ENDPOINT"]
-    # Empty Resource keeps Weaver live-check focused on the gen_ai.* surface
-    # under test. Real apps should set service.name etc.
-    resource = Resource.get_empty()
 
     tp = TracerProvider(resource=resource)
     tp.add_span_processor(BatchSpanProcessor(OTLPSpanExporter(endpoint=endpoint, insecure=True)))
