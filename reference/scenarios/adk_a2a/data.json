@@ -241,38 +241,6 @@
     },
     {
       "id": "genai_expected_attribute_missing",
-      "message": "Span 'generate_content gemini-2.0-flash' (operation 'generate_content') is missing expected attribute 'gen_ai.provider.name'",
-      "context": {
-        "missing_attribute": "gen_ai.provider.name",
-        "operation": "generate_content"
-      }
-    },
-    {
-      "id": "genai_expected_attribute_missing",
-      "message": "Span 'generate_content gemini-2.0-flash' (operation 'generate_content') is missing expected attribute 'gen_ai.response.id'",
-      "context": {
-        "missing_attribute": "gen_ai.response.id",
-        "operation": "generate_content"
-      }
-    },
-    {
-      "id": "genai_expected_attribute_missing",
-      "message": "Span 'generate_content gemini-2.0-flash' (operation 'generate_content') is missing expected attribute 'gen_ai.response.model'",
-      "context": {
-        "missing_attribute": "gen_ai.response.model",
-        "operation": "generate_content"
-      }
-    },
-    {
-      "id": "genai_expected_attribute_missing",
-      "message": "Span 'generate_content gemini-2.0-flash' (operation 'generate_content') is missing expected attribute 'server.address'",
-      "context": {
-        "missing_attribute": "server.address",
-        "operation": "generate_content"
-      }
-    },
-    {
-      "id": "genai_expected_attribute_missing",
       "message": "Span 'invoke_agent travel_assistant' (operation 'invoke_agent') is missing expected attribute 'gen_ai.response.finish_reasons'",
       "context": {
         "missing_attribute": "gen_ai.response.finish_reasons",
