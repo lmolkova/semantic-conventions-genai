@@ -199,7 +199,7 @@ attributes:
     stability: development
   - key: gen_ai.response.id
     type: string
-    brief: The identifier returned in the response.
+    brief: The identifier for the completion returned in the response.
     examples: ['chatcmpl-123']
     stability: development
   - key: gen_ai.response.model
