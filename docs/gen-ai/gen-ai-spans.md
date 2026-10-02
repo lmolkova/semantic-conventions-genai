@@ -43,7 +43,7 @@ retries.
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-This span represents a logical client call to a Generative AI model or service. The model generates a response or requests a tool call based on the input.
+This span represents a logical client call to Generative AI model or  service that generates a response or requests a tool call based on the input prompt.
 
 **Span kind** SHOULD be `CLIENT` and MAY be set to `INTERNAL` on spans representing
 call to models running in the same process. It's RECOMMENDED to use `CLIENT` kind
