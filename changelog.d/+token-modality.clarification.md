@@ -1,0 +1,1 @@
+Clarify that `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens` are totals across all modalities. Per-modality span attributes are recommended only when the provider reports them. Usage metrics record tokens with no known modality as `unknown`.
