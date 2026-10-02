@@ -235,8 +235,7 @@ spans:
       - ref: gen_ai.response.id
         requirement_level: recommended
       - ref: gen_ai.response.model
-        requirement_level: 
-          recommended: If available.
+        requirement_level: recommended
       - ref: gen_ai.response.finish_reasons
         requirement_level: recommended
       - ref: gen_ai.response.time_to_first_chunk
