@@ -627,8 +627,10 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[3] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[3] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a
@@ -765,8 +767,10 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[3] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[3] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a
@@ -901,8 +905,10 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[3] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[3] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a
@@ -1037,8 +1043,10 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[3] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[3] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a
@@ -1173,8 +1181,10 @@ should have the `gen_ai.provider.name` set to `aws.bedrock` and include
 applicable `aws.bedrock.*` attributes and are not expected to include
 `openai.*` attributes.
 
-**[3] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[3] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a

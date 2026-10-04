@@ -300,8 +300,10 @@ Instrumentations MUST follow [JSON schema](/model/gen-ai/gen-ai-system-instructi
 
 When the attribute is recorded on events, it MUST be recorded in structured form. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.
 
-**[32] `gen_ai.token.modality`:** On token usage metrics, values across all modalities SHOULD add up to the
-total, such as `gen_ai.usage.input_tokens`.
+**[32] `gen_ai.token.modality`:** For each operation, token usage counter measurements across all modalities
+SHOULD add up to the corresponding total, such as the `gen_ai.usage.input_tokens`
+attribute or a measurement on the `gen_ai.client.inference.operation.input_tokens`
+histogram.
 
 Instrumentations SHOULD record tokens as `unknown` when the provider does
 not report their modality or reports one not listed here. For example, if a
@@ -374,7 +376,7 @@ Datastore: A tool used by the agent to access and query structured or unstructur
 
 **[45] `gen_ai.usage.image.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens`.
 
-**[46] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and tokens of all modalities.
+**[46] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and input tokens of all modalities.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.

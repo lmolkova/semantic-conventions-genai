@@ -350,7 +350,7 @@ by the provider or inferred by the instrumentation.
 
 **[22] `gen_ai.usage.image.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens`.
 
-**[23] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and tokens of all modalities.
+**[23] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and input tokens of all modalities.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
@@ -645,7 +645,7 @@ instead of omitting it.
 `error` indicates that the generation ended abnormally, whether reported
 by the provider or inferred by the instrumentation.
 
-**[10] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and tokens of all modalities.
+**[10] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and input tokens of all modalities.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.

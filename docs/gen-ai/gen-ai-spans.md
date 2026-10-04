@@ -219,7 +219,7 @@ by the provider or inferred by the instrumentation.
 
 **[27] `gen_ai.usage.image.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens`.
 
-**[28] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and tokens of all modalities.
+**[28] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and input tokens of all modalities.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
@@ -490,7 +490,7 @@ Instrumentations SHOULD document the list of errors they report.
 
 **[6] `gen_ai.request.encoding_formats`:** In some GenAI systems the encoding formats are called embedding types. Also, some GenAI systems only accept a single format per request.
 
-**[7] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and tokens of all modalities.
+**[7] `gen_ai.usage.input_tokens`:** This value SHOULD include cached tokens and input tokens of all modalities.
 Instrumentations SHOULD make a best effort to populate this value, using a total
 provided by the provider when available or, depending on the provider API,
 by summing different token types parsed from the provider output.
