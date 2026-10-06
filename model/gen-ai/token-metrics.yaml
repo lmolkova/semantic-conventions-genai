@@ -18,9 +18,6 @@ metrics:
 
       When systems report both used tokens and billable tokens, instrumentation
       MUST report billable tokens.
-
-      This metric SHOULD NOT be reported for embeddings operations; use
-      `gen_ai.client.embeddings.operation.input_tokens` instead.
     stability: development
     annotations:
       code_generation:
@@ -96,9 +93,6 @@ metrics:
       it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 
       When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
-
-      This metric SHOULD NOT be reported for embeddings operations; use
-      `gen_ai.client.embeddings.operation.input_tokens` instead.
     stability: development
     annotations:
       code_generation:

@@ -28,7 +28,20 @@ _embeddings_duration = _reference_meter.create_histogram(
     unit="s",
     description="GenAI client embeddings operation duration.",
     explicit_bucket_boundaries_advisory=[
-        0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92,
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32,
+        0.64,
+        1.28,
+        2.56,
+        5.12,
+        10.24,
+        20.48,
+        40.96,
+        81.92,
     ],
 )
 
@@ -645,17 +658,24 @@ def run_embeddings():
         "gen_ai.request.model": request_model,
     }
     start_time = time.perf_counter()
+    metric_attributes = dict(span_attributes_4)
     with _reference_tracer.start_as_current_span("embeddings text-embedding-004", attributes=span_attributes_4) as span:
-        response = client.models.embed_content(
-            model=request_model,
-            contents="Hello, world!",
-        )
-        if response.embeddings and response.embeddings[0].values is not None:
-            span.set_attribute("gen_ai.embeddings.dimension.count", len(response.embeddings[0].values))
-        metric_attributes = dict(span_attributes_4)
-        # The SDK drops the Gemini API `usageMetadata`, so input tokens are not available.
-        _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
-        print(f"    -> embedding dim: {len(response.embeddings[0].values)}")
+        try:
+            response = client.models.embed_content(
+                model=request_model,
+                contents="Hello, world!",
+            )
+            if response.embeddings and response.embeddings[0].values is not None:
+                span.set_attribute("gen_ai.embeddings.dimension.count", len(response.embeddings[0].values))
+            # The SDK drops the Gemini API `usageMetadata`, so input tokens are not available.
+            print(f"    -> embedding dim: {len(response.embeddings[0].values)}")
+        except Exception as e:
+            span.set_status(StatusCode.ERROR, str(e))
+            span.set_attribute("error.type", type(e).__qualname__)
+            metric_attributes["error.type"] = type(e).__qualname__
+            raise
+        finally:
+            _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
 
 
 def run_create_agent():

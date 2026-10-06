@@ -598,7 +598,6 @@ Reports the usage of input tokens following the common [gen_ai.client.inference.
 
 **[1]:** This metric SHOULD be reported when an operation involves the usage of tokens and the count is readily available.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
-This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -730,7 +729,6 @@ Reports the usage of output tokens following the common [gen_ai.client.inference
 
 **[1]:** This metric SHOULD be reported when an operation involves the usage of tokens and the count is readily available.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
-This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -1254,7 +1252,6 @@ Reports the usage of input tokens following the common [gen_ai.client.inference.
 For example, if GenAI system returns usage information in the streaming response, it SHOULD be used. Or if GenAI system returns each token independently, instrumentation SHOULD count number of output tokens and record the result.
 If instrumentation cannot efficiently obtain number of input and/or output tokens, it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
-This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -1374,7 +1371,6 @@ Reports the usage of output tokens following the common [gen_ai.client.inference
 For example, if GenAI system returns usage information in the streaming response, it SHOULD be used. Or if GenAI system returns each token independently, instrumentation SHOULD count number of output tokens and record the result.
 If instrumentation cannot efficiently obtain number of input and/or output tokens, it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
-This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 

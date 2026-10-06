@@ -24,7 +24,20 @@ _embeddings_duration = _reference_meter.create_histogram(
     unit="s",
     description="GenAI client embeddings operation duration.",
     explicit_bucket_boundaries_advisory=[
-        0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92,
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32,
+        0.64,
+        1.28,
+        2.56,
+        5.12,
+        10.24,
+        20.48,
+        40.96,
+        81.92,
     ],
 )
 _embeddings_input_tokens = _reference_meter.create_histogram(
@@ -32,7 +45,20 @@ _embeddings_input_tokens = _reference_meter.create_histogram(
     unit="{token}",
     description="The number of input tokens used per embeddings operation.",
     explicit_bucket_boundaries_advisory=[
-        1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864,
+        1,
+        4,
+        16,
+        64,
+        256,
+        1024,
+        4096,
+        16384,
+        65536,
+        262144,
+        1048576,
+        4194304,
+        16777216,
+        67108864,
     ],
 )
 
