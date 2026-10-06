@@ -6,11 +6,13 @@ against a mock Cohere server, with manual OTel spans.
 
 import json
 import os
+import time
 
 from reference_shared import (
     flush_and_shutdown,
     mock_server_host_port,
     reference_event_logger,
+    reference_meter,
     reference_tracer,
     setup_otel,
 )
@@ -18,6 +20,24 @@ from reference_shared import (
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 
 _reference_tracer = reference_tracer()
+_reference_meter = reference_meter()
+
+_embeddings_duration = _reference_meter.create_histogram(
+    "gen_ai.client.embeddings.duration",
+    unit="s",
+    description="GenAI client embeddings operation duration.",
+    explicit_bucket_boundaries_advisory=[
+        0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92,
+    ],
+)
+_embeddings_input_tokens = _reference_meter.create_histogram(
+    "gen_ai.client.embeddings.operation.input_tokens",
+    unit="{token}",
+    description="The number of input tokens used per embeddings operation.",
+    explicit_bucket_boundaries_advisory=[
+        1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864,
+    ],
+)
 
 
 def run_chat(client):
@@ -153,6 +173,7 @@ def run_embeddings(client):
         span_attributes_3["server.address"] = host
     if port is not None:
         span_attributes_3["server.port"] = port
+    start_time = time.perf_counter()
     with _reference_tracer.start_as_current_span("embeddings embed-v4.0", attributes=span_attributes_3) as span:
         resp = client.embed(
             model=request_model,
@@ -160,10 +181,13 @@ def run_embeddings(client):
             input_type="search_document",
             embedding_types=["float"],
         )
+        metric_attributes = dict(span_attributes_3)
+        _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
         if hasattr(resp, "meta") and resp.meta and hasattr(resp.meta, "billed_units") and resp.meta.billed_units:
             input_tokens = getattr(resp.meta.billed_units, "input_tokens", None)
             if input_tokens is not None:
                 span.set_attribute("gen_ai.usage.input_tokens", int(input_tokens))
+                _embeddings_input_tokens.record(int(input_tokens), metric_attributes)
         print(f"    -> embedding dim: {len(resp.embeddings.float_[0])}")
 
 

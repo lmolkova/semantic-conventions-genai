@@ -18,6 +18,9 @@ metrics:
 
       When systems report both used tokens and billable tokens, instrumentation
       MUST report billable tokens.
+
+      This metric SHOULD NOT be reported for embeddings operations; use
+      `gen_ai.client.embeddings.operation.input_tokens` instead.
     stability: development
     annotations:
       code_generation:
@@ -93,6 +96,9 @@ metrics:
       it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 
       When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+
+      This metric SHOULD NOT be reported for embeddings operations; use
+      `gen_ai.client.embeddings.operation.input_tokens` instead.
     stability: development
     annotations:
       code_generation:
@@ -111,6 +117,23 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
+  - name: gen_ai.client.embeddings.operation.input_tokens
+    requirement_level: recommended
+    instrument: histogram
+    unit: "{token}"
+    brief: 'The number of input tokens used per embeddings operation.'
+    note: >
+      This metric SHOULD be reported when the count is readily available.
+
+      When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+    stability: development
+    annotations:
+      code_generation:
+        metric_value_type: int
+    attributes:
+      - ref_group: metric_attributes.gen_ai
+      - ref: gen_ai.operation.name
+        examples: ["embeddings"]
 metric_refinements:
   - id: openai.gen_ai.client.inference.usage.input_tokens
     ref: gen_ai.client.inference.usage.input_tokens

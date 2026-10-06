@@ -394,7 +394,7 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 ### Embeddings
 
-See [common embeddings span definition](./gen-ai-spans.md#embeddings).
+See [common embeddings span definition](./client-embeddings.md#span-gen_aiclientembeddings).
 
 ### Fetch response
 
@@ -598,6 +598,7 @@ Reports the usage of input tokens following the common [gen_ai.client.inference.
 
 **[1]:** This metric SHOULD be reported when an operation involves the usage of tokens and the count is readily available.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -729,6 +730,7 @@ Reports the usage of output tokens following the common [gen_ai.client.inference
 
 **[1]:** This metric SHOULD be reported when an operation involves the usage of tokens and the count is readily available.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -1252,6 +1254,7 @@ Reports the usage of input tokens following the common [gen_ai.client.inference.
 For example, if GenAI system returns usage information in the streaming response, it SHOULD be used. Or if GenAI system returns each token independently, instrumentation SHOULD count number of output tokens and record the result.
 If instrumentation cannot efficiently obtain number of input and/or output tokens, it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -1371,6 +1374,7 @@ Reports the usage of output tokens following the common [gen_ai.client.inference
 For example, if GenAI system returns usage information in the streaming response, it SHOULD be used. Or if GenAI system returns each token independently, instrumentation SHOULD count number of output tokens and record the result.
 If instrumentation cannot efficiently obtain number of input and/or output tokens, it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+This metric SHOULD NOT be reported for embeddings operations; use `gen_ai.client.embeddings.operation.input_tokens` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
@@ -1486,7 +1490,7 @@ Measures the to complete an operation following the common [gen_ai.client.operat
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `gen_ai.client.operation.duration` | Histogram | `s` | OpenAI-specific extension to `gen_ai.client.operation.duration`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. [1] | ![Development](https://img.shields.io/badge/-development-blue) | |
 
-**[1]:** This metric SHOULD NOT be reported for inference operations; use `gen_ai.client.inference.duration` instead.
+**[1]:** This metric SHOULD NOT be reported for inference or embeddings operations; use `gen_ai.client.inference.duration` or `gen_ai.client.embeddings.duration` instead.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/general/signal-requirement-level.md).
 
