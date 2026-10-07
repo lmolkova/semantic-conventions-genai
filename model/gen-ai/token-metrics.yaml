@@ -128,6 +128,11 @@ metrics:
       - ref_group: metric_attributes.gen_ai
       - ref: gen_ai.operation.name
         examples: ["embeddings"]
+        note: SHOULD be `embeddings`.
+      - ref: gen_ai.request.model
+        examples: ["text-embedding-3-small", "gemini-embedding-001"]
+      - ref: gen_ai.response.model
+        examples: ["text-embedding-3-small"]
 metric_refinements:
   - id: openai.gen_ai.client.inference.usage.input_tokens
     ref: gen_ai.client.inference.usage.input_tokens

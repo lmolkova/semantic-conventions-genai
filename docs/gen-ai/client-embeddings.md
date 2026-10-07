@@ -37,8 +37,6 @@ Examples of embeddings operations include:
 
 Describes a GenAI embeddings operation - a client call to a model or service that returns embeddings for one or more inputs.
 
-The `gen_ai.operation.name` SHOULD be `embeddings`.
-
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
 
 **Span kind** SHOULD be `CLIENT`.
@@ -54,15 +52,15 @@ The `gen_ai.operation.name` SHOULD be `embeddings`.
 | [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `embeddings` |
 | [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [4] | `gpt-4` |
+| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [4] | `text-embedding-3-small`; `gemini-embedding-001` |
 | [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [5] | `80`; `8080`; `443` |
 | [`gen_ai.embeddings.dimension.count`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of dimensions the resulting output embeddings should have. | `512`; `1024` |
 | [`gen_ai.request.encoding_formats`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string[] | The encoding formats requested in an embeddings operation, if specified. [6] | `["base64"]`; `["float", "binary"]` |
-| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
+| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `text-embedding-3-small` |
 | [`gen_ai.usage.input_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The number of tokens used in the GenAI input (prompt). [7] | `100` |
 | [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [8] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 
-**[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+**[1] `gen_ai.operation.name`:** SHOULD be `embeddings`.
 
 **[2] `gen_ai.provider.name`:** Semantic conventions for individual GenAI operations SHOULD clarify which
 kinds of providers (e.g. inference, embeddings, retrieval, memory, hosted
@@ -92,23 +90,11 @@ Instrumentations SHOULD document the list of errors they report.
 
 **[6] `gen_ai.request.encoding_formats`:** In some GenAI systems the encoding formats are called embedding types. Also, some GenAI systems only accept a single format per request.
 
-**[7] `gen_ai.usage.input_tokens`:** This value SHOULD include all types of input tokens, including cached tokens.
-Instrumentations SHOULD make a best effort to populate this value, using a total
-provided by the provider when available or, depending on the provider API,
-by summing different token types parsed from the provider output.
+**[7] `gen_ai.usage.input_tokens`:** The total number of input tokens across all inputs in the request,
+as reported by the provider.
 
-When the provider reports both billed token counts and model-consumed
-token counts (for example, Cohere exposes both `usage.billed_units` and
-`usage.tokens`), instrumentations SHOULD report the billed count so the
-value matches the units the customer is charged for.
-
-Detailed usage attributes are subsets of total and aggregate counts. For example,
-if a request has 100 text tokens (40 cached) and 200 image tokens:
-- `gen_ai.usage.input_tokens`: 300
-- `gen_ai.usage.cache_read.input_tokens`: 40
-- `gen_ai.usage.text.input_tokens`: 100
-- `gen_ai.usage.text.cache_read.input_tokens`: 40
-- `gen_ai.usage.image.input_tokens`: 200
+When the provider reports both billed and model-consumed token counts,
+instrumentations SHOULD report the billed count.
 
 **[8] `server.address`:** When observed from the client side, and when communicating through an intermediary, `server.address` SHOULD represent the server address behind any intermediaries, for example proxies, if it's available.
 
@@ -193,10 +179,6 @@ and SHOULD be provided **at span creation time** (if provided at all):
 
 The following metric instruments describe Generative AI embeddings operations.
 
-Embeddings operations do not have token usage counters. Use the
-`gen_ai.client.embeddings.operation.input_tokens` histogram sum for total
-input token consumption.
-
 ### Metric: `gen_ai.client.embeddings.duration`
 
 This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
@@ -222,12 +204,12 @@ When this metric is reported alongside a `gen_ai.client.embeddings` span, the me
 | [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `embeddings` |
 | [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [3] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [4] | `gpt-4` |
+| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [4] | `text-embedding-3-small`; `gemini-embedding-001` |
 | [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [5] | `80`; `8080`; `443` |
-| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
+| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `text-embedding-3-small` |
 | [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [6] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 
-**[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+**[1] `gen_ai.operation.name`:** SHOULD be `embeddings`.
 
 **[2] `gen_ai.provider.name`:** Semantic conventions for individual GenAI operations SHOULD clarify which
 kinds of providers (e.g. inference, embeddings, retrieval, memory, hosted
@@ -349,12 +331,12 @@ When systems report both used tokens and billable tokens, instrumentation MUST r
 | --- | --- | --- | --- | --- | --- |
 | [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `embeddings` |
 | [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [2] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [3] | `gpt-4` |
+| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. [3] | `text-embedding-3-small`; `gemini-embedding-001` |
 | [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [4] | `80`; `8080`; `443` |
-| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `gpt-4-0613` |
+| [`gen_ai.response.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | The name of the model that generated the response. | `text-embedding-3-small` |
 | [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.44.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [5] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 
-**[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
+**[1] `gen_ai.operation.name`:** SHOULD be `embeddings`.
 
 **[2] `gen_ai.provider.name`:** Semantic conventions for individual GenAI operations SHOULD clarify which
 kinds of providers (e.g. inference, embeddings, retrieval, memory, hosted

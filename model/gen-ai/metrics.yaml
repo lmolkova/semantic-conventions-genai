@@ -76,6 +76,11 @@ metrics:
       - ref_group: attributes.gen_ai.error
       - ref: gen_ai.operation.name
         examples: ["embeddings"]
+        note: SHOULD be `embeddings`.
+      - ref: gen_ai.request.model
+        examples: ["text-embedding-3-small", "gemini-embedding-001"]
+      - ref: gen_ai.response.model
+        examples: ["text-embedding-3-small"]
   - name: gen_ai.client.inference.time_to_first_chunk
     requirement_level: recommended
     instrument: histogram
