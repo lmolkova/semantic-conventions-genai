@@ -20,6 +20,12 @@ metrics:
       MUST report billable tokens.
 
       See `gen_ai.token.modality` for how to split tokens by modality.
+
+      Instrumentations SHOULD record this metric for each inference operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage. When no usage is received, the `0` is
+      recorded with `gen_ai.token.modality` set to `unknown`.
     stability: development
     annotations:
       code_generation:
@@ -45,6 +51,11 @@ metrics:
     brief: 'The number of input tokens served from a provider-managed cache.'
     note: >
       This value is a subset of `gen_ai.client.inference.usage.input_tokens`.
+
+      Instrumentations SHOULD record this metric for each inference operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage.
     stability: development
     annotations:
       code_generation:
@@ -58,6 +69,11 @@ metrics:
     brief: 'The number of input tokens written to a provider-managed cache.'
     note: >
       This value is a subset of `gen_ai.client.inference.usage.input_tokens`.
+
+      Instrumentations SHOULD record this metric for each inference operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage.
     stability: development
     annotations:
       code_generation:
@@ -71,6 +87,11 @@ metrics:
     brief: 'The number of output tokens used for reasoning (e.g. chain-of-thought, extended thinking).'
     note: >
       This value is a subset of `gen_ai.client.inference.usage.output_tokens`.
+
+      Instrumentations SHOULD record this metric for each inference operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage.
     stability: development
     annotations:
       code_generation:
@@ -95,12 +116,18 @@ metrics:
       it MAY allow users to enable offline token counting. Otherwise it MUST NOT report usage metrics.
 
       When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+
+      Instrumentations SHOULD record this metric for each inference operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage.
     stability: development
     annotations:
       code_generation:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
+      - ref_group: attributes.gen_ai.error
   - name: gen_ai.client.inference.operation.output_tokens
     requirement_level: recommended
     instrument: histogram
@@ -113,8 +140,9 @@ metrics:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
+      - ref_group: attributes.gen_ai.error
 metric_refinements:
-  - id: openai.client.inference.usage.input_tokens
+  - id: openai.gen_ai.client.inference.usage.input_tokens
     ref: gen_ai.client.inference.usage.input_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.usage.input_tokens`. Adds
@@ -123,7 +151,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.usage.output_tokens
+  - id: openai.gen_ai.client.inference.usage.output_tokens
     ref: gen_ai.client.inference.usage.output_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.usage.output_tokens`. Adds
@@ -132,7 +160,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.usage.cache_read.input_tokens
+  - id: openai.gen_ai.client.inference.usage.cache_read.input_tokens
     ref: gen_ai.client.inference.usage.cache_read.input_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.usage.cache_read.input_tokens`. Adds
@@ -141,7 +169,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.usage.cache_write.input_tokens
+  - id: openai.gen_ai.client.inference.usage.cache_write.input_tokens
     ref: gen_ai.client.inference.usage.cache_write.input_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.usage.cache_write.input_tokens`. Adds
@@ -150,7 +178,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.usage.reasoning.output_tokens
+  - id: openai.gen_ai.client.inference.usage.reasoning.output_tokens
     ref: gen_ai.client.inference.usage.reasoning.output_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.usage.reasoning.output_tokens`. Adds
@@ -159,7 +187,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.operation.input_tokens
+  - id: openai.gen_ai.client.inference.operation.input_tokens
     ref: gen_ai.client.inference.operation.input_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.operation.input_tokens`. Adds
@@ -168,7 +196,7 @@ metric_refinements:
     stability: development
     attributes:
       - ref_group: metric_attributes.openai
-  - id: openai.client.inference.operation.output_tokens
+  - id: openai.gen_ai.client.inference.operation.output_tokens
     ref: gen_ai.client.inference.operation.output_tokens
     brief: >
       OpenAI-specific extension to `gen_ai.client.inference.operation.output_tokens`. Adds
