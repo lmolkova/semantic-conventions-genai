@@ -50,11 +50,11 @@ call to models running in the same process. It's RECOMMENDED to use `CLIENT` kin
 when the GenAI system being instrumented usually runs in a different process than its
 client or when the GenAI call happens over instrumented protocol such as HTTP.
 
-One client request may involve server-side tool calls and multiple
-inference operations. The model provider or server, when instrumented,
-may record them as nested inference spans.
+One client request may involve multiple server-side inference operations.
+The model provider or server, when instrumented, may record those operations
+as nested inference spans.
 
-Telemetry consumers should group inference spans by `service.name`
+Telemetry consumers should group inference spans by [`service.name`](https://opentelemetry.io/docs/specs/semconv/registry/entities/service/)
 when counting operations or tokens.
 
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
