@@ -66,7 +66,6 @@ def run_chat():
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": choice.message.content}],
-                        "finish_reason": choice.finish_reason,
                     }
                     for choice in resp.choices
                     if choice.message.content
@@ -93,7 +92,6 @@ def run_chat():
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": c.message.content}],
-                        "finish_reason": c.finish_reason,
                     }
                     for c in resp.choices
                     if c.message.content
@@ -148,24 +146,28 @@ def run_chat_streaming():
             stream=True,
         )
         text = ""
-        finish_reason = None
+        seen_choice_indexes = set()
+        finish_reasons_by_index = {}
         response_id = None
         response_model = None
         for chunk in resp:
-            if not response_id:
-                response_id = chunk.id
-            if not response_model:
-                response_model = chunk.model
-            if chunk.choices[0].delta.content:
-                text += chunk.choices[0].delta.content
-            if chunk.choices[0].finish_reason is not None:
-                finish_reason = chunk.choices[0].finish_reason
+            response_id = response_id or chunk.id
+            response_model = response_model or chunk.model
+            for choice in chunk.choices:
+                seen_choice_indexes.add(choice.index)
+                if choice.index == 0 and choice.delta.content:
+                    text += choice.delta.content
+                if choice.finish_reason is not None:
+                    finish_reasons_by_index[choice.index] = choice.finish_reason
+        if seen_choice_indexes:
+            span.set_attribute(
+                "gen_ai.response.finish_reasons",
+                [finish_reasons_by_index.get(index, "error") for index in range(max(seen_choice_indexes) + 1)],
+            )
         if response_id:
             span.set_attribute("gen_ai.response.id", response_id)
         if response_model:
             span.set_attribute("gen_ai.response.model", response_model)
-        if finish_reason:
-            span.set_attribute("gen_ai.response.finish_reasons", [finish_reason])
         span.set_attribute(
             "gen_ai.output.messages",
             json.dumps(
@@ -173,7 +175,6 @@ def run_chat_streaming():
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": text}],
-                        **({"finish_reason": finish_reason} if finish_reason is not None else {}),
                     }
                 ]
             ),

@@ -149,7 +149,6 @@ def run_invoke_agent(client):
 
             if response_text:
                 span.set_attribute("gen_ai.output.type", "text")
-                response_finish_reason = "stop" if response.status == "completed" else response.status
                 span.set_attribute(
                     "gen_ai.output.messages",
                     json.dumps(
@@ -157,7 +156,6 @@ def run_invoke_agent(client):
                             {
                                 "role": "assistant",
                                 "parts": [{"type": "text", "content": response_text}],
-                                "finish_reason": response_finish_reason,
                             }
                         ]
                     ),

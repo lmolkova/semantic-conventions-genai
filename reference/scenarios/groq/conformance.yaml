@@ -23,3 +23,16 @@ scenarios:
           operation: chat
           missing_attribute: gen_ai.usage.output_tokens
         reason: Mock needs to include usage in streaming chunks.
+    spans:
+      - match:
+          attributes:
+            gen_ai.operation.name: chat
+          type: gen_ai.client.inference
+      - match:
+          attributes:
+            gen_ai.operation.name: generate_content
+          type: gen_ai.client.inference
+      - match:
+          attributes:
+            gen_ai.operation.name: text_completion
+          type: gen_ai.client.inference

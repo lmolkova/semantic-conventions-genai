@@ -10,12 +10,50 @@ from contextlib import contextmanager
 from urllib.parse import urlparse
 
 from opentelemetry.trace import SpanKind, StatusCode
-from reference_shared import flush_and_shutdown, reference_event_logger, reference_tracer, setup_otel
+from reference_shared import (
+    flush_and_shutdown,
+    reference_event_logger,
+    reference_meter,
+    reference_tracer,
+    setup_otel,
+)
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 _SERVER_ADDRESS = urlparse(MOCK_BASE_URL).hostname
 
 _reference_tracer = reference_tracer()
+_reference_meter = reference_meter()
+
+_operation_input_tokens = _reference_meter.create_histogram(
+    "gen_ai.client.inference.operation.input_tokens",
+    unit="{token}",
+    description="The number of input (prompt) tokens used per inference operation.",
+)
+_operation_output_tokens = _reference_meter.create_histogram(
+    "gen_ai.client.inference.operation.output_tokens",
+    unit="{token}",
+    description="The number of output (completion) tokens used per inference operation.",
+)
+_input_tokens = _reference_meter.create_counter(
+    "gen_ai.client.inference.usage.input_tokens",
+    unit="{token}",
+    description="The number of input (prompt) tokens used, including cached tokens.",
+)
+_output_tokens = _reference_meter.create_counter(
+    "gen_ai.client.inference.usage.output_tokens",
+    unit="{token}",
+    description="The number of output (completion) tokens used, including reasoning tokens.",
+)
+_cache_read_input_tokens = _reference_meter.create_counter(
+    "gen_ai.client.inference.usage.cache_read.input_tokens",
+    unit="{token}",
+    description="The number of input tokens served from a provider-managed cache.",
+)
+_reasoning_output_tokens = _reference_meter.create_counter(
+    "gen_ai.client.inference.usage.reasoning.output_tokens",
+    unit="{token}",
+    description="The number of output tokens used for reasoning.",
+)
 
 
 @contextmanager
@@ -60,7 +98,8 @@ def _patch_automatic_function_calling():
                 result_parts = original(single, function_map)
                 for result_part in result_parts:
                     tool_span.set_attribute(
-                        "gen_ai.tool.call.result", json.dumps(result_part.function_response.response)
+                        "gen_ai.tool.call.result",
+                        json.dumps({"output": result_part.function_response.response}),
                     )
                 parts.extend(result_parts)
         return parts
@@ -70,6 +109,135 @@ def _patch_automatic_function_calling():
         yield
     finally:
         _extra_utils.get_function_response_parts = original
+
+
+# Maps Google `MediaModality` values to the `gen_ai.usage.<modality>.*` suffix.
+_MODALITY_MAP = {
+    "TEXT": "text",
+    "IMAGE": "image",
+    "AUDIO": "audio",
+}
+
+
+def _entry_modality(entry):
+    raw = getattr(entry, "modality", None)
+    name = getattr(raw, "name", str(raw)).split(".")[-1].upper()
+    return _MODALITY_MAP.get(name)
+
+
+def _modality_usage_attributes(usage_metadata):
+    """Map Google per-modality token details to `gen_ai.usage.<modality>.*` attributes."""
+    attrs = {}
+    for details, suffix in (
+        (getattr(usage_metadata, "prompt_tokens_details", None), "input_tokens"),
+        (getattr(usage_metadata, "candidates_tokens_details", None), "output_tokens"),
+        (getattr(usage_metadata, "cache_tokens_details", None), "cache_read.input_tokens"),
+    ):
+        for entry in details or []:
+            modality = _entry_modality(entry)
+            count = getattr(entry, "token_count", None)
+            if modality and count:
+                attrs[f"gen_ai.usage.{modality}.{suffix}"] = count
+    return attrs
+
+
+def _usage_attributes(um):
+    """All `gen_ai.usage.*` attributes derivable from Google usage metadata.
+
+    Returned as a dict so the exact same attributes can be set on both the span
+    and the inference-details event.
+    """
+    attrs = {}
+    reasoning_tokens = getattr(um, "thoughts_token_count", None) or 0
+    cache_read_tokens = getattr(um, "cached_content_token_count", None) or 0
+    # Tool-use tokens are reported separately from prompt_token_count, so add
+    # them to get the total input token count.
+    tool_use_tokens = getattr(um, "tool_use_prompt_token_count", None) or 0
+    if um.prompt_token_count:
+        # prompt_token_count already includes cached content.
+        attrs["gen_ai.usage.input_tokens"] = um.prompt_token_count + tool_use_tokens
+    # Google reports "thoughts" (reasoning) tokens separately from the visible
+    # candidates, so include them in the output token total.
+    output_tokens = (um.candidates_token_count or 0) + reasoning_tokens
+    if output_tokens:
+        attrs["gen_ai.usage.output_tokens"] = output_tokens
+    if cache_read_tokens:
+        attrs["gen_ai.usage.cache_read.input_tokens"] = cache_read_tokens
+    if reasoning_tokens:
+        attrs["gen_ai.usage.reasoning.output_tokens"] = reasoning_tokens
+    attrs.update(_modality_usage_attributes(um))
+    return attrs
+
+
+def _usage_metric_attributes(request_model, response):
+    """Build the attributes shared by every inference usage instrument."""
+    attributes = {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "gcp.gemini",
+        "gen_ai.request.model": request_model,
+    }
+    if response.model_version:
+        attributes["gen_ai.response.model"] = response.model_version
+    return attributes
+
+
+def _add_by_modality(counter, total, suffix, usage, metric_attributes):
+    """Split `total` across the modalities Google reported for `suffix`.
+
+    Whatever the per-modality entries leave unaccounted for goes to `unknown`:
+    tool-use prompt tokens and reasoning tokens are counted in the totals but
+    carry no modality of their own.
+    """
+    remainder = total
+    for modality in _MODALITY_MAP.values():
+        count = usage.get(f"gen_ai.usage.{modality}.{suffix}")
+        if count:
+            counter.add(count, {**metric_attributes, "gen_ai.token.modality": modality})
+            remainder -= count
+    if remainder > 0:
+        counter.add(remainder, {**metric_attributes, "gen_ai.token.modality": "unknown"})
+
+
+def _record_inference_usage(usage, metric_attributes):
+    """Record the usage instruments from the same `gen_ai.usage.*` values the span carries."""
+    input_tokens = usage.get("gen_ai.usage.input_tokens")
+    if input_tokens is not None:
+        _operation_input_tokens.record(input_tokens, metric_attributes)
+        _add_by_modality(_input_tokens, input_tokens, "input_tokens", usage, metric_attributes)
+    output_tokens = usage.get("gen_ai.usage.output_tokens")
+    if output_tokens is not None:
+        _operation_output_tokens.record(output_tokens, metric_attributes)
+        _add_by_modality(_output_tokens, output_tokens, "output_tokens", usage, metric_attributes)
+    cache_read_tokens = usage.get("gen_ai.usage.cache_read.input_tokens")
+    if cache_read_tokens:
+        _add_by_modality(
+            _cache_read_input_tokens, cache_read_tokens, "cache_read.input_tokens", usage, metric_attributes
+        )
+    reasoning_tokens = usage.get("gen_ai.usage.reasoning.output_tokens")
+    if reasoning_tokens:
+        # Google reports no modality for thoughts tokens.
+        _reasoning_output_tokens.add(reasoning_tokens, {**metric_attributes, "gen_ai.token.modality": "unknown"})
+
+
+def _emit_inference_event(request_model, input_messages, output_messages, response, usage):
+    """Emit an inference-details event carrying the same usage attributes as the span."""
+    event_attrs = {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "gcp.gemini",
+        "gen_ai.request.model": request_model,
+        "gen_ai.input.messages": json.dumps(input_messages),
+        "gen_ai.output.messages": json.dumps(output_messages),
+    }
+    if response.model_version:
+        event_attrs["gen_ai.response.model"] = response.model_version
+    if response.candidates and response.candidates[0].finish_reason:
+        event_attrs["gen_ai.response.finish_reasons"] = [str(response.candidates[0].finish_reason)]
+    event_attrs.update(usage)
+    reference_event_logger().emit(
+        event_name="gen_ai.client.inference.operation.details",
+        body="Inference operation details",
+        attributes=event_attrs,
+    )
 
 
 def run_chat():
@@ -106,50 +274,21 @@ def run_chat():
             span.set_attribute("gen_ai.response.model", response.model_version)
         if response.candidates and response.candidates[0].finish_reason:
             span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
+        usage = {}
         if hasattr(response, "usage_metadata") and response.usage_metadata:
-            if hasattr(response.usage_metadata, "prompt_token_count") and response.usage_metadata.prompt_token_count:
-                span.set_attribute("gen_ai.usage.input_tokens", response.usage_metadata.prompt_token_count)
-            if (
-                hasattr(response.usage_metadata, "candidates_token_count")
-                and response.usage_metadata.candidates_token_count
-            ):
-                span.set_attribute("gen_ai.usage.output_tokens", response.usage_metadata.candidates_token_count)
+            usage = _usage_attributes(response.usage_metadata)
+            for attr, value in usage.items():
+                span.set_attribute(attr, value)
+            _record_inference_usage(usage, _usage_metric_attributes(request_model, response))
 
-        # Emit inference operation details event
-        event_attrs = {
-            "gen_ai.operation.name": "chat",
-            "gen_ai.provider.name": "gcp.gemini",
-            "gen_ai.request.model": request_model,
-            "gen_ai.input.messages": json.dumps(
-                [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
-            ),
-            "gen_ai.output.messages": json.dumps(
-                [
-                    {
-                        "role": "assistant",
-                        "parts": [{"type": "text", "content": response.text}],
-                        "finish_reason": str(response.candidates[0].finish_reason) if response.candidates else None,
-                    }
-                ]
-            ),
-        }
-        if response.model_version:
-            event_attrs["gen_ai.response.model"] = response.model_version
-        if response.candidates and response.candidates[0].finish_reason:
-            event_attrs["gen_ai.response.finish_reasons"] = [str(response.candidates[0].finish_reason)]
-        if hasattr(response, "usage_metadata") and response.usage_metadata:
-            if hasattr(response.usage_metadata, "prompt_token_count") and response.usage_metadata.prompt_token_count:
-                event_attrs["gen_ai.usage.input_tokens"] = response.usage_metadata.prompt_token_count
-            if (
-                hasattr(response.usage_metadata, "candidates_token_count")
-                and response.usage_metadata.candidates_token_count
-            ):
-                event_attrs["gen_ai.usage.output_tokens"] = response.usage_metadata.candidates_token_count
-        reference_event_logger().emit(
-            event_name="gen_ai.client.inference.operation.details",
-            body="Inference operation details",
-            attributes=event_attrs,
-        )
+        input_messages = [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
+        output_messages = [
+            {
+                "role": "assistant",
+                "parts": [{"type": "text", "content": response.text}],
+            }
+        ]
+        _emit_inference_event(request_model, input_messages, output_messages, response, usage)
 
         print(f"    -> {response.text[:60]}")
 
@@ -214,7 +353,6 @@ def run_interactions_continuation():
                     {
                         "role": "assistant",
                         "parts": [{"type": "text", "content": "This is a response from the mock interactions server."}],
-                        "finish_reason": "stop" if interaction.status == "completed" else interaction.status,
                     }
                 ]
             ),
@@ -300,22 +438,144 @@ def run_chat_tool_call():
             span.set_attribute("gen_ai.response.model", response.model_version)
         if response.candidates and response.candidates[0].finish_reason:
             span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
+        usage = {}
         if hasattr(response, "usage_metadata") and response.usage_metadata:
-            if hasattr(response.usage_metadata, "prompt_token_count") and response.usage_metadata.prompt_token_count:
-                span.set_attribute("gen_ai.usage.input_tokens", response.usage_metadata.prompt_token_count)
-            if (
-                hasattr(response.usage_metadata, "candidates_token_count")
-                and response.usage_metadata.candidates_token_count
-            ):
-                span.set_attribute("gen_ai.usage.output_tokens", response.usage_metadata.candidates_token_count)
+            usage = _usage_attributes(response.usage_metadata)
+            for attr, value in usage.items():
+                span.set_attribute(attr, value)
+            _record_inference_usage(usage, _usage_metric_attributes(request_model, response))
+
+        tool_call = None
         if response.candidates and response.candidates[0].content.parts:
             part = response.candidates[0].content.parts[0]
             if hasattr(part, "function_call") and part.function_call:
-                print(f"    -> tool_call: {part.function_call.name}")
-            else:
-                print(f"    -> {response.text[:60]}")
-        else:
-            print(f"    -> {response.text[:60]}")
+                tool_call = part.function_call
+        input_messages = [{"role": "user", "parts": [{"type": "text", "content": "What's the weather in Seattle?"}]}]
+        output_messages = [
+            {
+                "role": "assistant",
+                "parts": (
+                    [{"type": "tool_call", "name": tool_call.name, "arguments": dict(tool_call.args)}]
+                    if tool_call
+                    else [{"type": "text", "content": response.text}]
+                ),
+            }
+        ]
+        _emit_inference_event(request_model, input_messages, output_messages, response, usage)
+        print(f"    -> tool_call: {tool_call.name}" if tool_call else f"    -> {response.text[:60]}")
+
+
+def run_chat_multimodal():
+    """Scenario: multimodal (text + image + audio) input, per-modality usage."""
+    from google import genai
+    from google.genai import types
+
+    print("  [chat_multimodal] multimodal input chat via Google GenAI (reference implementation)")
+    client = genai.Client(
+        api_key="mock-key",
+        http_options=types.HttpOptions(base_url=MOCK_BASE_URL, api_version="v1beta"),
+    )
+    request_model = "gemini-2.0-flash"
+    # Payload bytes are ignored by the mock, which only inspects the MIME type.
+    blob = b"\x00" * 16
+    import base64
+
+    blob_b64 = base64.b64encode(blob).decode("ascii")
+    span_attributes = {
+        "gen_ai.operation.name": "chat",
+        "gen_ai.provider.name": "gcp.gemini",
+        "gen_ai.request.model": request_model,
+    }
+    with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes) as span:
+        response = client.models.generate_content(
+            model=request_model,
+            contents=[
+                "Summarize the attached media.",
+                types.Part.from_bytes(data=blob, mime_type="image/png"),
+                types.Part.from_bytes(data=blob, mime_type="audio/wav"),
+            ],
+        )
+        if response.model_version:
+            span.set_attribute("gen_ai.response.model", response.model_version)
+        if response.candidates and response.candidates[0].finish_reason:
+            span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
+        usage = {}
+        if hasattr(response, "usage_metadata") and response.usage_metadata:
+            usage = _usage_attributes(response.usage_metadata)
+            for attr, value in usage.items():
+                span.set_attribute(attr, value)
+            _record_inference_usage(usage, _usage_metric_attributes(request_model, response))
+
+        input_messages = [
+            {
+                "role": "user",
+                "parts": [
+                    {"type": "text", "content": "Summarize the attached media."},
+                    {"type": "blob", "mime_type": "image/png", "modality": "image", "content": blob_b64},
+                    {"type": "blob", "mime_type": "audio/wav", "modality": "audio", "content": blob_b64},
+                ],
+            }
+        ]
+        output_messages = [
+            {
+                "role": "assistant",
+                "parts": [{"type": "text", "content": response.text}],
+            }
+        ]
+        _emit_inference_event(request_model, input_messages, output_messages, response, usage)
+        print("    -> multimodal usage captured")
+
+
+def run_generate_media():
+    """Scenario: image + audio output generation, emitting per-modality output usage."""
+    from google import genai
+    from google.genai import types
+
+    print("  [generate_media] media generation via Google GenAI (reference implementation)")
+    client = genai.Client(
+        api_key="mock-key",
+        http_options=types.HttpOptions(base_url=MOCK_BASE_URL, api_version="v1beta"),
+    )
+    request_model = "gemini-2.0-flash"
+    # (label, requested output modalities) -> exercises image and audio output token counts.
+    for label, modalities in (("image", ["TEXT", "IMAGE"]), ("audio", ["AUDIO"])):
+        span_attributes = {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "gcp.gemini",
+            "gen_ai.request.model": request_model,
+        }
+        with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes) as span:
+            response = client.models.generate_content(
+                model=request_model,
+                contents=f"Generate {label} output.",
+                config=types.GenerateContentConfig(response_modalities=modalities),
+            )
+            if response.model_version:
+                span.set_attribute("gen_ai.response.model", response.model_version)
+            if response.candidates and response.candidates[0].finish_reason:
+                span.set_attribute("gen_ai.response.finish_reasons", [str(response.candidates[0].finish_reason)])
+            usage = {}
+            if hasattr(response, "usage_metadata") and response.usage_metadata:
+                usage = _usage_attributes(response.usage_metadata)
+                for attr, value in usage.items():
+                    span.set_attribute(attr, value)
+                _record_inference_usage(usage, _usage_metric_attributes(request_model, response))
+
+            input_messages = [{"role": "user", "parts": [{"type": "text", "content": f"Generate {label} output."}]}]
+            output_parts = []
+            for part in (response.candidates[0].content.parts if response.candidates else []) or []:
+                if getattr(part, "text", None):
+                    output_parts.append({"type": "text", "content": part.text})
+                elif getattr(part, "inline_data", None):
+                    output_parts.append({"type": "blob", "mime_type": part.inline_data.mime_type})
+            output_messages = [
+                {
+                    "role": "assistant",
+                    "parts": output_parts,
+                }
+            ]
+            _emit_inference_event(request_model, input_messages, output_messages, response, usage)
+            print(f"    -> {label} output usage captured")
 
 
 def run_chat_streaming():
@@ -459,6 +719,8 @@ def main():
     run_chat()
     run_interactions_continuation()
     run_chat_tool_call()
+    run_chat_multimodal()
+    run_generate_media()
     run_chat_streaming()
     run_embeddings()
     run_create_agent()

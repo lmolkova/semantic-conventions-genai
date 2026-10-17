@@ -12,6 +12,7 @@
       "server.port"
     ],
     "gen_ai.execute_tool.internal": [
+      "gen_ai.conversation.id",
       "gen_ai.operation.name",
       "gen_ai.tool.call.arguments",
       "gen_ai.tool.call.id",
@@ -42,5 +43,16 @@
     ]
   },
   "events": {},
-  "metrics": {}
+  "metrics": {},
+  "findings": [
+    {
+      "id": "genai_expected_attribute_missing",
+      "message": "Span 'invoke_agent refimpl-test-assistant' (operation 'invoke_agent') is missing expected attribute 'gen_ai.response.finish_reasons'",
+      "context": {
+        "missing_attribute": "gen_ai.response.finish_reasons",
+        "operation": "invoke_agent"
+      }
+    }
+  ],
+  "entities": {}
 }

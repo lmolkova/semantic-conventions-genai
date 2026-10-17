@@ -66,10 +66,10 @@ attributes:
           stability: development
           value: "groq"
           brief: '[Groq](https://groq.com/)'
-        - id: mistral_ai
+        - id: mistral
           stability: development
-          value: "mistral_ai"
-          brief: '[Mistral AI](https://mistral.ai/)'
+          value: "mistral"
+          brief: '[Mistral](https://mistral.ai/)'
         - id: moonshot_ai
           stability: development
           value: "moonshot_ai"
@@ -174,7 +174,7 @@ attributes:
       The reasoning or thinking effort level requested for a GenAI model.
     note: >
       The value SHOULD be the exact string value sent to the provider.
-      
+
       Semantic conventions for individual providers SHOULD document
       which input parameter maps to this attribute.
     examples: ['low', 'medium', 'high']
@@ -210,9 +210,22 @@ attributes:
   - key: gen_ai.response.finish_reasons
     type: string[]
     brief: Array of reasons the model stopped generating tokens, corresponding to each generation received.
+    note: |
+      Values correspond to generations in the same order as the returned
+      choices/candidates.
+
+      Each position SHOULD contain the finish reason for the corresponding
+      choice/candidate. If a finish reason was expected but not received, for
+      example because generation failed, was cancelled, or a stream ended before
+      the final event, instrumentations SHOULD report `error` for that position
+      instead of omitting it.
+
+      `error` indicates that the generation ended abnormally, whether reported
+      by the provider or inferred by the instrumentation.
     examples:
       - [stop]
       - [stop, length]
+      - [stop, length, error]
     stability: development
   - key: gen_ai.response.status
     type:
@@ -275,6 +288,14 @@ attributes:
       token counts (for example, Cohere exposes both `usage.billed_units` and
       `usage.tokens`), instrumentations SHOULD report the billed count so the
       value matches the units the customer is charged for.
+
+      Detailed usage attributes are subsets of total and aggregate counts. For example,
+      if a request has 100 text tokens (40 cached) and 200 image tokens:
+      - `gen_ai.usage.input_tokens`: 300
+      - `gen_ai.usage.cache_read.input_tokens`: 40
+      - `gen_ai.usage.text.input_tokens`: 100
+      - `gen_ai.usage.text.cache_read.input_tokens`: 40
+      - `gen_ai.usage.image.input_tokens`: 200
     examples: [100]
     stability: development
   - key: gen_ai.usage.cache_read.input_tokens
@@ -284,12 +305,33 @@ attributes:
       The value SHOULD be included in `gen_ai.usage.input_tokens`.
     examples: [50]
     stability: development
-  - key: gen_ai.usage.cache_creation.input_tokens
+  - key: gen_ai.usage.cache_write.input_tokens
     type: int
     brief: The number of input tokens written to a provider-managed cache.
     note: >
       The value SHOULD be included in `gen_ai.usage.input_tokens`.
     examples: [25]
+    stability: development
+  - key: gen_ai.usage.text.input_tokens
+    type: int
+    brief: The number of text input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens`.
+    examples: [100]
+    stability: development
+  - key: gen_ai.usage.image.input_tokens
+    type: int
+    brief: The number of image input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens`.
+    examples: [258]
+    stability: development
+  - key: gen_ai.usage.audio.input_tokens
+    type: int
+    brief: The number of audio input tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.input_tokens`.
+    examples: [120]
     stability: development
   - key: gen_ai.usage.output_tokens
     type: int
@@ -308,19 +350,76 @@ attributes:
       The value SHOULD be included in `gen_ai.usage.output_tokens`.
     examples: [50]
     stability: development
-  - key: gen_ai.token.type
+  - key: gen_ai.usage.text.output_tokens
+    type: int
+    brief: The number of text output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens`.
+    examples: [180]
+    stability: development
+  - key: gen_ai.usage.image.output_tokens
+    type: int
+    brief: The number of image output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens`.
+    examples: [1290]
+    stability: development
+  - key: gen_ai.usage.audio.output_tokens
+    type: int
+    brief: The number of audio output tokens.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.output_tokens`.
+    examples: [240]
+    stability: development
+  - key: gen_ai.usage.text.cache_read.input_tokens
+    type: int
+    brief: The number of text input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens`
+      and in `gen_ai.usage.text.input_tokens`.
+    examples: [40]
+    stability: development
+  - key: gen_ai.usage.image.cache_read.input_tokens
+    type: int
+    brief: The number of image input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens`
+      and in `gen_ai.usage.image.input_tokens`.
+    examples: [128]
+    stability: development
+  - key: gen_ai.usage.audio.cache_read.input_tokens
+    type: int
+    brief: The number of audio input tokens served from a provider-managed cache.
+    note: >
+      The value SHOULD be included in `gen_ai.usage.cache_read.input_tokens`
+      and in `gen_ai.usage.audio.input_tokens`.
+    examples: [60]
+    stability: development
+  - key: gen_ai.token.modality
     type:
       members:
-        - id: input
+        - id: text
           stability: development
-          value: "input"
-          brief: 'Input tokens (prompt, input, etc.)'
-        - id: output
+          value: "text"
+          brief: 'Text tokens.'
+        - id: image
           stability: development
-          value: "output"
-          brief: 'Output tokens (completion, response, etc.)'
-    brief: The type of token being counted.
-    examples: ['input', 'output']
+          value: "image"
+          brief: 'Image tokens.'
+        - id: audio
+          stability: development
+          value: "audio"
+          brief: 'Audio tokens.'
+        - id: unknown
+          stability: development
+          value: "unknown"
+          brief: 'The modality is not known.'
+    brief: The modality of the tokens being counted.
+    note: >
+      When the provider does not break usage down by modality and the modality
+      cannot be reliably determined, instrumentations SHOULD report the tokens
+      under the `unknown` modality.
+    examples: ['text', 'image', 'audio']
     stability: development
   - key: gen_ai.conversation.id
     type: string
@@ -383,6 +482,37 @@ attributes:
     brief: The version of the GenAI agent.
     examples: ["1.0.0", "2025-05-01"]
     stability: development
+  - key: gen_ai.main_agent.id
+    type: string
+    brief: The unique and stable identifier of the top-level Generative AI agent in the process
+    note: >
+      For main agents, this SHOULD be the provider-assigned stable identifier of the
+      agent resource such as [AWS Bedrock agent ARN](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_Agent.html)
+      or [GCP Agent Registry identifier](https://docs.cloud.google.com/agent-registry/concepts#agent-identifier).
+
+      Instrumentation MUST NOT generate `gen_ai.main_agent.id` from an in-memory or
+      process-local identifier. If no stable identifier is available, the agent entity
+      is not emitted, and instrumentation continues to report `gen_ai.agent.name` at
+      the span level when relevant.
+
+    examples: ['asst_5j66UpCpwteGg4YSxUnt7lPY', 'arn:aws:bedrock:us-east-1:123:agent/42', 'urn:agent:projects-123:projects:123:locations:us-east1:aiplatform:reasoningEngines:456']
+    stability: development
+  - key: gen_ai.main_agent.name
+    type: string
+    brief: The human-readable name of the top-level Generative AI agent in the process.
+    note: >
+      In Agent-to-Agent (A2A) communication, this maps to the `name` property declared
+      in the Agent Card.
+    examples: ["Math Tutor", "Fiction Writer"]
+    stability: development
+  - key: gen_ai.main_agent.description
+    type: string
+    brief: The free-form description of the top-level Generative AI agent in the process.
+    note: >
+      In Agent-to-Agent (A2A) communication, this maps to the `description` property declared
+      in the Agent Card.
+    examples: ["Helps with math problems", "Generates fiction stories"]
+    stability: development
   - key: gen_ai.tool.name
     type: string
     brief: Name of the tool utilized by the agent.
@@ -390,7 +520,10 @@ attributes:
     stability: development
   - key: gen_ai.tool.call.id
     type: string
-    brief: The tool call identifier.
+    brief: The tool call identifier supplied by the model or provider.
+    note: |
+      This attribute SHOULD be set to the identifier received from the model or provider
+      if and only if one was supplied.
     examples: ['call_mszuSIzqtI65i1wAUOE8w5H4']
     stability: development
   - key: gen_ai.tool.description
@@ -849,7 +982,14 @@ attributes:
       multiple messages or one message cannot contain parts from multiple choices.
 
       Instrumentations MAY provide a way for users to filter or truncate
-      output messages.
+      output messages. `gen_ai.response.finish_reasons` remains aligned with the
+      generations returned by the provider, not with a filtered or truncated
+      `gen_ai.output.messages` value.
+
+      When an operation ends in an error, this attribute SHOULD only be set
+      when the operation produced output, including partial streamed output.
+      Instrumentation SHOULD NOT synthesize output content for a failed
+      operation.
 
       > [!Warning]
       > This attribute is likely to contain sensitive information including user/PII data.
@@ -866,8 +1006,7 @@ attributes:
                 "type": "text",
                 "content": "The weather in Paris is currently rainy with a temperature of 57°F."
               }
-            ],
-            "finish_reason": "stop"
+            ]
           }
         ]
     stability: development
@@ -935,12 +1074,52 @@ attributes:
     type: string
     brief: Human-readable name of the GenAI workflow provided by the application.
     note: |
-      This attribute can be populated in different frameworks; for example, as the name of the first chain in LangChain or the name of the crew in CrewAI.
-      The workflow name is usually provided by the application in a way that is specific to the generative AI framework or library that orchestrates the workflow.
-      It is usually a static name that is expected to be unique within an application.
+      The workflow name is usually a static, application-unique identifier defined
+      in a framework-specific way.
 
-      `gen_ai.workflow.name` MUST have low cardinality.
-      Semantic conventions for individual Generative AI frameworks SHOULD document what `gen_ai.workflow.name` means in the context of that framework.
-      If there is no low-cardinality workflow name available for a given framework, this attribute MUST NOT be captured by default.
+      For example, it can be the name of the first chain in LangChain,
+      the name of the crew in CrewAI, or the entry point agent in ADK or
+      OpenAI Agents when no explicit workflow name is provided.
+
+      This attribute MUST have low cardinality. It is NOT RECOMMENDED to use
+      instrumentation-time constants or names of types representing the workflow,
+      such as "StateGraph". When no meaningful, low-cardinality workflow name is
+      available for a given framework, this attribute MUST NOT be captured by default.
+
+      Semantic conventions for individual Generative AI frameworks SHOULD document
+      what `gen_ai.workflow.name` means in the context of that framework.
     examples: ["multi_agent_rag", "customer_support_pipeline"]
+    stability: development
+  - key: gen_ai.skill.name
+    type: string
+    brief: The name of the [Agent Skill](https://agentskills.io/specification#skill-md-format).
+    examples: ["code-review", "pdf-processing"]
+    stability: development
+  - key: gen_ai.skill.description
+    type: string
+    brief: The [description of the Agent Skill](https://agentskills.io/specification#skill-md-format).
+    note: |
+      > [!WARNING]
+      > This attribute may contain sensitive information.
+    examples: ["Review a changelist against the team's review policy."]
+    stability: development
+  - key: gen_ai.skill.source.uri
+    type: string
+    brief: The source URI for loading the skill.
+    note: |
+      This SHOULD identify the skill source, not a temporary location where the
+      skill was materialized for execution.
+
+      > [!WARNING]
+      > This attribute may contain sensitive information.
+
+      Sensitive URI components, such as user information and access tokens in query
+      parameters, SHOULD be scrubbed when instrumentations can identify them.
+    examples:
+      ["https://skills.example.com/code-review", "gs://example-skills/code-review", "file:///opt/skills/code-review"]
+    stability: development
+  - key: gen_ai.skill.resource.name
+    type: string
+    brief: The skill-relative name of the resource (script, reference, or asset) being accessed or executed.
+    examples: ["references/review_policy.md", "assets/report_template.html"]
     stability: development

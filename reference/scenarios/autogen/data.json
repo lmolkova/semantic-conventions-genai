@@ -31,5 +31,7 @@
     ]
   },
   "events": {},
-  "metrics": {}
+  "metrics": {},
+  "findings": [],
+  "entities": {}
 }

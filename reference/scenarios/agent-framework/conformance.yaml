@@ -25,3 +25,16 @@ scenarios:
         reason: Library uses 'tokens' instead of '{token}'; fix in library.
       - id: missing_metric
         reason: Library emits custom metrics outside the registry; fix in library.
+    spans:
+      - match:
+          attributes:
+            gen_ai.operation.name: chat
+          type: gen_ai.client.inference
+      - match:
+          attributes:
+            gen_ai.operation.name: generate_content
+          type: gen_ai.client.inference
+      - match:
+          attributes:
+            gen_ai.operation.name: text_completion
+          type: gen_ai.client.inference

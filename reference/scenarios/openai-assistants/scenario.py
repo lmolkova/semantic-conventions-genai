@@ -149,6 +149,7 @@ def run_invoke_agent(client):
                     with tracer.start_as_current_span(
                         f"execute_tool {tool_name}", kind=SpanKind.INTERNAL, attributes=tool_span_attributes
                     ) as tool_span:
+                        tool_span.set_attribute("gen_ai.conversation.id", thread.id)
                         tool_span.set_attribute("gen_ai.tool.name", tool_name)
                         tool_span.set_attribute(
                             "gen_ai.tool.description",
@@ -190,11 +191,6 @@ def run_invoke_agent(client):
             assistant_messages = [m for m in messages.data if m.role == "assistant"]
             if assistant_messages:
                 text = assistant_messages[0].content[0].text.value
-                run_finish_reason = (
-                    "stop"
-                    if run.status == "completed"
-                    else ("error" if run.status in ("failed", "cancelled", "expired") else run.status)
-                )
                 span.set_attribute(
                     "gen_ai.output.messages",
                     json.dumps(
@@ -202,7 +198,6 @@ def run_invoke_agent(client):
                             {
                                 "role": "assistant",
                                 "parts": [{"type": "text", "content": text}],
-                                "finish_reason": run_finish_reason,
                             }
                         ]
                     ),
