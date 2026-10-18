@@ -4,7 +4,7 @@ import json
 import os
 import time
 
-from opentelemetry.trace import StatusCode
+from opentelemetry.trace import SpanKind, StatusCode
 from reference_shared import (
     flush_and_shutdown,
     mock_server_host_port,
@@ -253,7 +253,9 @@ def run_chat_reference(client):
         span_attributes["server.address"] = host
     if port is not None:
         span_attributes["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         span.set_attribute("gen_ai.request.choice.count", request_choice_count)
         span.set_attribute("gen_ai.request.max_tokens", request_max_tokens)
         span.set_attribute("gen_ai.request.temperature", request_temperature)
@@ -299,7 +301,7 @@ def run_chat_reference(client):
                 "cached_tokens",
                 None,
             )
-            if cached_tokens is not None:
+            if cached_tokens:
                 usage["gen_ai.usage.cache_read.input_tokens"] = cached_tokens
         for attr, value in usage.items():
             span.set_attribute(attr, value)
@@ -353,7 +355,9 @@ def run_responses_compaction_reference(client):
     if port is not None:
         span_attributes["server.port"] = port
 
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         span.set_attribute(
             "gen_ai.input.messages",
             json.dumps([{"role": "user", "parts": [{"type": "text", "content": conversation[0]["content"]}]}]),
@@ -463,7 +467,9 @@ def run_responses_continuation_reference(client):
     if port is not None:
         span_attributes["server.port"] = port
 
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         span.set_attribute(
             "gen_ai.input.messages",
             json.dumps(
@@ -536,7 +542,9 @@ def run_chat_streaming_reference(client):
         span_attributes_2["server.address"] = host
     if port is not None:
         span_attributes_2["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes_2) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes_2
+    ) as span:
         span.set_attribute(
             "gen_ai.input.messages",
             json.dumps(
@@ -627,8 +635,10 @@ def run_chat_tool_call_reference(client):
         span_attributes_3["server.address"] = host
     if port is not None:
         span_attributes_3["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes_3) as span:
-        span.set_attribute("gen_ai.tool.definitions", json.dumps(tools))
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes_3
+    ) as span:
+        span.set_attribute("gen_ai.tool.definitions", json.dumps([{"type": t["type"], **t["function"]} for t in tools]))
         resp = client.chat.completions.create(
             model=request_model,
             messages=[{"role": "user", "content": "What's the weather in Seattle?"}],
@@ -713,7 +723,9 @@ def run_chat_with_document_input_reference(client):
         span_attributes_doc["server.address"] = host
     if port is not None:
         span_attributes_doc["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes_doc) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes_doc
+    ) as span:
         span.set_attribute("gen_ai.input.messages", input_messages)
         resp = client.chat.completions.create(
             model=request_model,
@@ -933,8 +945,12 @@ def run_embeddings_reference(client):
         span_attributes_4["server.port"] = port
     start_time = time.perf_counter()
     metric_attributes = dict(span_attributes_4)
+    input_token_count = 0
     with _reference_tracer.start_as_current_span(
-        "embeddings text-embedding-3-small", attributes=span_attributes_4
+        "embeddings text-embedding-3-small",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes_4,
+        record_exception=False,
     ) as span:
         try:
             span.set_attribute("gen_ai.request.encoding_formats", [request_encoding_format])
@@ -949,7 +965,7 @@ def run_embeddings_reference(client):
                 span.set_attribute("gen_ai.embeddings.dimension.count", len(resp.data[0].embedding))
             if resp.usage:
                 span.set_attribute("gen_ai.usage.input_tokens", resp.usage.prompt_tokens)
-                _embeddings_input_tokens.record(resp.usage.prompt_tokens, metric_attributes)
+                input_token_count = resp.usage.prompt_tokens
             print(f"    -> embedding dim: {len(resp.data[0].embedding)}")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
@@ -958,6 +974,32 @@ def run_embeddings_reference(client):
             raise
         finally:
             _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
+            _embeddings_input_tokens.record(input_token_count, metric_attributes)
+
+
+def run_embeddings_error_reference():
+    """Exercise an embeddings error returned through the SDK's HTTP transport."""
+    import httpx
+    import openai
+
+    transport = httpx.MockTransport(
+        lambda request: httpx.Response(
+            400,
+            json={"error": {"message": "Invalid input", "type": "invalid_request_error", "code": "invalid_input"}},
+        )
+    )
+    with openai.OpenAI(
+        base_url=MOCK_BASE_URL,
+        api_key="mock-key",
+        max_retries=0,
+        http_client=httpx.Client(transport=transport),
+    ) as client:
+        try:
+            run_embeddings_reference(client)
+        except openai.BadRequestError:
+            pass
+        else:
+            raise AssertionError("Expected the SDK to reject the embeddings request")
 
 
 def run_responses_with_prompt_template_reference(client):
@@ -985,7 +1027,9 @@ def run_responses_with_prompt_template_reference(client):
         span_attributes["server.address"] = host
     if port is not None:
         span_attributes["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         for var_name, var_value in prompt_variables.items():
             span.set_attribute(f"gen_ai.prompt.variable.{var_name}", var_value)
         resp = client.responses.create(
@@ -1217,6 +1261,7 @@ def main():
     run_responses_with_prompt_template_reference(client)
     run_fetch_response_reference(client)
     run_embeddings_reference(client)
+    run_embeddings_error_reference()
 
     flush_and_shutdown(tp, lp, mp)
 

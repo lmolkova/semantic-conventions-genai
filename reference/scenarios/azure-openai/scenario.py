@@ -3,7 +3,7 @@
 import os
 import time
 
-from opentelemetry.trace import StatusCode
+from opentelemetry.trace import SpanKind, StatusCode
 from reference_shared import flush_and_shutdown, mock_server_host_port, reference_meter, reference_tracer, setup_otel
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
@@ -69,7 +69,9 @@ def run_chat_reference(client):
         span_attributes["server.address"] = host
     if port is not None:
         span_attributes["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat gpt-4o-mini", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gpt-4o-mini", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         messages = [{"role": "user", "content": "Say hello."}]
         resp = client.chat.completions.create(
             model=request_model,
@@ -101,8 +103,12 @@ def run_embeddings_reference(client):
         span_attributes_2["server.port"] = port
     start_time = time.perf_counter()
     metric_attributes = dict(span_attributes_2)
+    input_token_count = 0
     with _reference_tracer.start_as_current_span(
-        "embeddings text-embedding-3-small", attributes=span_attributes_2
+        "embeddings text-embedding-3-small",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes_2,
+        record_exception=False,
     ) as span:
         try:
             span.set_attribute("gen_ai.request.encoding_formats", [request_encoding_format])
@@ -112,13 +118,12 @@ def run_embeddings_reference(client):
                 encoding_format=request_encoding_format,
             )
             span.set_attribute("gen_ai.response.model", resp.model)
+            metric_attributes["gen_ai.response.model"] = resp.model
             if resp.data and resp.data[0].embedding is not None:
                 span.set_attribute("gen_ai.embeddings.dimension.count", len(resp.data[0].embedding))
             if resp.usage:
                 span.set_attribute("gen_ai.usage.input_tokens", resp.usage.prompt_tokens)
-            metric_attributes["gen_ai.response.model"] = resp.model
-            if resp.usage:
-                _embeddings_input_tokens.record(resp.usage.prompt_tokens, metric_attributes)
+                input_token_count = resp.usage.prompt_tokens
             print(f"    -> embedding dim: {len(resp.data[0].embedding)}")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
@@ -127,6 +132,7 @@ def run_embeddings_reference(client):
             raise
         finally:
             _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
+            _embeddings_input_tokens.record(input_token_count, metric_attributes)
 
 
 def main():

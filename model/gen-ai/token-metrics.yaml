@@ -148,12 +148,18 @@ metrics:
       This metric SHOULD be reported when the count is readily available.
 
       When systems report both used tokens and billable tokens, instrumentation MUST report billable tokens.
+
+      Instrumentations SHOULD record this metric for each embeddings operation,
+      including failed ones. The recorded value SHOULD match the token count
+      returned by the provider, or `0` if the response was not received or
+      did not contain token usage.
     stability: development
     annotations:
       code_generation:
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
+      - ref_group: attributes.gen_ai.error
       - ref: gen_ai.operation.name
         examples: ["embeddings"]
         note: SHOULD be `embeddings`.

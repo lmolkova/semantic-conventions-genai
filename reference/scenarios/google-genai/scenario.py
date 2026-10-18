@@ -8,6 +8,7 @@ import json
 import os
 import time
 from contextlib import contextmanager
+from urllib.parse import urlparse
 
 from opentelemetry.trace import SpanKind, StatusCode
 from reference_shared import (
@@ -19,6 +20,7 @@ from reference_shared import (
 )
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
+_SERVER_ADDRESS = urlparse(MOCK_BASE_URL).hostname
 
 _reference_tracer = reference_tracer()
 _reference_meter = reference_meter()
@@ -157,7 +159,7 @@ def _modality_usage_attributes(usage_metadata):
         for entry in details or []:
             modality = _entry_modality(entry)
             count = getattr(entry, "token_count", None)
-            if modality and count is not None:
+            if modality and count:
                 attrs[f"gen_ai.usage.{modality}.{suffix}"] = count
     return attrs
 
@@ -279,13 +281,18 @@ def run_chat():
         "gen_ai.operation.name": "chat",
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
+        "server.address": _SERVER_ADDRESS,
     }
-    with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gemini-2.0-flash", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         prompt_text = "Say hello."
         response = client.models.generate_content(
             model=request_model,
             contents=prompt_text,
         )
+        if response.response_id:
+            span.set_attribute("gen_ai.response.id", response.response_id)
         if response.model_version:
             span.set_attribute("gen_ai.response.model", response.model_version)
         if response.candidates and response.candidates[0].finish_reason:
@@ -336,6 +343,7 @@ def run_interactions_continuation():
         "gen_ai.request.model": request_model,
         "gen_ai.agent.name": "interactions_agent",
         "gen_ai.request.previous_response.id": previous_interaction_id,
+        "server.address": _SERVER_ADDRESS,
     }
     with _reference_tracer.start_as_current_span(
         "invoke_agent interactions_agent", kind=SpanKind.CLIENT, attributes=span_attributes
@@ -417,27 +425,27 @@ def run_chat_tool_call():
         "gen_ai.operation.name": "chat",
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
+        "server.address": _SERVER_ADDRESS,
     }
     with (
         _patch_automatic_function_calling(),
-        _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes_2) as span,
+        _reference_tracer.start_as_current_span(
+            "chat gemini-2.0-flash", kind=SpanKind.CLIENT, attributes=span_attributes_2
+        ) as span,
     ):
         span.set_attribute(
             "gen_ai.tool.definitions",
             json.dumps(
                 [
                     {
-                        "function_declarations": [
-                            {
-                                "name": "get_weather",
-                                "description": "Get the current weather",
-                                "parameters": {
-                                    "type": "object",
-                                    "properties": {"location": {"type": "string", "description": "City name"}},
-                                    "required": ["location"],
-                                },
-                            }
-                        ]
+                        "type": "function",
+                        "name": "get_weather",
+                        "description": "Get the current weather",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {"location": {"type": "string", "description": "City name"}},
+                            "required": ["location"],
+                        },
                     }
                 ]
             ),
@@ -447,6 +455,8 @@ def run_chat_tool_call():
             contents="What's the weather in Seattle?",
             config=types.GenerateContentConfig(tools=tools),
         )
+        if response.response_id:
+            span.set_attribute("gen_ai.response.id", response.response_id)
         if response.model_version:
             span.set_attribute("gen_ai.response.model", response.model_version)
         if response.candidates and response.candidates[0].finish_reason:
@@ -609,9 +619,13 @@ def run_chat_streaming():
         "gen_ai.operation.name": "chat",
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
+        "server.address": _SERVER_ADDRESS,
     }
-    with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes_3) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gemini-2.0-flash", kind=SpanKind.CLIENT, attributes=span_attributes_3
+    ) as span:
         text = ""
+        model_version = None
         last_chunk = None
         for chunk in client.models.generate_content_stream(
             model=request_model,
@@ -619,9 +633,11 @@ def run_chat_streaming():
         ):
             if chunk.text:
                 text += chunk.text
+            if chunk.model_version:
+                model_version = chunk.model_version
             last_chunk = chunk
-        if last_chunk and last_chunk.model_version:
-            span.set_attribute("gen_ai.response.model", last_chunk.model_version)
+        if model_version:
+            span.set_attribute("gen_ai.response.model", model_version)
         if last_chunk and last_chunk.candidates and last_chunk.candidates[0].finish_reason:
             span.set_attribute("gen_ai.response.finish_reasons", [str(last_chunk.candidates[0].finish_reason)])
         if last_chunk and hasattr(last_chunk, "usage_metadata") and last_chunk.usage_metadata:
@@ -656,18 +672,24 @@ def run_embeddings():
         "gen_ai.operation.name": "embeddings",
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
+        "server.address": _SERVER_ADDRESS,
     }
     start_time = time.perf_counter()
     metric_attributes = dict(span_attributes_4)
-    with _reference_tracer.start_as_current_span("embeddings text-embedding-004", attributes=span_attributes_4) as span:
+    with _reference_tracer.start_as_current_span(
+        "embeddings text-embedding-004",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes_4,
+        record_exception=False,
+    ) as span:
         try:
+            # The SDK exposes no input-token usage for this response.
             response = client.models.embed_content(
                 model=request_model,
                 contents="Hello, world!",
             )
             if response.embeddings and response.embeddings[0].values is not None:
                 span.set_attribute("gen_ai.embeddings.dimension.count", len(response.embeddings[0].values))
-            # The SDK drops the Gemini API `usageMetadata`, so input tokens are not available.
             print(f"    -> embedding dim: {len(response.embeddings[0].values)}")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
@@ -705,6 +727,7 @@ def run_create_agent():
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
         "gen_ai.agent.name": agent_name,
+        "server.address": _SERVER_ADDRESS,
     }
     with _reference_tracer.start_as_current_span(
         f"create_agent {agent_name}", kind=SpanKind.CLIENT, attributes=span_attributes

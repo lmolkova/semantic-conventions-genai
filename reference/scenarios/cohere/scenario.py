@@ -8,7 +8,7 @@ import json
 import os
 import time
 
-from opentelemetry.trace import StatusCode
+from opentelemetry.trace import SpanKind, StatusCode
 from reference_shared import (
     flush_and_shutdown,
     mock_server_host_port,
@@ -81,7 +81,9 @@ def run_chat(client):
         span_attributes["server.address"] = host
     if port is not None:
         span_attributes["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat command-r-plus", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat command-r-plus", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         messages = [{"role": "user", "content": "Say hello."}]
         resp = client.chat(
             model=request_model,
@@ -101,6 +103,7 @@ def run_chat(client):
         content = resp.message.content[0].text
         event_attrs = {
             "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "cohere",
             "gen_ai.request.model": request_model,
             "gen_ai.input.messages": json.dumps(
                 [{"role": m["role"], "parts": [{"type": "text", "content": m["content"]}]} for m in messages]
@@ -161,8 +164,10 @@ def run_chat_tool_call(client):
         span_attributes_2["server.address"] = host
     if port is not None:
         span_attributes_2["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat command-r-plus", attributes=span_attributes_2) as span:
-        span.set_attribute("gen_ai.tool.definitions", json.dumps(tools))
+    with _reference_tracer.start_as_current_span(
+        "chat command-r-plus", kind=SpanKind.CLIENT, attributes=span_attributes_2
+    ) as span:
+        span.set_attribute("gen_ai.tool.definitions", json.dumps([{"type": t["type"], **t["function"]} for t in tools]))
         resp = client.chat(
             model=request_model,
             messages=[{"role": "user", "content": "What's the weather in Seattle?"}],
@@ -190,6 +195,7 @@ def run_embeddings(client):
     """Scenario: embedding generation with reference implementation."""
     print("  [embeddings] embedding generation (reference implementation)")
     request_model = "embed-v4.0"
+    encoding_formats = ["float"]
     host, port = mock_server_host_port(MOCK_BASE_URL)
     span_attributes_3 = {
         "gen_ai.operation.name": "embeddings",
@@ -202,19 +208,28 @@ def run_embeddings(client):
         span_attributes_3["server.port"] = port
     start_time = time.perf_counter()
     metric_attributes = dict(span_attributes_3)
-    with _reference_tracer.start_as_current_span("embeddings embed-v4.0", attributes=span_attributes_3) as span:
+    input_token_count = 0
+    with _reference_tracer.start_as_current_span(
+        "embeddings embed-v4.0",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes_3,
+        record_exception=False,
+    ) as span:
         try:
+            span.set_attribute("gen_ai.request.encoding_formats", encoding_formats)
             resp = client.embed(
                 model=request_model,
                 texts=["Hello, world!"],
                 input_type="search_document",
-                embedding_types=["float"],
+                embedding_types=encoding_formats,
             )
             if hasattr(resp, "meta") and resp.meta and hasattr(resp.meta, "billed_units") and resp.meta.billed_units:
                 input_tokens = getattr(resp.meta.billed_units, "input_tokens", None)
                 if input_tokens is not None:
                     span.set_attribute("gen_ai.usage.input_tokens", int(input_tokens))
-                    _embeddings_input_tokens.record(int(input_tokens), metric_attributes)
+                    input_token_count = int(input_tokens)
+            if resp.embeddings and resp.embeddings.float_ and resp.embeddings.float_[0]:
+                span.set_attribute("gen_ai.embeddings.dimension.count", len(resp.embeddings.float_[0]))
             print(f"    -> embedding dim: {len(resp.embeddings.float_[0])}")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
@@ -223,6 +238,7 @@ def run_embeddings(client):
             raise
         finally:
             _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
+            _embeddings_input_tokens.record(input_token_count, metric_attributes)
 
 
 def main():

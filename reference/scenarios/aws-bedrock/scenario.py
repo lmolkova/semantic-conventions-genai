@@ -4,7 +4,7 @@ import json
 import os
 import time
 
-from opentelemetry.trace import StatusCode
+from opentelemetry.trace import SpanKind, StatusCode
 from reference_shared import (
     flush_and_shutdown,
     mock_server_host_port,
@@ -97,7 +97,7 @@ def run_converse_reference(client):
     if port is not None:
         span_attributes["server.port"] = port
     with _reference_tracer.start_as_current_span(
-        "chat anthropic.claude-3-haiku-20240307-v1:0", attributes=span_attributes
+        "chat anthropic.claude-3-haiku-20240307-v1:0", kind=SpanKind.CLIENT, attributes=span_attributes
     ) as span:
         span.set_attribute(
             "gen_ai.input.messages",
@@ -133,6 +133,7 @@ def run_converse_reference(client):
         # Emit inference operation details event
         event_attrs = {
             "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "aws.bedrock",
             "gen_ai.request.model": request_model,
             "gen_ai.input.messages": json.dumps(
                 [{"role": m["role"], "parts": [{"type": "text", "content": m["content"][0]["text"]}]} for m in messages]
@@ -192,9 +193,22 @@ def run_converse_tool_call_reference(client):
     if port is not None:
         span_attributes_2["server.port"] = port
     with _reference_tracer.start_as_current_span(
-        "chat anthropic.claude-3-haiku-20240307-v1:0", attributes=span_attributes_2
+        "chat anthropic.claude-3-haiku-20240307-v1:0", kind=SpanKind.CLIENT, attributes=span_attributes_2
     ) as span:
-        span.set_attribute("gen_ai.tool.definitions", json.dumps(tool_config["tools"]))
+        span.set_attribute(
+            "gen_ai.tool.definitions",
+            json.dumps(
+                [
+                    {
+                        "type": "function",
+                        "name": t["toolSpec"]["name"],
+                        "description": t["toolSpec"]["description"],
+                        "parameters": t["toolSpec"]["inputSchema"]["json"],
+                    }
+                    for t in tool_config["tools"]
+                ]
+            ),
+        )
         messages = [
             {
                 "role": "user",
@@ -289,7 +303,7 @@ def run_converse_with_document_input_reference(client):
     if port is not None:
         span_attributes_doc["server.port"] = port
     with _reference_tracer.start_as_current_span(
-        "chat anthropic.claude-3-haiku-20240307-v1:0", attributes=span_attributes_doc
+        "chat anthropic.claude-3-haiku-20240307-v1:0", kind=SpanKind.CLIENT, attributes=span_attributes_doc
     ) as span:
         span.set_attribute("gen_ai.input.messages", input_messages)
         response = client.converse(
@@ -346,7 +360,7 @@ def run_converse_with_prompt_template_reference(client):
         span_attributes["server.address"] = host
     if port is not None:
         span_attributes["server.port"] = port
-    with _reference_tracer.start_as_current_span("chat", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span("chat", kind=SpanKind.CLIENT, attributes=span_attributes) as span:
         for var_name, var_value in prompt_variables.items():
             span.set_attribute(f"gen_ai.prompt.variable.{var_name}", var_value)
         response = client.converse(
@@ -376,6 +390,7 @@ def run_converse_with_prompt_template_reference(client):
 
         event_attrs = {
             "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "aws.bedrock",
             "gen_ai.prompt.name": prompt_name,
             "gen_ai.prompt.version": prompt_version,
             "gen_ai.output.messages": json.dumps(
@@ -410,6 +425,7 @@ def run_embeddings_reference(client):
 
     print("  [embeddings] Bedrock Titan Embeddings (reference implementation)")
     request_model = "amazon.titan-embed-text-v2:0"
+    encoding_formats = ["float"]
     host, port = mock_server_host_port(MOCK_BASE_URL)
     span_attributes_3 = {
         "gen_ai.operation.name": "embeddings",
@@ -422,21 +438,27 @@ def run_embeddings_reference(client):
         span_attributes_3["server.port"] = port
     start_time = time.perf_counter()
     metric_attributes = dict(span_attributes_3)
+    input_token_count = 0
     with _reference_tracer.start_as_current_span(
-        "embeddings amazon.titan-embed-text-v2:0", attributes=span_attributes_3
+        "embeddings amazon.titan-embed-text-v2:0",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes_3,
+        record_exception=False,
     ) as span:
         try:
+            span.set_attribute("gen_ai.request.encoding_formats", encoding_formats)
             response = client.invoke_model(
                 modelId=request_model,
                 contentType="application/json",
                 accept="application/json",
-                body=_json.dumps({"inputText": "Hello, world!"}),
+                body=_json.dumps({"inputText": "Hello, world!", "embeddingTypes": encoding_formats}),
             )
             result = _json.loads(response["body"].read())
             if result.get("inputTextTokenCount") is not None:
                 span.set_attribute("gen_ai.usage.input_tokens", result["inputTextTokenCount"])
-            if result.get("inputTextTokenCount") is not None:
-                _embeddings_input_tokens.record(result["inputTextTokenCount"], metric_attributes)
+                input_token_count = result["inputTextTokenCount"]
+            if result.get("embedding"):
+                span.set_attribute("gen_ai.embeddings.dimension.count", len(result["embedding"]))
             print(f"    -> embedding dim: {len(result['embedding'])}")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
@@ -445,6 +467,7 @@ def run_embeddings_reference(client):
             raise
         finally:
             _embeddings_duration.record(time.perf_counter() - start_time, metric_attributes)
+            _embeddings_input_tokens.record(input_token_count, metric_attributes)
 
 
 def main():

@@ -21,7 +21,7 @@
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.response.model | [azure-ai-inference], [azure-openai], [litellm], [mistralai], [openai] |
-| server.address | [aws-bedrock], [azure-ai-inference], [azure-openai], [cohere], [mistralai], [openai] |
+| server.address | [aws-bedrock], [azure-ai-inference], [azure-openai], [cohere], [google-genai], [litellm], [mistralai], [openai] |
 
 [aws-bedrock]: ../scenarios/aws-bedrock/scenario.py
 [azure-ai-inference]: ../scenarios/azure-ai-inference/scenario.py
