@@ -979,11 +979,11 @@ def run_embeddings_reference(client):
 
 def run_embeddings_error_reference():
     """Exercise an embeddings error returned through the SDK's HTTP transport."""
-    import httpx
+    import httpx2
     import openai
 
-    transport = httpx.MockTransport(
-        lambda request: httpx.Response(
+    transport = httpx2.MockTransport(
+        lambda request: httpx2.Response(
             400,
             json={"error": {"message": "Invalid input", "type": "invalid_request_error", "code": "invalid_input"}},
         )
@@ -992,7 +992,7 @@ def run_embeddings_error_reference():
         base_url=MOCK_BASE_URL,
         api_key="mock-key",
         max_retries=0,
-        http_client=httpx.Client(transport=transport),
+        http_client=httpx2.Client(transport=transport),
     ) as client:
         try:
             run_embeddings_reference(client)
