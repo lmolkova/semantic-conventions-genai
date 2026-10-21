@@ -24,3 +24,14 @@ entities:
     description:
       - ref: gen_ai.main_agent.name
       - ref: gen_ai.main_agent.description
+
+  - type: gen_ai.provider
+    stability: development
+    brief: >
+      The Generative AI provider hosting and serving the model.
+    note: >
+      This entity SHOULD be used by the inference hosting layer to identify
+      the provider it serves models for.
+    identity:
+      - ref: gen_ai.provider.name
+        requirement_level: required

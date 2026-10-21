@@ -273,6 +273,231 @@ spans:
       - ref: gen_ai.request.model
         sampling_relevant: true
 
+  - type: gen_ai.inference.server
+    requirement_level: recommended
+    kind: server
+    name:
+      note: |
+        **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
+    brief: >
+      Server-side counterpart of the client inference span that represents
+      handling of an inference request by the provider.
+    note: |
+      This span wraps all operations performed to produce the response, such as
+      server-side tool calls, and MAY result in one or more `gen_ai.inference.internal` spans.
+    stability: development
+    entity_associations:
+      - "gen_ai.provider"
+    attributes:
+      - ref_group: attributes.gen_ai.common
+      - ref_group: attributes.gen_ai.address_and_port
+      - ref_group: attributes.gen_ai.usage.breakdown
+      - ref_group: attributes.gen_ai.content
+      - ref_group: attributes.gen_ai.error
+      - ref: gen_ai.operation.name
+        sampling_relevant: true
+      - ref: gen_ai.request.model
+        sampling_relevant: true
+      - ref: server.address
+        sampling_relevant: true
+      - ref: server.port
+        sampling_relevant: true
+      - ref: gen_ai.request.max_tokens
+        requirement_level: recommended
+      - ref: gen_ai.request.choice.count
+        requirement_level:
+          conditionally_required: If available, in the request, and !=1.
+      - ref: gen_ai.request.temperature
+        requirement_level: recommended
+      - ref: gen_ai.request.top_k
+        requirement_level:
+          conditionally_required: If applicable.
+      - ref: gen_ai.request.top_p
+        requirement_level: recommended
+      - ref: gen_ai.request.stop_sequences
+        requirement_level: recommended
+      - ref: gen_ai.request.frequency_penalty
+        requirement_level: recommended
+      - ref: gen_ai.request.presence_penalty
+        requirement_level: recommended
+      - ref: gen_ai.request.seed
+        requirement_level:
+          conditionally_required: If applicable and if the request includes a seed.
+      - ref: gen_ai.output.type
+        requirement_level:
+          conditionally_required: When applicable and if the request includes an output format.
+      - ref: gen_ai.request.stream
+        requirement_level:
+          conditionally_required: If and only if the request is streaming. If unset, the request is assumed to be non-streaming.
+      - ref: gen_ai.request.reasoning.level
+        requirement_level:
+          recommended: When applicable.
+      - ref: gen_ai.request.previous_response.id
+        requirement_level:
+          recommended: When available and if the request references a previous response.
+      - ref: gen_ai.response.id
+        requirement_level: recommended
+      - ref: gen_ai.response.model
+        requirement_level: recommended
+      - ref: gen_ai.response.finish_reasons
+        requirement_level: recommended
+      - ref: gen_ai.response.time_to_first_chunk
+        brief: >
+          Time from when the server received the request to when it sent the first
+          chunk of the response stream, in seconds.
+        requirement_level:
+          recommended: If the request was a streaming request.
+      - ref: gen_ai.usage.input_tokens
+        requirement_level: recommended
+        note: >
+          The value SHOULD reflect the usage reported to the client for the whole request,
+          aggregated across all inference operations.
+      - ref: gen_ai.usage.output_tokens
+        requirement_level: recommended
+        note: >
+          The value SHOULD reflect the usage reported to the client for the whole request,
+          aggregated across all inference operations.
+      - ref: gen_ai.usage.reasoning.output_tokens
+        requirement_level:
+          recommended: When available and non-zero.
+        note: >
+          The value SHOULD be included in `gen_ai.usage.output_tokens`.
+      - ref: gen_ai.conversation.id
+        requirement_level:
+          conditionally_required: When available.
+
+  - type: gen_ai.inference.internal
+    requirement_level: recommended
+    kind: internal
+    name:
+      note: |
+        **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
+    brief: >
+      Reported by the inference hosting layer and assumed to represent
+      the actual model inference.
+    stability: development
+    entity_associations:
+      - "gen_ai.provider"
+    attributes:
+      - ref_group: attributes.gen_ai.usage.breakdown
+      - ref: gen_ai.operation.name
+        requirement_level: required
+        sampling_relevant: true
+      - ref: gen_ai.request.model
+        brief: The name of the model the inference request was routed to.
+        requirement_level: required
+        sampling_relevant: true
+        note: ""
+      - ref: gen_ai.response.model
+        brief: The exact model (version, checkpoint) that performed inference.
+        requirement_level: recommended
+      - ref: gen_ai.response.id
+        brief: The identifier the hosting layer assigned to this inference operation.
+        requirement_level: recommended
+      - ref: error.type
+        requirement_level:
+          conditionally_required: "If the operation ended in an error."
+        note: |
+          The `error.type` SHOULD match the error code reported by the inference engine,
+          the canonical name of exception that occurred, or another low-cardinality error identifier.
+      - ref: gen_ai.request.max_tokens
+        brief: The maximum number of tokens the model was allowed to generate.
+        requirement_level: recommended
+      - ref: gen_ai.request.choice.count
+        brief: The number of candidate sequences the model generated.
+        requirement_level:
+          conditionally_required: If not equal to 1.
+      - ref: gen_ai.request.temperature
+        brief: The temperature used for sampling.
+        requirement_level: recommended
+      - ref: gen_ai.request.top_k
+        brief: The top_k value used for sampling.
+        requirement_level:
+          conditionally_required: If applicable.
+        note: ""
+      - ref: gen_ai.request.top_p
+        brief: The top_p value used for sampling.
+        requirement_level: recommended
+      - ref: gen_ai.request.stop_sequences
+        brief: The sequences that stop generation.
+        requirement_level: recommended
+      - ref: gen_ai.request.frequency_penalty
+        brief: The frequency penalty applied during sampling.
+        requirement_level: recommended
+      - ref: gen_ai.request.presence_penalty
+        brief: The presence penalty applied during sampling.
+        requirement_level: recommended
+      - ref: gen_ai.request.seed
+        brief: The seed used for sampling.
+        requirement_level:
+          conditionally_required: If a seed was used.
+      - ref: gen_ai.output.type
+        brief: The output format enforced during generation, for example via constrained decoding.
+        requirement_level:
+          conditionally_required: If the output format was constrained.
+      - ref: gen_ai.request.stream
+        brief: Indicates whether output tokens were streamed as they were generated.
+        requirement_level:
+          conditionally_required: If and only if output was streamed. If unset, output is assumed to be non-streaming.
+      - ref: gen_ai.request.reasoning.level
+        brief: The reasoning level applied during generation.
+        requirement_level:
+          recommended: When applicable.
+        note: ""
+      - ref: gen_ai.response.finish_reasons
+        brief: Array of reasons the model stopped generating tokens, one per generated sequence.
+        requirement_level: recommended
+      - ref: gen_ai.response.time_to_first_chunk
+        brief: >
+          Time from when the hosting layer accepted the request to when the model
+          produced the first output token, in seconds.
+        requirement_level:
+          recommended: If output was streamed.
+        note: >
+          The value includes queueing and prefill time.
+      - ref: gen_ai.usage.input_tokens
+        brief: The number of input tokens processed by the model, including tokens served from cache.
+        requirement_level: recommended
+        note: >
+          The value SHOULD reflect tokens consumed by the model, not billed units.
+      - ref: gen_ai.usage.output_tokens
+        brief: The number of tokens the model generated.
+        requirement_level: recommended
+        note: >
+          The value SHOULD reflect tokens produced by the model, not billed units.
+      - ref: gen_ai.usage.reasoning.output_tokens
+        brief: The number of output tokens the model generated for reasoning.
+        requirement_level:
+          recommended: When available and non-zero.
+        note: >
+          The value SHOULD be included in `gen_ai.usage.output_tokens`.
+      - ref: gen_ai.usage.cache_read.input_tokens
+        brief: The number of input tokens served from the model's prefix (KV) cache instead of being recomputed.
+        requirement_level:
+          recommended: When available and non-zero.
+      - ref: gen_ai.usage.cache_write.input_tokens
+        brief: The number of input tokens written to the model's prefix (KV) cache.
+        requirement_level:
+          recommended: When available and non-zero.
+      - ref: gen_ai.usage.text.cache_read.input_tokens
+        brief: The number of text input tokens served from the model's prefix (KV) cache.
+      - ref: gen_ai.usage.image.cache_read.input_tokens
+        brief: The number of image input tokens served from the model's prefix (KV) cache.
+      - ref: gen_ai.usage.audio.cache_read.input_tokens
+        brief: The number of audio input tokens served from the model's prefix (KV) cache.
+      - ref: gen_ai.system_instructions
+        brief: The system instructions passed to the model.
+        requirement_level: opt_in
+      - ref: gen_ai.input.messages
+        brief: The input messages passed to the model.
+        requirement_level: opt_in
+      - ref: gen_ai.output.messages
+        brief: The messages generated by the model, one per generated sequence.
+        requirement_level: opt_in
+      - ref: gen_ai.tool.definitions
+        brief: The tool definitions passed to the model.
+        requirement_level: opt_in
+
   - type: gen_ai.embeddings.client
     requirement_level: recommended
     kind: client
