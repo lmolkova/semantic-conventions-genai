@@ -233,8 +233,10 @@ spans:
         requirement_level:
           recommended: When available and if the request references a previous response.
       - ref: gen_ai.response.id
+        brief: The identifier for the completion returned in the response.
         requirement_level: recommended
       - ref: gen_ai.response.model
+        brief: The model name returned in the response.
         requirement_level: recommended
       - ref: gen_ai.response.finish_reasons
         requirement_level: recommended

@@ -199,12 +199,12 @@ attributes:
     stability: development
   - key: gen_ai.response.id
     type: string
-    brief: The identifier for the completion returned in the response.
+    brief: The unique identifier for the completion.
     examples: ['chatcmpl-123']
     stability: development
   - key: gen_ai.response.model
     type: string
-    brief: The model name returned in the response.
+    brief: The name of the model that generated the response.
     examples: ['gpt-4-0613']
     stability: development
   - key: gen_ai.response.finish_reasons
