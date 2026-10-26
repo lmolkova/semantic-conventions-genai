@@ -193,7 +193,7 @@ def run_chat_streaming_reference(client):
         for chunk in stream:
             model = model or getattr(chunk, "model", None)
             response_id = response_id or getattr(chunk, "id", None)
-            usage = chunk.usage or usage
+            usage = chunk.usage or (chunk.x_groq and chunk.x_groq.usage) or usage
             if chunk.choices and chunk.choices[0].delta.content:
                 text += chunk.choices[0].delta.content
             if chunk.choices and chunk.choices[0].finish_reason:
@@ -207,19 +207,6 @@ def run_chat_streaming_reference(client):
         if usage:
             span.set_attribute("gen_ai.usage.input_tokens", usage.prompt_tokens)
             span.set_attribute("gen_ai.usage.output_tokens", usage.completion_tokens)
-            for token_type, count in (("input", usage.prompt_tokens), ("output", usage.completion_tokens)):
-                _token_usage.record(
-                    count,
-                    {
-                        "gen_ai.operation.name": "chat",
-                        "gen_ai.provider.name": "groq",
-                        "gen_ai.request.model": request_model,
-                        "gen_ai.response.model": model,
-                        "gen_ai.token.type": token_type,
-                        "server.address": _SERVER_ADDRESS,
-                        "server.port": _SERVER_PORT,
-                    },
-                )
         _inference_duration.record(
             time.perf_counter() - start_time,
             {
