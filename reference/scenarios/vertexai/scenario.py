@@ -222,7 +222,7 @@ def run_chat():
             model = GenerativeModel(request_model)
             prompt_text = "Say hello."
             response = model.generate_content(prompt_text)
-        response_model = response.to_dict().get("modelVersion")
+        response_model = response.to_dict().get("model_version")
         response_id = response.to_dict().get("response_id")
         if response_id:
             span.set_attribute("gen_ai.response.id", response_id)
@@ -315,7 +315,10 @@ def run_chat_tool_call():
                 "What's the weather in Seattle?",
                 tools=[tool],
             )
-        response_model = response.to_dict().get("modelVersion")
+        response_model = response.to_dict().get("model_version")
+        response_id = response.to_dict().get("response_id")
+        if response_id:
+            span.set_attribute("gen_ai.response.id", response_id)
         if response_model:
             span.set_attribute("gen_ai.response.model", response_model)
         finish_reason = (
@@ -366,8 +369,11 @@ def run_chat_multimodal():
         "gen_ai.operation.name": "chat",
         "gen_ai.provider.name": "gcp.vertex_ai",
         "gen_ai.request.model": request_model,
+        "server.address": _SERVER_ADDRESS,
     }
-    with _reference_tracer.start_as_current_span("chat gemini-2.0-flash", attributes=span_attributes) as span:
+    with _reference_tracer.start_as_current_span(
+        "chat gemini-2.0-flash", kind=SpanKind.CLIENT, attributes=span_attributes
+    ) as span:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", DeprecationWarning)
             warnings.simplefilter("ignore", UserWarning)
@@ -379,7 +385,10 @@ def run_chat_multimodal():
                     Part.from_data(data=blob, mime_type="audio/wav"),
                 ]
             )
-        response_model = response.to_dict().get("modelVersion")
+        response_model = response.to_dict().get("model_version")
+        response_id = response.to_dict().get("response_id")
+        if response_id:
+            span.set_attribute("gen_ai.response.id", response_id)
         if response_model:
             span.set_attribute("gen_ai.response.model", response_model)
         finish_reason = (
@@ -435,7 +444,10 @@ def run_chat_streaming():
                 text += chunk.text
                 last_chunk = chunk
         if last_chunk:
-            response_model = last_chunk.to_dict().get("modelVersion")
+            response_model = last_chunk.to_dict().get("model_version")
+            response_id = last_chunk.to_dict().get("response_id")
+            if response_id:
+                span.set_attribute("gen_ai.response.id", response_id)
             if response_model:
                 span.set_attribute("gen_ai.response.model", response_model)
         if last_chunk and last_chunk.candidates and last_chunk.candidates[0].finish_reason:
