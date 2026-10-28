@@ -1,6 +1,7 @@
 {
   "spans": {
     "gen_ai.client.invoke_agent": [
+      "error.type",
       "gen_ai.agent.name",
       "gen_ai.input.messages",
       "gen_ai.operation.name",
@@ -35,6 +36,7 @@
   "events": {},
   "metrics": {
     "gen_ai.client.invoke_agent.duration": [
+      "error.type",
       "gen_ai.agent.name",
       "gen_ai.operation.name",
       "gen_ai.provider.name",

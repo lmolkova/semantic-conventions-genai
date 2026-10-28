@@ -1,6 +1,6 @@
 """Reference implementation for Google GenAI.
 
-Exercises: chat, chat_streaming, embeddings
+Exercises: chat, chat_streaming, embeddings, create_agent, invoke_agent
 against a mock Google GenAI server, with manual OTel spans.
 """
 
@@ -21,6 +21,7 @@ from reference_shared import (
 
 MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 _SERVER_ADDRESS = urlparse(MOCK_BASE_URL).hostname
+_SERVER_PORT = urlparse(MOCK_BASE_URL).port
 
 _reference_tracer = reference_tracer()
 _reference_meter = reference_meter()
@@ -359,23 +360,15 @@ def run_interactions_continuation():
 
     prompt_text = "Follow up prompt."
     span_attributes = {
-        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.operation.name": "chat",
         "gen_ai.provider.name": "gcp.gemini",
         "gen_ai.request.model": request_model,
-        "gen_ai.agent.name": "interactions_agent",
         "gen_ai.request.previous_response.id": previous_interaction_id,
         "server.address": _SERVER_ADDRESS,
+        "server.port": _SERVER_PORT,
     }
-    metric_attributes = {
-        "gen_ai.operation.name": "invoke_agent",
-        "gen_ai.provider.name": "gcp.gemini",
-        "gen_ai.request.model": request_model,
-        "gen_ai.agent.name": "interactions_agent",
-        "server.address": _SERVER_ADDRESS,
-    }
-    start_time = time.perf_counter()
     with _reference_tracer.start_as_current_span(
-        "invoke_agent interactions_agent", kind=SpanKind.CLIENT, attributes=span_attributes
+        f"chat {request_model}", kind=SpanKind.CLIENT, attributes=span_attributes, record_exception=False
     ) as span:
         try:
             interaction = client.interactions.create(
@@ -383,50 +376,100 @@ def run_interactions_continuation():
                 previous_interaction_id=previous_interaction_id,
                 input=prompt_text,
             )
-            if interaction.id:
-                span.set_attribute("gen_ai.response.id", interaction.id)
-            if interaction.model:
-                span.set_attribute("gen_ai.response.model", str(interaction.model))
+        except Exception as e:
+            span.set_status(StatusCode.ERROR, str(e))
+            span.set_attribute("error.type", type(e).__qualname__)
+            raise
+        if interaction.id:
+            span.set_attribute("gen_ai.response.id", interaction.id)
+        metric_attributes = {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "gcp.gemini",
+            "gen_ai.request.model": request_model,
+        }
+        if interaction.model:
+            span.set_attribute("gen_ai.response.model", str(interaction.model))
+            metric_attributes["gen_ai.response.model"] = str(interaction.model)
+        usage = {}
+        if interaction.usage:
+            if interaction.usage.total_input_tokens:
+                usage["gen_ai.usage.input_tokens"] = interaction.usage.total_input_tokens
+            if interaction.usage.total_output_tokens:
+                usage["gen_ai.usage.output_tokens"] = interaction.usage.total_output_tokens
+        for attr, value in usage.items():
+            span.set_attribute(attr, value)
+        _record_inference_usage(usage, metric_attributes)
+
+        event_attrs = {
+            "gen_ai.operation.name": "chat",
+            "gen_ai.provider.name": "gcp.gemini",
+            "gen_ai.request.model": request_model,
+            "gen_ai.request.previous_response.id": previous_interaction_id,
+            "gen_ai.input.messages": json.dumps(
+                [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
+            ),
+            "gen_ai.output.messages": json.dumps(
+                [
+                    {
+                        "role": "assistant",
+                        "parts": [{"type": "text", "content": "This is a response from the mock interactions server."}],
+                    }
+                ]
+            ),
+        }
+        if interaction.id:
+            event_attrs["gen_ai.response.id"] = interaction.id
+        if interaction.model:
+            event_attrs["gen_ai.response.model"] = str(interaction.model)
+        event_attrs.update(usage)
+        reference_event_logger().emit(
+            event_name="gen_ai.client.inference.operation.details",
+            body="Inference operation details",
+            attributes=event_attrs,
+        )
+        print(f"    -> previous_response_id: {previous_interaction_id}")
+
+
+def run_agent_interaction():
+    """Scenario: invoke a Gemini managed agent through the Interactions API (`agent=` flavor).
+
+    The agent runs server-side, so only the client invoke_agent operation is instrumentable here.
+    """
+    from google import genai
+    from google.genai import types
+
+    print("  [agent_interaction] Google GenAI: invoke agent via Interactions API")
+    client = genai.Client(
+        api_key="mock-key",
+        http_options=types.HttpOptions(
+            base_url=MOCK_BASE_URL,
+            api_version="v1beta",
+        ),
+    )
+    agent = "deep-research-pro-preview-12-2025"
+    span_attributes = {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.provider.name": "gcp.gemini",
+        "gen_ai.agent.name": agent,
+        "server.address": _SERVER_ADDRESS,
+        "server.port": _SERVER_PORT,
+    }
+    metric_attributes = dict(span_attributes)
+    start_time = time.perf_counter()
+    with _reference_tracer.start_as_current_span(
+        f"invoke_agent {agent}", kind=SpanKind.CLIENT, attributes=span_attributes, record_exception=False
+    ) as span:
+        try:
+            interaction = client.interactions.create(
+                agent=agent,
+                input="Research the history of the transistor.",
+            )
             if interaction.usage:
                 if interaction.usage.total_input_tokens:
                     span.set_attribute("gen_ai.usage.input_tokens", interaction.usage.total_input_tokens)
                 if interaction.usage.total_output_tokens:
                     span.set_attribute("gen_ai.usage.output_tokens", interaction.usage.total_output_tokens)
-
-            event_attrs = {
-                "gen_ai.operation.name": "chat",
-                "gen_ai.provider.name": "gcp.gemini",
-                "gen_ai.request.model": request_model,
-                "gen_ai.request.previous_response.id": previous_interaction_id,
-                "gen_ai.input.messages": json.dumps(
-                    [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
-                ),
-                "gen_ai.output.messages": json.dumps(
-                    [
-                        {
-                            "role": "assistant",
-                            "parts": [
-                                {"type": "text", "content": "This is a response from the mock interactions server."}
-                            ],
-                        }
-                    ]
-                ),
-            }
-            if interaction.id:
-                event_attrs["gen_ai.response.id"] = interaction.id
-            if interaction.model:
-                event_attrs["gen_ai.response.model"] = str(interaction.model)
-            if interaction.usage:
-                if interaction.usage.total_input_tokens:
-                    event_attrs["gen_ai.usage.input_tokens"] = interaction.usage.total_input_tokens
-                if interaction.usage.total_output_tokens:
-                    event_attrs["gen_ai.usage.output_tokens"] = interaction.usage.total_output_tokens
-            reference_event_logger().emit(
-                event_name="gen_ai.client.inference.operation.details",
-                body="Inference operation details",
-                attributes=event_attrs,
-            )
-            print(f"    -> previous_response_id: {previous_interaction_id}")
+            print(f"    -> {interaction.id} ({interaction.status})")
         except Exception as e:
             span.set_status(StatusCode.ERROR, str(e))
             span.set_attribute("error.type", type(e).__qualname__)
@@ -812,6 +855,7 @@ def main():
     run_chat_streaming()
     run_embeddings()
     run_create_agent()
+    run_agent_interaction()
 
     flush_and_shutdown(tp, lp, mp)
 

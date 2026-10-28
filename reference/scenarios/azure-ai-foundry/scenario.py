@@ -1,8 +1,8 @@
 """Reference implementation: Azure AI Foundry invoke_agent with manual instrumentation.
 
-Exercises: invoke_agent (Azure AI Foundry Agents API: create agent, create
-thread, run, poll) against a mock Azure AI Foundry server, with manual span
-instrumentation.
+Exercises: create_agent and invoke_agent (Azure AI Foundry Agents API, invoked
+through the Responses API), including a failed invocation, against a mock
+Azure AI Foundry server, with manual span instrumentation.
 """
 
 import json
@@ -65,32 +65,25 @@ class MockCredential:
         return AccessToken("mock-token", 9999999999)
 
 
-def run_invoke_agent(client):
-    """Exercise Azure AI Foundry Agents API with manual OTel spans.
-
-    Creates a CLIENT span with gen_ai invoke_agent attributes to demonstrate
-    what an instrumentation library should capture for the Azure AI Foundry v2
-    agent flow (create agent version, invoke through Responses API, get
-    result).
-    """
-    print("  [invoke_agent] Azure AI Foundry Agents: create + run")
-
-    tool_defs = [
-        {
-            "type": "function",
-            "name": "get_weather",
-            "description": "Get the current weather",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {"type": "string", "description": "City name"},
-                },
-                "required": ["location"],
+TOOL_DEFS = [
+    {
+        "type": "function",
+        "name": "get_weather",
+        "description": "Get the current weather",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {"type": "string", "description": "City name"},
             },
-        }
-    ]
+            "required": ["location"],
+        },
+    }
+]
 
-    # Create agent version using the v2 AIProjectClient surface.
+
+def run_create_agent(client):
+    """Create an agent version using the v2 AIProjectClient surface."""
+    print("  [create_agent] Azure AI Foundry Agents: create")
     span_attributes = {
         "gen_ai.operation.name": "create_agent",
         "gen_ai.provider.name": "azure.ai.openai",
@@ -104,24 +97,26 @@ def run_invoke_agent(client):
     ) as span:
         span.set_attribute("gen_ai.agent.description", AGENT_DESCRIPTION)
         span.set_attribute("gen_ai.system_instructions", json.dumps([{"type": "text", "content": AGENT_INSTRUCTIONS}]))
-        span.set_attribute("gen_ai.tool.definitions", json.dumps(tool_defs))
+        span.set_attribute("gen_ai.tool.definitions", json.dumps(TOOL_DEFS))
         agent = client.agents.create_version(
             agent_name=AGENT_NAME,
             definition=PromptAgentDefinition(
                 model=AGENT_MODEL,
                 instructions=AGENT_INSTRUCTIONS,
-                tools=tool_defs,
+                tools=TOOL_DEFS,
             ),
             description=AGENT_DESCRIPTION,
         )
         span.set_attribute("gen_ai.agent.id", agent.id)
         if getattr(agent, "version", None):
             span.set_attribute("gen_ai.agent.version", str(agent.version))
+    return agent
 
-    # Invoke the agent through the Responses API, wrapped in a manual span.
-    openai_client = client.get_openai_client()
 
-    span_attributes_2 = {
+def run_invoke_agent(openai_client, agent):
+    """Invoke the agent through the Responses API, wrapped in a manual span."""
+    print("  [invoke_agent] Azure AI Foundry Agents: run")
+    span_attributes = {
         "gen_ai.operation.name": "invoke_agent",
         "gen_ai.provider.name": "azure.ai.openai",
         "gen_ai.request.model": AGENT_MODEL,
@@ -129,10 +124,13 @@ def run_invoke_agent(client):
         "server.address": _SERVER_ADDRESS,
         "server.port": _SERVER_PORT,
     }
-    metric_attributes = dict(span_attributes_2)
+    metric_attributes = dict(span_attributes)
     start_time = time.perf_counter()
     with tracer.start_as_current_span(
-        f"invoke_agent {agent.name}", kind=SpanKind.CLIENT, attributes=span_attributes_2
+        f"invoke_agent {agent.name}",
+        kind=SpanKind.CLIENT,
+        attributes=span_attributes,
+        record_exception=False,
     ) as span:
         span.set_attribute("gen_ai.request.max_tokens", REQUEST_MAX_TOKENS)
         span.set_attribute("gen_ai.request.temperature", REQUEST_TEMPERATURE)
@@ -141,12 +139,12 @@ def run_invoke_agent(client):
         span.set_attribute(
             "gen_ai.input.messages", json.dumps([{"role": "user", "parts": [{"type": "text", "content": USER_INPUT}]}])
         )
-        span.set_attribute("gen_ai.tool.definitions", json.dumps(tool_defs))
+        span.set_attribute("gen_ai.tool.definitions", json.dumps(TOOL_DEFS))
         try:
             response = openai_client.responses.create(
                 model=AGENT_MODEL,
                 instructions=AGENT_INSTRUCTIONS,
-                tools=tool_defs,
+                tools=TOOL_DEFS,
                 input=USER_INPUT,
                 max_output_tokens=REQUEST_MAX_TOKENS,
                 temperature=REQUEST_TEMPERATURE,
@@ -212,10 +210,26 @@ def run_invoke_agent(client):
             raise
         finally:
             _invoke_agent_duration.record(time.perf_counter() - start_time, metric_attributes)
-            openai_client.close()
 
-    # Clean up
-    client.agents.delete_version(agent_name=agent.name, agent_version=agent.version)
+
+def run_invoke_agent_error(client, agent):
+    """Exercise an invoke_agent error returned through the SDK's HTTP transport."""
+    import httpx2
+    import openai
+
+    transport = httpx2.MockTransport(
+        lambda request: httpx2.Response(
+            400,
+            json={"error": {"message": "Invalid input", "type": "invalid_request_error", "code": "invalid_input"}},
+        )
+    )
+    with client.get_openai_client(http_client=httpx2.Client(transport=transport), max_retries=0) as openai_client:
+        try:
+            run_invoke_agent(openai_client, agent)
+        except openai.BadRequestError:
+            pass
+        else:
+            raise AssertionError("Expected the SDK to reject the invoke_agent request")
 
 
 if __name__ == "__main__":
@@ -228,6 +242,10 @@ if __name__ == "__main__":
         authentication_policy=SansIOHTTPPolicy(),
     )
 
-    run_invoke_agent(client)
+    agent = run_create_agent(client)
+    with client.get_openai_client() as openai_client:
+        run_invoke_agent(openai_client, agent)
+    run_invoke_agent_error(client, agent)
+    client.agents.delete_version(agent_name=agent.name, agent_version=agent.version)
 
     flush_and_shutdown(tp, lp, mp)

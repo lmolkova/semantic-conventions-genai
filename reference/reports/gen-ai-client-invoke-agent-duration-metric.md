@@ -14,13 +14,13 @@
 | Attribute | Supporting Libraries |
 | --- | --- |
 | gen_ai.agent.name | [azure-ai-foundry], [google-genai], [openai-assistants] |
-| server.port | [aws-bedrock-agent], [azure-ai-foundry], [openai-assistants] |
+| server.port | [aws-bedrock-agent], [azure-ai-foundry], [google-genai], [openai-assistants] |
 
 ## Recommended
 
 | Attribute | Supporting Libraries |
 | --- | --- |
-| gen_ai.request.model | [azure-ai-foundry], [google-genai], [openai-assistants] |
+| gen_ai.request.model | [azure-ai-foundry], [openai-assistants] |
 | server.address | [aws-bedrock-agent], [azure-ai-foundry], [google-genai], [openai-assistants] |
 
 [aws-bedrock-agent]: ../scenarios/aws-bedrock-agent/scenario.py
