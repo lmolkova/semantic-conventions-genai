@@ -27,3 +27,9 @@ scenarios:
           missing_attribute: gen_ai.usage.output_tokens
           operation: invoke_agent
         reason: The pinned mock omits model-invocation trace usage; record tokens when the service returns it.
+    spans:
+      - match:
+          attributes:
+            gen_ai.operation.name: invoke_agent
+          kind: client
+          type: gen_ai.client.invoke_agent

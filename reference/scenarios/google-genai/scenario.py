@@ -46,6 +46,27 @@ _embeddings_duration = _reference_meter.create_histogram(
         81.92,
     ],
 )
+_invoke_agent_duration = _reference_meter.create_histogram(
+    "gen_ai.client.invoke_agent.duration",
+    unit="s",
+    description="GenAI client invoke agent operation duration.",
+    explicit_bucket_boundaries_advisory=[
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32,
+        0.64,
+        1.28,
+        2.56,
+        5.12,
+        10.24,
+        20.48,
+        40.96,
+        81.92,
+    ],
+)
 
 _operation_input_tokens = _reference_meter.create_histogram(
     "gen_ai.client.inference.operation.input_tokens",
@@ -345,56 +366,74 @@ def run_interactions_continuation():
         "gen_ai.request.previous_response.id": previous_interaction_id,
         "server.address": _SERVER_ADDRESS,
     }
+    metric_attributes = {
+        "gen_ai.operation.name": "invoke_agent",
+        "gen_ai.provider.name": "gcp.gemini",
+        "gen_ai.request.model": request_model,
+        "gen_ai.agent.name": "interactions_agent",
+        "server.address": _SERVER_ADDRESS,
+    }
+    start_time = time.perf_counter()
     with _reference_tracer.start_as_current_span(
         "invoke_agent interactions_agent", kind=SpanKind.CLIENT, attributes=span_attributes
     ) as span:
-        interaction = client.interactions.create(
-            model=request_model,
-            previous_interaction_id=previous_interaction_id,
-            input=prompt_text,
-        )
-        if interaction.id:
-            span.set_attribute("gen_ai.response.id", interaction.id)
-        if interaction.model:
-            span.set_attribute("gen_ai.response.model", str(interaction.model))
-        if interaction.usage:
-            if interaction.usage.total_input_tokens:
-                span.set_attribute("gen_ai.usage.input_tokens", interaction.usage.total_input_tokens)
-            if interaction.usage.total_output_tokens:
-                span.set_attribute("gen_ai.usage.output_tokens", interaction.usage.total_output_tokens)
+        try:
+            interaction = client.interactions.create(
+                model=request_model,
+                previous_interaction_id=previous_interaction_id,
+                input=prompt_text,
+            )
+            if interaction.id:
+                span.set_attribute("gen_ai.response.id", interaction.id)
+            if interaction.model:
+                span.set_attribute("gen_ai.response.model", str(interaction.model))
+            if interaction.usage:
+                if interaction.usage.total_input_tokens:
+                    span.set_attribute("gen_ai.usage.input_tokens", interaction.usage.total_input_tokens)
+                if interaction.usage.total_output_tokens:
+                    span.set_attribute("gen_ai.usage.output_tokens", interaction.usage.total_output_tokens)
 
-        event_attrs = {
-            "gen_ai.operation.name": "chat",
-            "gen_ai.provider.name": "gcp.gemini",
-            "gen_ai.request.model": request_model,
-            "gen_ai.request.previous_response.id": previous_interaction_id,
-            "gen_ai.input.messages": json.dumps(
-                [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
-            ),
-            "gen_ai.output.messages": json.dumps(
-                [
-                    {
-                        "role": "assistant",
-                        "parts": [{"type": "text", "content": "This is a response from the mock interactions server."}],
-                    }
-                ]
-            ),
-        }
-        if interaction.id:
-            event_attrs["gen_ai.response.id"] = interaction.id
-        if interaction.model:
-            event_attrs["gen_ai.response.model"] = str(interaction.model)
-        if interaction.usage:
-            if interaction.usage.total_input_tokens:
-                event_attrs["gen_ai.usage.input_tokens"] = interaction.usage.total_input_tokens
-            if interaction.usage.total_output_tokens:
-                event_attrs["gen_ai.usage.output_tokens"] = interaction.usage.total_output_tokens
-        reference_event_logger().emit(
-            event_name="gen_ai.client.inference.operation.details",
-            body="Inference operation details",
-            attributes=event_attrs,
-        )
-        print(f"    -> previous_response_id: {previous_interaction_id}")
+            event_attrs = {
+                "gen_ai.operation.name": "chat",
+                "gen_ai.provider.name": "gcp.gemini",
+                "gen_ai.request.model": request_model,
+                "gen_ai.request.previous_response.id": previous_interaction_id,
+                "gen_ai.input.messages": json.dumps(
+                    [{"role": "user", "parts": [{"type": "text", "content": prompt_text}]}]
+                ),
+                "gen_ai.output.messages": json.dumps(
+                    [
+                        {
+                            "role": "assistant",
+                            "parts": [
+                                {"type": "text", "content": "This is a response from the mock interactions server."}
+                            ],
+                        }
+                    ]
+                ),
+            }
+            if interaction.id:
+                event_attrs["gen_ai.response.id"] = interaction.id
+            if interaction.model:
+                event_attrs["gen_ai.response.model"] = str(interaction.model)
+            if interaction.usage:
+                if interaction.usage.total_input_tokens:
+                    event_attrs["gen_ai.usage.input_tokens"] = interaction.usage.total_input_tokens
+                if interaction.usage.total_output_tokens:
+                    event_attrs["gen_ai.usage.output_tokens"] = interaction.usage.total_output_tokens
+            reference_event_logger().emit(
+                event_name="gen_ai.client.inference.operation.details",
+                body="Inference operation details",
+                attributes=event_attrs,
+            )
+            print(f"    -> previous_response_id: {previous_interaction_id}")
+        except Exception as e:
+            span.set_status(StatusCode.ERROR, str(e))
+            span.set_attribute("error.type", type(e).__qualname__)
+            metric_attributes["error.type"] = type(e).__qualname__
+            raise
+        finally:
+            _invoke_agent_duration.record(time.perf_counter() - start_time, metric_attributes)
 
 
 def run_chat_tool_call():
