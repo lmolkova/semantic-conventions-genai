@@ -14,6 +14,8 @@ jobs:
   create-pull-request:
     permissions:
       contents: write # required for pushing the release branch
+      pull-requests: write # fork test only
+      issues: write # fork test only
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,18 +45,10 @@ jobs:
           PYTHONUTF8=1 uv run --project changelog.d --locked towncrier build \
             --config changelog.d/towncrier.toml --yes --version "v$VERSION"
 
-      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
-        id: otelbot-token
-        with:
-          client-id: ${{ vars.OTELBOT_SEMANTIC_CONVENTIONS_GENAI_CLIENT_ID }}
-          private-key: ${{ secrets.OTELBOT_SEMANTIC_CONVENTIONS_GENAI_PRIVATE_KEY }}
-          permission-pull-requests: write
-          permission-issues: write # required for creating the `release` label
-
       - name: Create pull request
         env:
           # Use the App token for PR creation so the pull request runs workflows.
-          GH_TOKEN: ${{ steps.otelbot-token.outputs.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           message="[chore] Prepare release v${VERSION}"
           branch="otelbot/prepare-release-v${VERSION}"
