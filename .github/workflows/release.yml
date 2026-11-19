@@ -106,6 +106,7 @@ jobs:
     needs: release
     permissions:
       contents: write # pushes the bump branch
+      pull-requests: write # opens the PR when otelbot isn't configured
     env:
       VERSION: ${{ needs.release.outputs.version }}
     steps:
