@@ -24,7 +24,7 @@ linkTitle: OpenAI
   - [Metric: `gen_ai.client.inference.duration`](#metric-gen_aiclientinferenceduration)
 <!-- tocstop -->
 
-The Semantic Conventions for [OpenAI](https://openai.com/) extend and override the [Gen AI Semantic Conventions](/docs/gen-ai/README.md).
+The Semantic Conventions for [OpenAI](https://openai.com/) extend and override the [Gen AI Semantic Conventions](/docs/README.md).
 
 ## Spans
 
@@ -44,7 +44,7 @@ See [`openai.fetch_response.client`](../openai/client-fetch-response/spans/opena
 
 ## Metrics
 
-OpenAI metrics follow [Generative AI metrics](gen-ai-metrics.md) with the noted additional attributes.
+OpenAI metrics follow [Generative AI metrics](../README.md) with the noted additional attributes.
 Individual systems may include additional system-specific attributes. It is recommended to check system-specific documentation, if available.
 
 ### Metric: `gen_ai.client.inference.usage.input_tokens`

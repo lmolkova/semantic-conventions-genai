@@ -7,4 +7,4 @@ Operation: Client Inference
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md). |
+| [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |

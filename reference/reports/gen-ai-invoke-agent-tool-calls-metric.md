@@ -1,6 +1,6 @@
 # Invoke Agent Tool Calls Metric
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-metrics.md#metric-gen_aiinvoke_agenttool_calls)**
+> **[Semantic Convention](../../docs/gen-ai/invoke-agent/metrics/gen_ai.invoke_agent.tool_calls.md)**
 
 ## Required
 

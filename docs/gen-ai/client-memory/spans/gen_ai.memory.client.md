@@ -96,13 +96,13 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 **[10] `server.address`:** When observed from the client side, and when communicating through an intermediary, `server.address` SHOULD represent the server address behind any intermediaries, for example proxies, if it's available.
 
 **[11] `gen_ai.memory.query.text`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information.
 
 **[12] `gen_ai.memory.records`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information including user/PII data.

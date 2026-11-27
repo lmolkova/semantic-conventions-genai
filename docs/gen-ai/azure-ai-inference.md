@@ -15,7 +15,7 @@ linkTitle: Azure AI Inference
 
 <!-- tocstop -->
 
-The Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/azure/ai-studio) extend and override the [GenAI Semantic Conventions](README.md).
+The Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/azure/ai-studio) extend and override the [GenAI Semantic Conventions](../README.md).
 
 ## Spans
 
@@ -31,6 +31,6 @@ See [common embedding span definition](client-embeddings/spans/gen_ai.client.emb
 
 ## Metrics
 
-Azure AI Inference metrics follow generic [Generative AI metrics](gen-ai-metrics.md).
+Azure AI Inference metrics follow generic [Generative AI metrics](../README.md).
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status

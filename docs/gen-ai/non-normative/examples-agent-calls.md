@@ -1,6 +1,6 @@
 # Agent call examples
 
-These examples illustrate [agent and framework spans](../README.md).
+These examples illustrate [agent and framework spans](../../README.md).
 
 <!-- toc -->
 

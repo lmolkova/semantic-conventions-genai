@@ -4,27 +4,12 @@ linkTitle: Exceptions
 
 # Semantic conventions for Generative AI exceptions
 
-**Status**: [Development][DocumentStatus]
+**Status**: [Deprecated][DocumentStatus]
 
-This document defines semantic conventions for recording exceptions on Generative AI operations.
-
-<!-- toc -->
-
-- [Operation-specific exception events](#operation-specific-exception-events)
-- [Generative AI client operation exception](#generative-ai-client-operation-exception)
-
-<!-- tocstop -->
-
-## Operation-specific exception events
-
-| Operation | Exception event |
-| --- | --- |
-| Client inference | [`gen_ai.client.inference.exception`](client-inference/events/gen_ai.client.inference.exception.md) |
-| Client embeddings | [`gen_ai.client.embeddings.exception`](client-embeddings/events/gen_ai.client.embeddings.exception.md) |
-| Client agent invocation | [`gen_ai.client.invoke_agent.exception`](client-invoke-agent/events/gen_ai.client.invoke_agent.exception.md) |
-| Client response fetching | [`gen_ai.client.fetch_response.exception`](client-fetch-response/events/gen_ai.client.fetch_response.exception.md) |
-| Internal agent invocation | [`gen_ai.invoke_agent.exception`](invoke-agent/events/gen_ai.invoke_agent.exception.md) |
-| Tool execution | [`gen_ai.execute_tool.exception`](execute-tool/events/gen_ai.execute_tool.exception.md) |
+> [!WARNING]
+> This document is deprecated. `gen_ai.client.operation.exception` will be deprecated in favor of
+> operation-specific exception events.
+> See the [operation docs](../README.md) instead.
 
 ## Generative AI client operation exception
 

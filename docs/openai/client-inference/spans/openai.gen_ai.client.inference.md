@@ -15,7 +15,7 @@ Operation: Client Inference
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md).
+Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md).
 
 `gen_ai.provider.name` MUST be set to `"openai"` and SHOULD be provided **at span creation time**.
 
@@ -202,7 +202,7 @@ Instrumentations SHOULD set this attribute when the first chunk is received and 
 **[29] `gen_ai.usage.input_tokens`:** The total input token count is returned by `usage.input_tokens` or a similar property in the model response.
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/README.md#how-to-aggregate-token-usage).
 
 **[30] `gen_ai.usage.output_tokens`:** This value SHOULD include reasoning tokens and tokens of all modalities.
 
@@ -212,7 +212,7 @@ token counts (for example, Cohere exposes both `usage.billed_units` and
 value matches the units the customer is charged for.
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/README.md#how-to-aggregate-token-usage).
 
 **[31] `gen_ai.usage.reasoning.output_tokens`:** Corresponds to `usage.output_tokens_details.reasoning_tokens` in the model response.
 
@@ -231,7 +231,7 @@ input messages.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-input-messages.json).
@@ -265,7 +265,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).
@@ -305,7 +305,7 @@ system instructions.
 > [!Warning]
 > This attribute may contain sensitive information.
 
-See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-system-instructions.json).

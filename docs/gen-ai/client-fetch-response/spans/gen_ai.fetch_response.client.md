@@ -109,7 +109,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).

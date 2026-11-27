@@ -13,7 +13,7 @@ Operation: Client Fetch Response
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
 
-Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md).
+Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/README.md).
 
 Describes the [OpenAI Get a model response](https://platform.openai.com/docs/api-reference/responses/get)
 operation, which fetches a stored response from the Responses API by its identifier. No
@@ -114,7 +114,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).

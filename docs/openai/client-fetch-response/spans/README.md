@@ -7,4 +7,4 @@ Operation: Client Fetch Response
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`openai.fetch_response.client`](/docs/openai/client-fetch-response/spans/openai.fetch_response.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md). |
+| [`openai.fetch_response.client`](/docs/openai/client-fetch-response/spans/openai.fetch_response.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |

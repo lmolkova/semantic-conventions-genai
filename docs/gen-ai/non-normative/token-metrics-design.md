@@ -1,7 +1,7 @@
 # Design choices behind token metrics
 
 This document explains the design of the token instruments in
-[Semantic conventions for generative AI inference token metrics](/docs/gen-ai/README.md#inference-token-metrics).
+[Semantic conventions for generative AI inference token metrics](/docs/README.md#inference-token-metrics).
 
 ## TL;DR
 
