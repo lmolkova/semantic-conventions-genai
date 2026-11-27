@@ -1,0 +1,5 @@
+[template]
+acronyms = ["A2A", "AI", "AWS", "Bedrock", "GenAI", "MCP", "OpenAI"]
+
+[template.text_maps.namespace_mapping]
+gen_ai = "GenAI"
