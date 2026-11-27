@@ -108,7 +108,7 @@ SEMCONV_DOC_LINKS: dict[str, str] = {
     "gen_ai.client.inference.usage.reasoning.output_tokens": "../../docs/gen-ai/registry/metrics/gen_ai.client.inference.usage.reasoning.output_tokens.md",
     "gen_ai.client.inference.operation.input_tokens": "../../docs/gen-ai/registry/metrics/gen_ai.client.inference.operation.input_tokens.md",
     "gen_ai.client.inference.operation.output_tokens": "../../docs/gen-ai/registry/metrics/gen_ai.client.inference.operation.output_tokens.md",
-    "gen_ai.client.operation.duration": "../../docs/gen-ai/gen-ai-metrics.md#metric-gen_aiclientoperationduration",
+    "gen_ai.client.operation.duration": "../../docs/gen-ai/registry/metrics/gen_ai.client.operation.duration.md",
     "gen_ai.client.inference.duration": "../../docs/gen-ai/registry/metrics/gen_ai.client.inference.duration.md",
     "gen_ai.client.embeddings.duration": "../../docs/gen-ai/registry/metrics/gen_ai.client.embeddings.duration.md",
     "gen_ai.client.embeddings.operation.input_tokens": "../../docs/gen-ai/registry/metrics/gen_ai.client.embeddings.operation.input_tokens.md",

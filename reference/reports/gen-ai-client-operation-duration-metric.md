@@ -1,6 +1,6 @@
 # Client Operation Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-metrics.md#metric-gen_aiclientoperationduration)**
+> **[Semantic Convention](../../docs/gen-ai/registry/metrics/gen_ai.client.operation.duration.md)**
 
 ## Required
 

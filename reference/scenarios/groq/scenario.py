@@ -17,7 +17,7 @@ MOCK_BASE_URL = os.environ["MOCK_LLM_URL"]
 
 _reference_tracer = reference_tracer()
 _meter = reference_meter()
-# Bucket boundaries advised for each metric by docs/gen-ai/gen-ai-metrics.md.
+# Bucket boundaries advised for each metric by `explicit_bucket_boundaries` in the model.
 _token_usage = _meter.create_histogram(
     "gen_ai.client.token.usage",
     unit="{token}",
