@@ -65,6 +65,8 @@ metrics:
       span, the metric value SHOULD be the same as the span duration.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -84,6 +86,8 @@ metrics:
       span, the metric value SHOULD be the same as the span duration.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.embeddings
       code_generation:
         metric_value_type: double
     attributes:
@@ -108,6 +112,8 @@ metrics:
       to a protocol or framework name, such as `a2a`.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.invoke_agent
       code_generation:
         metric_value_type: double
     attributes:
@@ -135,6 +141,8 @@ metrics:
       The chunk definition and measurement boundaries are the same as for [`gen_ai.response.time_to_first_chunk`](/docs/registry/attributes/gen-ai.md#gen-ai-response-time-to-first-chunk).
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -149,6 +157,8 @@ metrics:
       This metric SHOULD be reported for streaming calls and SHOULD NOT be reported otherwise.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -160,6 +170,8 @@ metrics:
     brief: 'Generative AI server request duration such as time-to-last byte or last output token.'
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.server.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -172,6 +184,8 @@ metrics:
     brief: 'Time per output token generated after the first token for successful responses.'
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.server.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -183,6 +197,8 @@ metrics:
     brief: 'Time to generate first token for successful responses.'
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.server.inference
       code_generation:
         metric_value_type: double
     attributes:
@@ -190,6 +206,8 @@ metrics:
   - name: gen_ai.invoke_agent.duration
     requirement_level: recommended
     annotations:
+      docs:
+        operation: gen_ai.invoke_agent
       code_generation:
         metric_value_type: double
     brief: >
@@ -220,6 +238,8 @@ metrics:
           recommended: When `gen_ai.operation.name` is `invoke_agent`, if applicable.
   - name: gen_ai.invoke_agent.inference_calls
     annotations:
+      docs:
+        operation: gen_ai.invoke_agent
       code_generation:
         metric_value_type: int
     brief: >
@@ -250,6 +270,8 @@ metrics:
       - ref_group: metric_attributes.gen_ai.invoke_agent.calls
   - name: gen_ai.invoke_agent.tool_calls
     annotations:
+      docs:
+        operation: gen_ai.invoke_agent
       code_generation:
         metric_value_type: int
     brief: >
@@ -282,6 +304,8 @@ metrics:
   - name: gen_ai.execute_tool.duration
     requirement_level: recommended
     annotations:
+      docs:
+        operation: gen_ai.execute_tool
       code_generation:
         metric_value_type: double
     brief: >
@@ -301,6 +325,8 @@ metrics:
   - name: gen_ai.retrieval.duration
     requirement_level: recommended
     annotations:
+      docs:
+        operation: gen_ai.retrieval
       code_generation:
         metric_value_type: double
     brief: >

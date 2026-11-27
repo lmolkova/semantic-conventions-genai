@@ -1,6 +1,6 @@
 # Inference Span
 
-> **[Semantic Convention](../../docs/gen-ai/client-inference.md#span-gen_aiclientinference)**
+> **[Semantic Convention](../../docs/gen-ai/client-inference/README.md#span-gen_aiclientinference)**
 
 ## Required
 

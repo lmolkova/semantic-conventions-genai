@@ -1,0 +1,23 @@
+{#- Operation docs layout: `<ns>/<operation>/<signal>/<id>.md`, where the
+   operation comes from the signal's `annotations.docs.operation`, e.g.
+   `gen_ai.client.inference` -> `gen-ai/client-inference`. Paths are relative to
+   `docs/`; urls are root-anchored so they resolve from any page. -#}
+{% macro dir(operation) -%}
+{%- set parts = operation | split_id -%}
+{{ parts | first | kebab_case }}/{{ parts[1:] | join("_") | kebab_case }}
+{%- endmacro %}
+{% macro title(operation) -%}
+{{ operation | map_text("operation_titles") }}
+{%- endmacro %}
+{% macro index_path(operation, signal) -%}
+{{ dir(operation) | trim }}/{{ signal }}/README.md
+{%- endmacro %}
+{% macro signal_path(operation, signal, id) -%}
+{{ dir(operation) | trim }}/{{ signal }}/{{ id }}.md
+{%- endmacro %}
+{% macro signal_url(operation, signal, id) -%}
+/docs/{{ signal_path(operation, signal, id) | trim }}
+{%- endmacro %}
+{% macro signal_title(signal) -%}
+{{ {"spans": "Span", "metrics": "Metric", "events": "Event", "entities": "Entity"}[signal] }}
+{%- endmacro %}

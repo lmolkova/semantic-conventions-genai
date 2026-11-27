@@ -31,6 +31,9 @@ spans:
       spans for A2A requests only and SHOULD NOT report telemetry describing
       higher level GenAI agent operations.
     stability: development
+    annotations:
+      docs:
+        operation: a2a.client
     attributes:
       - ref_group: a2a.protocol.attributes
       - ref_group: a2a.error.attributes
@@ -50,9 +53,12 @@ spans:
       This span is reported when instrumentation cannot detect the transport
       server span the A2A request is handled in. When it can, instrumentation
       SHOULD enrich the transport server span instead - see A2A
-      [HTTP](/docs/gen-ai/a2a.md#server-over-http) and
-      [gRPC](/docs/gen-ai/a2a.md#server-over-grpc) server spans.
+      [HTTP](/docs/a2a/README.md#server-over-http) and
+      [gRPC](/docs/a2a/README.md#server-over-grpc) server spans.
     stability: development
+    annotations:
+      docs:
+        operation: a2a.server
     attributes:
       - ref_group: a2a.protocol.attributes
       - ref_group: a2a.error.attributes
@@ -62,6 +68,9 @@ spans:
 span_refinements:
   - id: a2a.http.server
     ref: http.server
+    annotations:
+      docs:
+        operation: a2a.server
     brief: >
       This span describes processing of an A2A request received over an HTTP
       binding (HTTP+JSON or JSON-RPC over HTTP).
@@ -77,7 +86,7 @@ span_refinements:
       span status to `ERROR`, as permitted by the
       [HTTP span status conventions](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/http/http-spans.md#status),
       and SHOULD set `error.type` according to the
-      [A2A error guidance](/docs/gen-ai/a2a.md#server), even when the HTTP response
+      [A2A error guidance](/docs/a2a/README.md#server), even when the HTTP response
       indicates success.
 
       Instrumentation coordinating A2A and HTTP telemetry SHOULD preserve the
@@ -100,6 +109,9 @@ span_refinements:
 
   - id: a2a.grpc.server
     ref: rpc.grpc.call.server
+    annotations:
+      docs:
+        operation: a2a.server
     brief: >
       This span describes processing of an A2A request received over the gRPC
       binding.
@@ -109,7 +121,7 @@ span_refinements:
       A2A attributes instead of reporting a nested `a2a.server` span.
 
       A2A protocol errors SHOULD set the span status to `ERROR` and SHOULD set
-      `error.type` according to the [A2A error guidance](/docs/gen-ai/a2a.md#server),
+      `error.type` according to the [A2A error guidance](/docs/a2a/README.md#server),
       preferring an available A2A error reason over its mapped gRPC status code.
 
       Instrumentation coordinating A2A and gRPC telemetry SHOULD preserve the

@@ -1,6 +1,6 @@
 # MCP Server Span
 
-> **[Semantic Convention](../../docs/gen-ai/mcp.md#server)**
+> **[Semantic Convention](../../docs/mcp/README.md#server)**
 
 ## Required
 

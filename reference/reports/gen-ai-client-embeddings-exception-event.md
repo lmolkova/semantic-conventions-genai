@@ -1,6 +1,6 @@
 # Client Embeddings Exception Event
 
-> **[Semantic Convention](../../docs/gen-ai/client-embeddings.md#event-gen_aiclientembeddingsexception)**
+> **[Semantic Convention](../../docs/gen-ai/client-embeddings/README.md#event-gen_aiclientembeddingsexception)**
 
 ## Conditionally Required
 

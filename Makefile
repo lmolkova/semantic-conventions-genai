@@ -84,9 +84,10 @@ generate-registry:
 		-r ./model \
 		--v2 \
 		-t ./templates/registry \
+		--param registry_base_url=/docs/registry/ \
 		--param upstream_docs_base=$(UPSTREAM_DOCS_BASE) \
 		markdown \
-		./docs/registry
+		./docs
 
 # Refresh the weaver snippet tables embedded in hand-written signal docs under
 # docs/gen-ai/ (rewritten in place between <!-- weaver ... --> markers).

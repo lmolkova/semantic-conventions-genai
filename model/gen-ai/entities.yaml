@@ -2,6 +2,9 @@ file_format: definition/2
 entities:
   - type: gen_ai.main_agent
     stability: development
+    annotations:
+      docs:
+        operation: gen_ai.invoke_agent
     brief: >
       A logical top-level Generative AI agent in the process.
     note: >

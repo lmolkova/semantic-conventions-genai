@@ -1,6 +1,6 @@
 # MCP Server Operation Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/mcp.md#metric-mcpserveroperationduration)**
+> **[Semantic Convention](../../docs/mcp/README.md#metric-mcpserveroperationduration)**
 
 ## Required
 

@@ -1,6 +1,6 @@
 # A2A Server Span
 
-> **[Semantic Convention](../../docs/gen-ai/a2a.md#server)**
+> **[Semantic Convention](../../docs/a2a/README.md#server)**
 
 ## Required
 

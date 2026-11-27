@@ -16,17 +16,17 @@ templates:
   - pattern: attributes_readme.md.j2
     filter: semconv_grouped_attributes({"v2":true})
     application_mode: single
-    file_name: attributes/README.md
+    file_name: registry/attributes/README.md
 
   - pattern: attribute_namespace.md.j2
     filter: semconv_grouped_attributes({"v2":true})
     application_mode: each
-    file_name: "attributes/{{ ctx.root_namespace | kebab_case }}.md"
+    file_name: "registry/attributes/{{ ctx.root_namespace | kebab_case }}.md"
 
   - pattern: registry_readme.md.j2
     filter: "."
     application_mode: single
-    file_name: README.md
+    file_name: registry/README.md
 
   # entity registry
   - template: entity_readme.md.j2
@@ -35,14 +35,62 @@ templates:
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
     application_mode: single
-    file_name: "entities/README.md"
+    file_name: "registry/entities/README.md"
   - template: entity_namespace.md.j2
     filter: >
       try (semconv_signal("entity"; {"v2":true, "exclude_deprecated":true})
       | group_by(.root_namespace)
       | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
     application_mode: each
-    file_name: "entities/{{ ctx.root_namespace | kebab_case }}.md"
+    file_name: "registry/entities/{{ ctx.root_namespace | kebab_case }}.md"
+
+  # Per-operation signal docs: <ns>/<operation>/<signal>/<id>.md plus a
+  # generated index per signal type. The operation comes from
+  # `annotations.docs.operation`; signals without it are skipped. The
+  # operation README.md is hand-written.
+  - template: signal_page.md.j2
+    filter: &operation_signals >
+      [ (.refinements.spans[] | {signal: "spans", item: .}),
+        (.refinements.metrics[] | {signal: "metrics", item: .}),
+        (.refinements.events[] | {signal: "events", item: .}),
+        (.refinements.entities[] | {signal: "entities", item: .}) ]
+      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
+        | . + {operation: .item.annotations.docs.operation, id: .item.id})
+    application_mode: each
+    file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id) | trim }}"
+
+  - template: signal_index.md.j2
+    filter: >
+      [ (.refinements.spans[] | {signal: "spans", item: .}),
+        (.refinements.metrics[] | {signal: "metrics", item: .}),
+        (.refinements.events[] | {signal: "events", item: .}),
+        (.refinements.entities[] | {signal: "entities", item: .}) ]
+      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
+        | . + {operation: .item.annotations.docs.operation})
+      | group_by([.operation, .signal])
+      | map({operation: .[0].operation, signal: .[0].signal, items: (map(.item) | sort_by(.id))})
+    application_mode: each
+    file_name: "{% import 'operations.j2' as ops %}{{ ops.index_path(ctx.operation, ctx.signal) | trim }}"
+
+text_maps:
+  operation_titles:
+    gen_ai.client.inference: Client Inference
+    gen_ai.server.inference: Server Inference
+    gen_ai.client.realtime_inference: Client Realtime Inference
+    gen_ai.client.embeddings: Client Embeddings
+    gen_ai.retrieval: Retrieval
+    gen_ai.client.fetch_response: Client Fetch Response
+    gen_ai.client.memory: Client Memory
+    gen_ai.client.create_agent: Client Create Agent
+    gen_ai.client.invoke_agent: Client Invoke Agent
+    gen_ai.invoke_agent: Invoke Agent
+    gen_ai.execute_tool: Execute Tool
+    gen_ai.plan: Plan
+    gen_ai.evaluation: Evaluation
+    mcp.client: MCP Client
+    mcp.server: MCP Server
+    a2a.client: A2A Client
+    a2a.server: A2A Server
 
 acronyms:
   - A2A

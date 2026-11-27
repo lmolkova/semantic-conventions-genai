@@ -1,6 +1,6 @@
 # Retrieval Span
 
-> **[Semantic Convention](../../docs/gen-ai/retrieval.md#span-gen_airetrieval)**
+> **[Semantic Convention](../../docs/gen-ai/retrieval/README.md#span-gen_airetrieval)**
 
 ## Required
 

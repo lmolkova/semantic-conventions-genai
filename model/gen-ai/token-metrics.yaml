@@ -22,6 +22,8 @@ metrics:
       instrumentation MUST set `gen_ai.token.modality` to `unknown`.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -38,6 +40,8 @@ metrics:
     note: *inference_usage_note
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -62,6 +66,8 @@ metrics:
       instrumentation MUST set `gen_ai.token.modality` to `unknown`.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -86,6 +92,8 @@ metrics:
       instrumentation MUST set `gen_ai.token.modality` to `unknown`.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -107,6 +115,8 @@ metrics:
       reasoning token count.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -138,6 +148,8 @@ metrics:
       did not contain token usage.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -153,6 +165,8 @@ metrics:
     note: *token_usage_note
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.inference
       code_generation:
         metric_value_type: int
     attributes:
@@ -176,6 +190,8 @@ metrics:
       did not contain token usage.
     stability: development
     annotations:
+      docs:
+        operation: gen_ai.client.embeddings
       code_generation:
         metric_value_type: int
     attributes:

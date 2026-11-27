@@ -1,6 +1,6 @@
 # A2A Client Span
 
-> **[Semantic Convention](../../docs/gen-ai/a2a.md#client)**
+> **[Semantic Convention](../../docs/a2a/README.md#client)**
 
 ## Required
 

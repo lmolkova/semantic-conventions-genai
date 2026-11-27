@@ -1,6 +1,6 @@
 # Client Invoke Agent Exception Event
 
-> **[Semantic Convention](../../docs/gen-ai/client-invoke-agent.md#event-gen_aiclientinvoke_agentexception)**
+> **[Semantic Convention](../../docs/gen-ai/client-invoke-agent/README.md#event-gen_aiclientinvoke_agentexception)**
 
 ## Conditionally Required
 

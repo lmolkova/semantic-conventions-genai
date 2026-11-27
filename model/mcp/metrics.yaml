@@ -32,6 +32,9 @@ metrics:
       The duration of the MCP request or notification as observed on the sender
       from the time it was sent until the response or ack is received.
     stability: development
+    annotations:
+      docs:
+        operation: mcp.client
     attributes:
       - ref_group: mcp.common.attributes
       - ref_group: mcp.network.protocol.attributes
@@ -47,6 +50,9 @@ metrics:
       MCP request or notification duration as observed on the receiver
       from the time it was received until the result or ack is sent.
     stability: development
+    annotations:
+      docs:
+        operation: mcp.server
     attributes:
       - ref_group: mcp.common.attributes
       - ref_group: mcp.network.protocol.attributes
@@ -59,6 +65,9 @@ metrics:
     unit: s
     brief: The duration of the MCP session as observed on the MCP client.
     stability: development
+    annotations:
+      docs:
+        operation: mcp.client
     attributes:
       - ref_group: mcp.session.metrics.attributes
       - ref_group: mcp.client.address_and_port.attributes
@@ -69,5 +78,8 @@ metrics:
     unit: s
     brief: The duration of the MCP session as observed on the MCP server.
     stability: development
+    annotations:
+      docs:
+        operation: mcp.server
     attributes:
       - ref_group: mcp.session.metrics.attributes

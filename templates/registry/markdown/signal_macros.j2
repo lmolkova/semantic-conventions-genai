@@ -1,0 +1,25 @@
+{%- import 'attribute_table.j2' as at -%}
+{%- import 'metric_table.j2' as mt -%}
+{%- import 'event_macros.j2' as ev -%}
+{%- import 'span_macros.j2' as sp -%}
+{%- import 'entity_macros.j2' as entity -%}
+
+{#- Body of a resolved span, metric, event or entity, as rendered in snippets. -#}
+{% macro render(item, signal) -%}
+{%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
+{%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
+{%- set upstream_docs_base = params.upstream_docs_base | trim -%}
+<!-- prettier-ignore-start -->
+
+{% if signal == "spans" -%}
+{{ sp.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{%- elif signal == "metrics" -%}
+{{ mt.generate(item) }}
+{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{%- elif signal == "events" -%}
+{{ ev.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{%- elif signal == "entities" -%}
+{{ entity.header(item) }}{{ entity.all_attribute_table(item, attribute_registry_base_url, upstream_docs_base) }}
+{%- endif %}
+<!-- prettier-ignore-end -->
+{%- endmacro %}

@@ -8,17 +8,17 @@ linkTitle: Generative AI
 
 Semantic conventions for Generative AI operations are defined for the following signals:
 
-* [Client Inference](client-inference.md): Semantic Conventions for Generative AI inference operations - *spans, events, and metrics*.
-* [Client Embeddings](client-embeddings.md): Semantic Conventions for Generative AI embeddings operations - *spans, events, and metrics*.
-* [Execute Tool](execute-tool.md): Semantic Conventions for Generative AI tool execution - *spans, events, and metrics*.
-* [Retrieval](retrieval.md): Semantic Conventions for Generative AI retrieval operations - *spans and metrics*.
-* [Client Agent Invocations](client-invoke-agent.md): Semantic Conventions for Generative AI remote agent invocations - *spans and metrics*.
+* [Client Inference](client-inference/README.md): Semantic Conventions for Generative AI inference operations - *spans, events, and metrics*.
+* [Client Embeddings](client-embeddings/README.md): Semantic Conventions for Generative AI embeddings operations - *spans, events, and metrics*.
+* [Execute Tool](execute-tool/README.md): Semantic Conventions for Generative AI tool execution - *spans, events, and metrics*.
+* [Retrieval](retrieval/README.md): Semantic Conventions for Generative AI retrieval operations - *spans and metrics*.
+* [Client Agent Invocations](client-invoke-agent/README.md): Semantic Conventions for Generative AI remote agent invocations - *spans and metrics*.
 * [Events](gen-ai-events.md): Semantic Conventions for Generative AI inputs and outputs - *events*.
 * [Exceptions](gen-ai-exceptions.md): Semantic Conventions for Generative AI *exceptions*.
 * [Metrics](gen-ai-metrics.md): Semantic Conventions for Generative AI operations - *metrics*.
 * [Inference Token Metrics](gen-ai-token-metrics.md): Semantic Conventions for Generative AI inference token metrics - *metrics*.
 * [Model spans](gen-ai-spans.md): Semantic Conventions for Generative AI model operations - *spans and events*.
-* [Realtime content generation](gen-ai-realtime.md): Semantic Conventions for Generative AI realtime, bidirectional streaming operations.
+* [Realtime content generation](client-realtime-inference/README.md): Semantic Conventions for Generative AI realtime, bidirectional streaming operations.
 * [Agent spans](gen-ai-agent-spans.md): Semantic Conventions for Generative AI agent operations - *spans and events*.
 
 Technology specific semantic conventions are defined for the following GenAI system:
@@ -30,8 +30,8 @@ Technology specific semantic conventions are defined for the following GenAI sys
 
 See also:
 
-* [Agent2Agent Protocol](./a2a.md): Semantic Conventions for [A2A](https://a2a-protocol.org)
-* [Model Context Protocol](./mcp.md): Semantic Conventions for [MCP](https://modelcontextprotocol.io)
+* [Agent2Agent Protocol](../a2a/README.md): Semantic Conventions for [A2A](https://a2a-protocol.org)
+* [Model Context Protocol](../mcp/README.md): Semantic Conventions for [MCP](https://modelcontextprotocol.io)
 
 ## Attributes shared across operations
 
