@@ -17,9 +17,25 @@ Semantic conventions for generative AI operations and related protocols, split o
 repository. Shared attributes and conventions not specific to GenAI live in the upstream repository;
 docs generated here link to it at a pinned upstream version.
 
-Semantic conventions for Generative AI are defined for the following operations.
+<details>
+<summary>Table of contents</summary>
 
-Model operations:
+- [Model](#model)
+- [Agents](#agents)
+- [Protocols](#protocols)
+- [Evaluation](#evaluation)
+- [Technology-specific conventions](#technology-specific-conventions)
+- [Attributes shared across operations](#attributes-shared-across-operations)
+- [Capturing instructions, inputs, and outputs](#capturing-instructions-inputs-and-outputs)
+  - [Full (buffered) content](#full-buffered-content)
+- [How to aggregate token usage](#how-to-aggregate-token-usage)
+- [Inference token metrics](#inference-token-metrics)
+
+</details>
+
+## Model
+
+Operations:
 
 * [Client inference](gen-ai/client-inference/README.md)
 * [Client realtime inference](gen-ai/client-realtime-inference/README.md)
@@ -27,9 +43,12 @@ Model operations:
 * [Client fetch response](gen-ai/client-fetch-response/README.md)
 * [Server inference](gen-ai/server-inference/README.md)
 * [Execute tool](gen-ai/execute-tool/README.md)
-* [LLM call examples](gen-ai/non-normative/examples-llm-calls.md)
 
-Agentic operations:
+Check out [LLM call examples](gen-ai/non-normative/examples-llm-calls.md).
+
+## Agents
+
+Operations:
 
 * [Client create agent](gen-ai/client-create-agent/README.md)
 * [Client invoke agent](gen-ai/client-invoke-agent/README.md)
@@ -38,24 +57,24 @@ Agentic operations:
 * [Execute tool](gen-ai/execute-tool/README.md)
 * [Retrieval](gen-ai/retrieval/README.md)
 * [Client memory](gen-ai/client-memory/README.md)
-* [Agent call examples](gen-ai/non-normative/examples-agent-calls.md)
 
-Protocols:
+Check out [agent call examples](gen-ai/non-normative/examples-agent-calls.md).
+
+## Protocols
 
 * [Model Context Protocol (MCP)](mcp/README.md)
 * [Agent2Agent Protocol (A2A)](a2a/README.md)
 
-Technology specific semantic conventions are defined for the following GenAI system:
+## Evaluation
 
-* [Anthropic](anthropic/README.md): Semantic Conventions for Anthropic.
-* [Azure AI Inference](azure/README.md): Semantic Conventions for Azure AI Inference.
-* [AWS Bedrock](aws/README.md): Semantic Conventions for AWS Bedrock.
-* [OpenAI](openai/README.md): Semantic Conventions for OpenAI.
+See [Evaluation](gen-ai/evaluation/README.md) for Generative AI evaluation result events.
 
-See also:
+## Technology-specific conventions
 
-* GenAI [attributes](gen-ai/attributes.md) and [entities](gen-ai/entities/README.md)
-* [Evaluation](gen-ai/evaluation/README.md): Semantic Conventions for Generative AI evaluation results - *events*.
+* [Anthropic](anthropic/README.md)
+* [Azure AI Inference](azure/README.md)
+* [AWS Bedrock](aws/README.md)
+* [OpenAI](openai/README.md)
 
 ## Attributes shared across operations
 
