@@ -1,31 +1,35 @@
-{#- Operation docs layout: `<ns>/<operation>/<signal>/<id>.md`. The operation
-   comes from the signal's `annotations.docs.operation` and the namespace from
-   the signal id, so refinements land in their own namespace:
-   `openai.gen_ai.client.inference` -> `openai/client-inference`. Paths are
-   relative to `docs/`; urls are root-anchored so they resolve from any page. -#}
+{#- Docs layout under `docs/<ns>/`, `<ns>` being the first segment of an id:
+   - `operations/<op>/README.md`: hand-written operation docs;
+   - `registry/README.md`: generated index of all signals and attributes;
+   - `registry/<signal>/[refinement.]<id>.md`: one generated page per signal.
+   Urls are root-anchored so they resolve from any page. -#}
 {% macro namespace(id) -%}
 {{ id | split_id | first }}
 {%- endmacro %}
-{% macro dir(ns, operation) -%}
-{{ ns | kebab_case }}/{{ (operation | split_id)[1:] | join("_") | kebab_case }}
+{% macro ns_dir(id) -%}
+{{ namespace(id) | trim | kebab_case }}
+{%- endmacro %}
+{% macro ns_title(ns) -%}
+{{ ns | map_text("namespace_titles", ns | title_case | acronym) }}
+{%- endmacro %}
+{% macro op_dir(operation) -%}
+{{ ns_dir(operation) | trim }}/operations/{{ (operation | split_id)[1:] | join("_") | kebab_case }}
 {%- endmacro %}
 {#- Prefixed with the namespace when it differs from the operation's, e.g. `OpenAI Client Inference`. -#}
 {% macro title(operation, ns=none) -%}
-{%- if ns and ns != namespace(operation) | trim %}{{ ns | title_case | acronym }} {% endif -%}
+{%- if ns and ns != namespace(operation) | trim %}{{ ns_title(ns) | trim }} {% endif -%}
 {{ operation | map_text("operation_titles") }}
 {%- endmacro %}
 {#- The operation's README, unless `operation_docs` points it elsewhere. -#}
 {% macro operation_url(operation) -%}
-{{ operation | map_text("operation_docs", "/docs/" ~ (dir(namespace(operation) | trim, operation) | trim) ~ "/README.md") }}
+{{ operation | map_text("operation_docs", "/docs/" ~ (op_dir(operation) | trim) ~ "/README.md") }}
 {%- endmacro %}
-{#- Refinement pages get a `refinement.` prefix. Entities are not tied to an
-   operation and live in `<ns>/entities/`. -#}
-{% macro signal_path(operation, signal, id, refinement=false) -%}
-{%- if signal == "entities" -%}{{ namespace(id) | trim | kebab_case }}{% else %}{{ dir(namespace(id) | trim, operation) | trim }}{% endif -%}
-/{{ signal }}/{{ "refinement." if refinement }}{{ id }}.md
+{#- Refinement pages get a `refinement.` prefix. -#}
+{% macro signal_path(signal, id, refinement=false) -%}
+{{ ns_dir(id) | trim }}/registry/{{ signal }}/{{ "refinement." if refinement }}{{ id }}.md
 {%- endmacro %}
-{% macro signal_url(operation, signal, id, refinement=false) -%}
-/docs/{{ signal_path(operation, signal, id, refinement) | trim }}
+{% macro signal_url(signal, id, refinement=false) -%}
+/docs/{{ signal_path(signal, id, refinement) | trim }}
 {%- endmacro %}
 {#- The id of the signal an item refines (its own id for base signals). -#}
 {% macro base_id(item) -%}

@@ -11,7 +11,7 @@ Operation: [{{ ops.title(ctx.operation) | trim }}]({{ ops.operation_url(ctx.oper
 {%- set item = ctx.item %}
 {%- if item._refines %}
 
-**Refines:** {% if item._refines_local %}[`{{ item._refines }}`]({{ ops.signal_url(item._refines_operation, ctx.signal, item._refines) | trim }}){% else %}`{{ item._refines }}`{% endif %}
+**Refines:** {% if item._refines_local %}[`{{ item._refines }}`]({{ ops.signal_url(ctx.signal, item._refines) | trim }}){% else %}`{{ item._refines }}`{% endif %}
 {%- if item._added %}
 
 **Adds:** {% for k in item._added %}{% if not loop.first %}, {% endif %}`{{ k }}`{% endfor %}
@@ -25,7 +25,7 @@ Operation: [{{ ops.title(ctx.operation) | trim }}]({{ ops.operation_url(ctx.oper
 
 **Known refinements:**
 {% for r in item._refinements | sort(attribute="id") %}
-- [`{{ r.id }}`]({{ ops.signal_url(r.operation, ctx.signal, r.id, true) | trim }})
+- [`{{ r.id }}`]({{ ops.signal_url(ctx.signal, r.id, true) | trim }})
 {%- endfor %}
 {%- endif %}
 

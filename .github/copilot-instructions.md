@@ -55,7 +55,7 @@ through several coupled surfaces:
 
 ## What not to flag in review
 
-- Generated files under `docs/` (`attributes.md`, `entities/`, signal pages)
+- Generated files under `docs/<namespace>/registry/`
   — review the model changes that produced them instead.
 - Generated tables inside `docs/gen-ai/*.md` — review the model changes
   that produced them instead.

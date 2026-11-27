@@ -1,6 +1,6 @@
 # Plan Span
 
-> **[Semantic Convention](../../docs/gen-ai/plan/spans/gen_ai.plan.internal.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.plan.internal.md)**
 
 ## Required
 

@@ -1,6 +1,6 @@
 # Execute Tool Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/execute-tool/metrics/gen_ai.execute_tool.duration.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/metrics/gen_ai.execute_tool.duration.md)**
 
 ## Required
 

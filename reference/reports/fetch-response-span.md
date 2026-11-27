@@ -1,6 +1,6 @@
 # Fetch Response Span
 
-> **[Semantic Convention](../../docs/gen-ai/client-fetch-response/spans/gen_ai.fetch_response.client.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.fetch_response.client.md)**
 
 ## Required
 

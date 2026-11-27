@@ -940,7 +940,7 @@ spans:
       GenAI instrumentations that can instrument tool execution calls SHOULD do so,
       unless another instrumentation can reliably cover all supported tool types.
       MCP tool executions may also be traced by the
-      [corresponding MCP instrumentation](/docs/mcp/client/spans/mcp.client.md).
+      [corresponding MCP instrumentation](/docs/mcp/registry/spans/mcp.client.md).
 
       Tools are often executed directly by application code. Application developers
       are encouraged to follow this semantic convention for tools invoked by their
@@ -950,10 +950,10 @@ spans:
       When the library API or state identifies a specialized tool call,
       instrumentation SHOULD apply the corresponding refinement to the execute-tool
       span. Available refinements include
-      [agents exposed as tools](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.transfer.md),
-      [loading a skill](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.load_skill.md),
-      [reading a skill resource](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.read_skill_resource.md), and
-      [command execution](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.command.md).
+      [agents exposed as tools](/docs/gen-ai/registry/spans/refinement.gen_ai.execute_tool.transfer.md),
+      [loading a skill](/docs/gen-ai/registry/spans/refinement.gen_ai.execute_tool.load_skill.md),
+      [reading a skill resource](/docs/gen-ai/registry/spans/refinement.gen_ai.execute_tool.read_skill_resource.md), and
+      [command execution](/docs/gen-ai/registry/spans/refinement.gen_ai.execute_tool.command.md).
     stability: development
     annotations:
       docs:

@@ -1,6 +1,6 @@
 # MCP Client Span
 
-> **[Semantic Convention](../../docs/mcp/client/spans/mcp.client.md)**
+> **[Semantic Convention](../../docs/mcp/registry/spans/mcp.client.md)**
 
 ## Required
 

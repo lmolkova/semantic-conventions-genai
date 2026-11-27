@@ -37,12 +37,12 @@ docs generated here link to it at a pinned upstream version.
 
 Operations:
 
-* [Client inference](gen-ai/client-inference/README.md)
-* [Client realtime inference](gen-ai/client-realtime-inference/README.md)
-* [Client embeddings](gen-ai/client-embeddings/README.md)
-* [Client fetch response](gen-ai/client-fetch-response/README.md)
-* [Server inference](gen-ai/server-inference/README.md)
-* [Execute tool](gen-ai/execute-tool/README.md)
+* [Client inference](gen-ai/operations/client-inference/README.md)
+* [Client realtime inference](gen-ai/operations/client-realtime-inference/README.md)
+* [Client embeddings](gen-ai/operations/client-embeddings/README.md)
+* [Client fetch response](gen-ai/operations/client-fetch-response/README.md)
+* [Server inference](gen-ai/operations/server-inference/README.md)
+* [Execute tool](gen-ai/operations/execute-tool/README.md)
 
 Check out [LLM call examples](gen-ai/non-normative/examples-llm-calls.md).
 
@@ -50,13 +50,13 @@ Check out [LLM call examples](gen-ai/non-normative/examples-llm-calls.md).
 
 Operations:
 
-* [Client create agent](gen-ai/client-create-agent/README.md)
-* [Client invoke agent](gen-ai/client-invoke-agent/README.md)
-* [Invoke agent](gen-ai/invoke-agent/README.md)
-* [Plan](gen-ai/plan/README.md)
-* [Execute tool](gen-ai/execute-tool/README.md)
-* [Retrieval](gen-ai/retrieval/README.md)
-* [Client memory](gen-ai/client-memory/README.md)
+* [Client create agent](gen-ai/operations/client-create-agent/README.md)
+* [Client invoke agent](gen-ai/operations/client-invoke-agent/README.md)
+* [Invoke agent](gen-ai/operations/invoke-agent/README.md)
+* [Plan](gen-ai/operations/plan/README.md)
+* [Execute tool](gen-ai/operations/execute-tool/README.md)
+* [Retrieval](gen-ai/operations/retrieval/README.md)
+* [Client memory](gen-ai/operations/client-memory/README.md)
 
 Check out [agent call examples](gen-ai/non-normative/examples-agent-calls.md).
 
@@ -67,7 +67,7 @@ Check out [agent call examples](gen-ai/non-normative/examples-agent-calls.md).
 
 ## Evaluation
 
-See [Evaluation](gen-ai/evaluation/README.md) for Generative AI evaluation result events.
+See [Evaluation](gen-ai/operations/evaluation/README.md) for Generative AI evaluation result events.
 
 ## Technology-specific conventions
 
@@ -89,7 +89,7 @@ Instrumentations SHOULD NOT propagate attributes not listed here.
 Instrumentations SHOULD NOT use these attributes on signals that don't reference them
 explicitly.
 
-* [`gen_ai.conversation.id`](/docs/gen-ai/attributes.md#gen-ai-conversation-id)
+* [`gen_ai.conversation.id`](/docs/gen-ai/registry/README.md#gen-ai-conversation-id)
 
 ## Capturing instructions, inputs, and outputs
 
@@ -162,17 +162,17 @@ whether content is captured and which telemetry signals receive it.
 
 The content capture configuration governs the following attributes and their representation on spans and events:
 
-- [`gen_ai.input.messages`](/docs/gen-ai/attributes.md#gen-ai-input-messages)
-- [`gen_ai.output.messages`](/docs/gen-ai/attributes.md#gen-ai-output-messages)
-- [`gen_ai.system_instructions`](/docs/gen-ai/attributes.md#gen-ai-system-instructions)
-- [`gen_ai.tool.call.arguments`](/docs/gen-ai/attributes.md#gen-ai-tool-call-arguments)
-- [`gen_ai.tool.call.result`](/docs/gen-ai/attributes.md#gen-ai-tool-call-result)
-- [`gen_ai.retrieval.query.text`](/docs/gen-ai/attributes.md#gen-ai-retrieval-query-text)
-- [`gen_ai.prompt.variables`](/docs/gen-ai/attributes.md#gen-ai-prompt-variables)
-- [`gen_ai.memory.query.text`](/docs/gen-ai/attributes.md#gen-ai-memory-query-text)
-- [`gen_ai.memory.records`](/docs/gen-ai/attributes.md#gen-ai-memory-records)
+- [`gen_ai.input.messages`](/docs/gen-ai/registry/README.md#gen-ai-input-messages)
+- [`gen_ai.output.messages`](/docs/gen-ai/registry/README.md#gen-ai-output-messages)
+- [`gen_ai.system_instructions`](/docs/gen-ai/registry/README.md#gen-ai-system-instructions)
+- [`gen_ai.tool.call.arguments`](/docs/gen-ai/registry/README.md#gen-ai-tool-call-arguments)
+- [`gen_ai.tool.call.result`](/docs/gen-ai/registry/README.md#gen-ai-tool-call-result)
+- [`gen_ai.retrieval.query.text`](/docs/gen-ai/registry/README.md#gen-ai-retrieval-query-text)
+- [`gen_ai.prompt.variables`](/docs/gen-ai/registry/README.md#gen-ai-prompt-variables)
+- [`gen_ai.memory.query.text`](/docs/gen-ai/registry/README.md#gen-ai-memory-query-text)
+- [`gen_ai.memory.records`](/docs/gen-ai/registry/README.md#gen-ai-memory-records)
 
-Attributes providing schemas rather than user/model payload content (such as [`gen_ai.tool.definitions`](/docs/gen-ai/attributes.md#gen-ai-tool-definitions)) are not governed by this configuration.
+Attributes providing schemas rather than user/model payload content (such as [`gen_ai.tool.definitions`](/docs/gen-ai/registry/README.md#gen-ai-tool-definitions)) are not governed by this configuration.
 
 A content attribute MUST NOT be reported on a signal unless that signal's conventions
 reference the attribute or explicitly permit copying it from another signal.
@@ -270,7 +270,7 @@ standard configuration options:
 
 > [!NOTE]
 > Use [inference token metrics](#inference-token-metrics) (or corresponding
-> [embeddings](gen-ai/client-embeddings/README.md#metrics) or other metrics, depending on the
+> [embeddings](gen-ai/operations/client-embeddings/README.md#metrics) or other metrics, depending on the
 > operation) whenever possible. They aren't affected by trace sampling. Filter
 > or group by `service.name` if multiple services report the same operations.
 
@@ -308,7 +308,7 @@ Two families of token instruments are defined:
 - **Usage** (`gen_ai.client.inference.usage.*` counters) are the primary instruments
   for measuring token consumption. They track how many tokens were spent over time, spending rate,
   and serve as a proxy for cost approximation. Each token category is a separate
-  monotonic counter broken down by [`gen_ai.token.modality`](/docs/gen-ai/attributes.md),
+  monotonic counter broken down by [`gen_ai.token.modality`](/docs/gen-ai/registry/README.md#attributes),
   except `gen_ai.client.inference.usage.reasoning.output_tokens`.
   The `cache_read`,
   `cache_write`, and `reasoning` counters report subsets of the `input_tokens`
@@ -320,7 +320,7 @@ Two families of token instruments are defined:
   usage percentiles (e.g. p95/p99) and detect outliers.
 
 Embeddings operations only report the
-[`gen_ai.client.embeddings.operation.input_tokens`](gen-ai/client-embeddings/metrics/gen_ai.client.embeddings.operation.input_tokens.md)
+[`gen_ai.client.embeddings.operation.input_tokens`](gen-ai/registry/metrics/gen_ai.client.embeddings.operation.input_tokens.md)
 histogram, and total token usage can be computed from it.
 
 > [!NOTE]

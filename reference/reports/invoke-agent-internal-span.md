@@ -1,6 +1,6 @@
 # Invoke Agent Internal Span
 
-> **[Semantic Convention](../../docs/gen-ai/invoke-agent/spans/gen_ai.invoke_agent.internal.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.invoke_agent.internal.md)**
 
 ## Required
 

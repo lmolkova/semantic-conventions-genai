@@ -378,7 +378,7 @@ They are likely to be siblings if there is an encompassing span.
 
 **Tool call:**
 
-If tool call is [instrumented according to execute-tool span definition](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.md), it may look like
+If tool call is [instrumented according to execute-tool span definition](/docs/gen-ai/registry/spans/gen_ai.execute_tool.md), it may look like
 
 | Property                | Value                             |
 | ----------------------- | --------------------------------- |
@@ -500,7 +500,7 @@ They are likely to be siblings if there is an encompassing span.
 
 **Tool call:**
 
-If tool call is [instrumented according to execute-tool span definition](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.md), it may look like this:
+If tool call is [instrumented according to execute-tool span definition](/docs/gen-ai/registry/spans/gen_ai.execute_tool.md), it may look like this:
 
 | Property                | Value                             |
 | ----------------------- | --------------------------------- |

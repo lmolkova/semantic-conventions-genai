@@ -1,6 +1,6 @@
 # Create Agent Span
 
-> **[Semantic Convention](../../docs/gen-ai/client-create-agent/spans/gen_ai.create_agent.client.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.create_agent.client.md)**
 
 ## Required
 

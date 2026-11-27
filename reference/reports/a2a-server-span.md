@@ -1,6 +1,6 @@
 # A2A Server Span
 
-> **[Semantic Convention](../../docs/a2a/server/spans/a2a.server.md)**
+> **[Semantic Convention](../../docs/a2a/registry/spans/a2a.server.md)**
 
 ## Required
 

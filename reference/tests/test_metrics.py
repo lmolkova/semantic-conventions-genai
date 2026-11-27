@@ -87,7 +87,7 @@ def test_execute_tool_scenario_reports_duration():
     )
     assert (
         SEMCONV_DOC_LINKS["gen_ai.execute_tool.duration"]
-        == "../../docs/gen-ai/execute-tool/metrics/gen_ai.execute_tool.duration.md"
+        == "../../docs/gen-ai/registry/metrics/gen_ai.execute_tool.duration.md"
     )
 
 

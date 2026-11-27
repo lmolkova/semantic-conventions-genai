@@ -1,6 +1,6 @@
 # Retrieval Span
 
-> **[Semantic Convention](../../docs/gen-ai/retrieval/spans/gen_ai.retrieval.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.retrieval.md)**
 
 ## Required
 

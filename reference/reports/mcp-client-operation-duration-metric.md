@@ -1,6 +1,6 @@
 # MCP Client Operation Duration Metric
 
-> **[Semantic Convention](../../docs/mcp/client/metrics/mcp.client.operation.duration.md)**
+> **[Semantic Convention](../../docs/mcp/registry/metrics/mcp.client.operation.duration.md)**
 
 ## Required
 

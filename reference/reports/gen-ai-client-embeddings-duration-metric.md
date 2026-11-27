@@ -1,6 +1,6 @@
 # Client Embeddings Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/client-embeddings/metrics/gen_ai.client.embeddings.duration.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/metrics/gen_ai.client.embeddings.duration.md)**
 
 ## Required
 

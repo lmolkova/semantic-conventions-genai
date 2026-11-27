@@ -48,7 +48,7 @@ After updating the YAML, run:
 make generate-all
 ```
 
-This regenerates the attribute pages (`docs/<namespace>/attributes.md`), entity and signal pages,
+This regenerates the registry pages under `docs/<namespace>/registry/`,
 refreshes the generated tables embedded in the hand-written docs under
 `docs/gen-ai/` and regenerates the status reports.
 

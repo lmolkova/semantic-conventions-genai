@@ -1,6 +1,6 @@
 # Memory Span
 
-> **[Semantic Convention](../../docs/gen-ai/client-memory/spans/gen_ai.memory.client.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/spans/gen_ai.memory.client.md)**
 
 ## Required
 

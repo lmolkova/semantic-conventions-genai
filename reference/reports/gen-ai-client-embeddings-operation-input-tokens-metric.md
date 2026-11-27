@@ -1,6 +1,6 @@
 # Client Embeddings Operation Input Tokens Metric
 
-> **[Semantic Convention](../../docs/gen-ai/client-embeddings/metrics/gen_ai.client.embeddings.operation.input_tokens.md)**
+> **[Semantic Convention](../../docs/gen-ai/registry/metrics/gen_ai.client.embeddings.operation.input_tokens.md)**
 
 ## Required
 
