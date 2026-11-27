@@ -16,9 +16,9 @@ Examples of remote agent invocations include:
 - [AWS Bedrock Agents](https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html)
 
 In-process agent invocations are covered by the
-[invoke agent internal span](../gen-ai-agent-spans.md#invoke-agent-internal-span).
+[invoke agent internal span](../invoke-agent/spans/gen_ai.invoke_agent.internal.md).
 Agent creation is covered by the
-[create agent span](../gen-ai-agent-spans.md#create-agent-span).
+[create agent span](../client-create-agent/spans/gen_ai.create_agent.client.md).
 
 ## Spans
 

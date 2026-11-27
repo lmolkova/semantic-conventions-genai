@@ -27,7 +27,7 @@ Agentic operations:
 * [Execute tool](execute-tool/README.md)
 * [Retrieval](retrieval/README.md)
 * [Client memory](client-memory/)
-* [Evaluation](evaluation/)
+* [Agent call examples](non-normative/examples-agent-calls.md)
 
 Protocols:
 
@@ -43,10 +43,10 @@ Technology specific semantic conventions are defined for the following GenAI sys
 
 See also:
 
+* [Evaluation](evaluation/): Semantic Conventions for Generative AI evaluation results - *events*.
 * [Events](gen-ai-events.md): Semantic Conventions for Generative AI inputs and outputs - *events*.
 * [Exceptions](gen-ai-exceptions.md): Semantic Conventions for Generative AI *exceptions*.
 * [Metrics](gen-ai-metrics.md): Semantic Conventions for Generative AI operations - *metrics*.
-* [Agent spans](gen-ai-agent-spans.md): Semantic Conventions for Generative AI agent operations - *spans and events*.
 
 ## Attributes shared across operations
 

@@ -1,6 +1,6 @@
 # Agent call examples
 
-These examples illustrate [agent and framework spans](../gen-ai-agent-spans.md).
+These examples illustrate [agent and framework spans](../README.md).
 
 <!-- toc -->
 
