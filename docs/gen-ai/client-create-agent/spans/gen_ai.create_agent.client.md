@@ -13,6 +13,11 @@ Describes GenAI agent creation and is usually applicable when working with remot
 
 The `gen_ai.operation.name` SHOULD be `create_agent`.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `create_agent {gen_ai.agent.name}`.
 Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format.
 

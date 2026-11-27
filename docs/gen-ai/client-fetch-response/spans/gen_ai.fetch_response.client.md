@@ -17,6 +17,11 @@ Describes a request to a Generative AI provider that fetches a previously genera
 
 The `gen_ai.operation.name` SHOULD be `fetch_response`.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `{gen_ai.operation.name}`. The response identifier is high
 cardinality, so it is not included in the span name. Semantic conventions for individual
 GenAI providers MAY specify a different span name format.
@@ -104,7 +109,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).

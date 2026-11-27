@@ -11,6 +11,11 @@ Operation: Client Embeddings
 
 Describes a GenAI embeddings operation - a client call to a model or service that returns embeddings for one or more inputs.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
 
 **Span kind** SHOULD be `CLIENT`.
@@ -71,7 +76,7 @@ When the provider reports both billed and model-consumed token counts,
 instrumentations SHOULD report the billed count.
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/gen-ai-token-metrics.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
 
 **[8] `server.address`:** When observed from the client side, and when communicating through an intermediary, `server.address` SHOULD represent the server address behind any intermediaries, for example proxies, if it's available.
 

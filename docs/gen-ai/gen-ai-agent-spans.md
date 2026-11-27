@@ -23,7 +23,7 @@ Generative AI models can be trained to use tools to access real-time information
 
 This document defines semantic conventions for GenAI agent and framework operations across both remote services and local frameworks.
 
-The semantic conventions for GenAI agents extend and override the semantic conventions for [Gen AI Spans](gen-ai-spans.md).
+The semantic conventions for GenAI agents extend and override the semantic conventions for [Gen AI Spans](README.md).
 
 Check out [agent call examples](non-normative/examples-agent-calls.md).
 

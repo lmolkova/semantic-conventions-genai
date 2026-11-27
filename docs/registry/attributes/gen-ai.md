@@ -139,7 +139,7 @@ input messages.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-input-messages.json).
@@ -163,7 +163,7 @@ Instrumentation MUST NOT generate `gen_ai.main_agent.id` from an in-memory or pr
 **[11] `gen_ai.main_agent.name`:** In Agent-to-Agent (A2A) communication, this maps to the `name` property declared in the Agent Card.
 
 **[12] `gen_ai.memory.query.text`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/gen-ai-spans.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information.
@@ -171,7 +171,7 @@ by an explicit user opt-in via [content capture configuration](/docs/gen-ai/gen-
 **[13] `gen_ai.memory.record.count`:** For `search_memory` operations, this is the number of memory records returned by the operation. For `create_memory` operations, this is the number of memory records the operation attempted to create. For `update_memory` operations, this is the number of memory records the operation attempted to modify. For `upsert_memory` operations, this is the number of memory records the operation attempted to create or update. For `delete_memory` operations, this is the number of memory records the operation attempted to delete.
 
 **[14] `gen_ai.memory.records`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/gen-ai-spans.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information including user/PII data.
@@ -200,7 +200,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).
@@ -346,7 +346,7 @@ system instructions.
 > [!Warning]
 > This attribute may contain sensitive information.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-system-instructions.json).
@@ -465,7 +465,7 @@ if a request has 100 text tokens (40 cached) and 200 image tokens:
 - `gen_ai.usage.image.input_tokens`: 200
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/gen-ai-token-metrics.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
 
 **[55] `gen_ai.usage.output_tokens`:** This value SHOULD include reasoning tokens and tokens of all modalities.
 
@@ -475,7 +475,7 @@ token counts (for example, Cohere exposes both `usage.billed_units` and
 value matches the units the customer is charged for.
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/gen-ai-token-metrics.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
 
 **[56] `gen_ai.usage.reasoning.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens`.
 

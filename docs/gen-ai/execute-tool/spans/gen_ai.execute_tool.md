@@ -31,11 +31,12 @@ own code and to manually instrument any tool calls that automatic
 instrumentations do not cover.
 
 When the library API or state identifies a specialized tool call,
-instrumentation SHOULD apply the corresponding
-[refinement](/docs/gen-ai/execute-tool/README.md#specialized-tool-call-spans) to the execute-tool
+instrumentation SHOULD apply the corresponding refinement to the execute-tool
 span. Available refinements include
-[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md) and
-[Agent Skills](/docs/gen-ai/execute-tool/README.md#agent-skills).
+[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md),
+[loading a skill](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.md),
+[reading a skill resource](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.md), and
+[command execution](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.md).
 
 **Span name** SHOULD be `execute_tool {gen_ai.tool.name}`.
 

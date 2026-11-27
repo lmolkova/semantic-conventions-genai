@@ -49,7 +49,7 @@ It is recommended to check system-specific documentation, if available.
 
 Inference token metrics (`gen_ai.client.inference.usage.*` counters and
 `gen_ai.client.inference.operation.*` histograms) are defined in
-[Inference Token Metrics](gen-ai-token-metrics.md).
+[Inference Token Metrics](README.md#inference-token-metrics).
 
 ### Metric: `gen_ai.client.operation.duration`
 
@@ -197,31 +197,13 @@ operational metrics. It includes both functional and performance metrics.
 
 ### Metric: `gen_ai.server.request.duration`
 
-This metric reports the model server
-latency in terms of time spent per request.
-
 See [`gen_ai.server.request.duration`](server-inference/metrics/gen_ai.server.request.duration.md) for the definition.
 
 ### Metric: `gen_ai.server.time_per_output_token`
 
-This metric reports the model server
-latency in terms of time per token generated after the first token for any model
-servers which support serving LLMs. It is measured by subtracting the time taken
-to generate the first output token from the request duration and dividing the
-rest of the duration by the number of output tokens generated after the first
-token. This is important in measuring the performance of the decode phase of LLM
-inference.
-
 See [`gen_ai.server.time_per_output_token`](server-inference/metrics/gen_ai.server.time_per_output_token.md) for the definition.
 
 ### Metric: `gen_ai.server.time_to_first_token`
-
-This metric reports the model server
-latency in terms of time spent to generate the first token of the response for
-any model servers which support serving LLMs. It helps measure the time spent in
-the queue and the prefill phase. It is important especially for streaming
-requests. It is calculated at a request level and is reported as a histogram
-using the buckets mentioned below.
 
 See [`gen_ai.server.time_to_first_token`](server-inference/metrics/gen_ai.server.time_to_first_token.md) for the definition.
 
@@ -236,17 +218,9 @@ See [`gen_ai.invoke_agent.duration`](invoke-agent/metrics/gen_ai.invoke_agent.du
 
 ### Metric: `gen_ai.invoke_agent.inference_calls`
 
-This metric is [recommended][MetricRecommended] for instrumentations of agent
-frameworks that can reliably attribute inference (model) calls to a single
-agent, workflow, or framework entrypoint invocation.
-
 See [`gen_ai.invoke_agent.inference_calls`](invoke-agent/metrics/gen_ai.invoke_agent.inference_calls.md) for the definition.
 
 ### Metric: `gen_ai.invoke_agent.tool_calls`
-
-This metric is [recommended][MetricRecommended] for instrumentations of agent
-frameworks that can reliably attribute tool calls to a single agent,
-workflow, or framework entrypoint invocation.
 
 See [`gen_ai.invoke_agent.tool_calls`](invoke-agent/metrics/gen_ai.invoke_agent.tool_calls.md) for the definition.
 

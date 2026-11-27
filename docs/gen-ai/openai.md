@@ -49,43 +49,43 @@ Individual systems may include additional system-specific attributes. It is reco
 
 ### Metric: `gen_ai.client.inference.usage.input_tokens`
 
-Reports the usage of input tokens following the common [gen_ai.client.inference.usage.input_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceusageinput_tokens) definition.
+Reports the usage of input tokens following the common [gen_ai.client.inference.usage.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.input_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.usage.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.input_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.output_tokens`
 
-Reports the usage of output tokens following the common [gen_ai.client.inference.usage.output_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceusageoutput_tokens) definition.
+Reports the usage of output tokens following the common [gen_ai.client.inference.usage.output_tokens](client-inference/metrics/gen_ai.client.inference.usage.output_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.usage.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.output_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.cache_read.input_tokens`
 
-Reports the usage of cached input tokens following the common [gen_ai.client.inference.usage.cache_read.input_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceusagecache_readinput_tokens) definition.
+Reports the usage of cached input tokens following the common [gen_ai.client.inference.usage.cache_read.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.cache_read.input_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.usage.cache_read.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_read.input_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.cache_write.input_tokens`
 
-Reports the usage of input tokens written to a provider-managed cache following the common [gen_ai.client.inference.usage.cache_write.input_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceusagecache_writeinput_tokens) definition.
+Reports the usage of input tokens written to a provider-managed cache following the common [gen_ai.client.inference.usage.cache_write.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.cache_write.input_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.reasoning.output_tokens`
 
-Reports the usage of reasoning output tokens following the common [gen_ai.client.inference.usage.reasoning.output_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceusagereasoningoutput_tokens) definition.
+Reports the usage of reasoning output tokens following the common [gen_ai.client.inference.usage.reasoning.output_tokens](client-inference/metrics/gen_ai.client.inference.usage.reasoning.output_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.operation.input_tokens`
 
-Reports the usage of input tokens following the common [gen_ai.client.inference.operation.input_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceoperationinput_tokens) definition.
+Reports the usage of input tokens following the common [gen_ai.client.inference.operation.input_tokens](client-inference/metrics/gen_ai.client.inference.operation.input_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.operation.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.input_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.operation.output_tokens`
 
-Reports the usage of output tokens following the common [gen_ai.client.inference.operation.output_tokens](./gen-ai-token-metrics.md#metric-gen_aiclientinferenceoperationoutput_tokens) definition.
+Reports the usage of output tokens following the common [gen_ai.client.inference.operation.output_tokens](client-inference/metrics/gen_ai.client.inference.operation.output_tokens.md) definition.
 
 See [`openai.gen_ai.client.inference.operation.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.output_tokens.md) for the definition.
 

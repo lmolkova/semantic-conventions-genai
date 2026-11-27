@@ -15,6 +15,10 @@ Operation: Execute Tool
 
 Describes a tool call that loads a skill into an agent's context.
 
+An [Agent Skill](https://agentskills.io) is a folder holding a `SKILL.md` file -
+metadata (`name`, `description`) plus instructions - and, optionally, bundled
+`references/`, `assets/`, and `scripts/`.
+
 This refinement applies when a dedicated tool loads a skill.
 Examples include:
 

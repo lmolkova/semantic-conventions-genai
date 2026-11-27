@@ -9,7 +9,7 @@ linkTitle: AWS Bedrock
 ## AWS Bedrock Spans
 
 The Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) extend and override the semantic conventions
-for [Gen AI Spans](gen-ai-spans.md).
+for [Gen AI Spans](README.md).
 
 `gen_ai.provider.name` MUST be set to `"aws.bedrock"`.
 

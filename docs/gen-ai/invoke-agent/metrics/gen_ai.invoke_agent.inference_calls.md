@@ -11,7 +11,11 @@ Operation: Invoke Agent
 | -------- | --------------- | ----------- | -------------- | --------- | ------ |
 | `gen_ai.invoke_agent.inference_calls` | Histogram | `{inference_call}` | The number of inference (model) calls a GenAI agent, workflow, or framework entrypoint makes during a single invocation. [1] | ![Development](https://img.shields.io/badge/-development-blue) | |
 
-**[1]:** The distribution is scoped to a single invocation and SHOULD include
+**[1]:** This metric is recommended for instrumentations of agent frameworks that can
+reliably attribute inference (model) calls to a single agent, workflow, or
+framework entrypoint invocation.
+
+The distribution is scoped to a single invocation and SHOULD include
 only the inference calls the invocation itself issued including failed
 ones; calls made by nested invocations (for example, sub-agents or
 transferred-to agents) are recorded against those invocations so that

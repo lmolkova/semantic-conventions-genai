@@ -31,6 +31,11 @@ client or when the memory call happens over instrumented protocol such as HTTP.
 For `delete_memory`, lack of `gen_ai.memory.record.id` may indicate that
 the operation intends to delete all memory records in the specified store.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `{gen_ai.operation.name}`.
 
 **Span status** SHOULD follow the [Recording Errors](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/general/recording-errors.md) document.
@@ -91,13 +96,13 @@ applicable `aws.bedrock.*` attributes and are not expected to include
 **[10] `server.address`:** When observed from the client side, and when communicating through an intermediary, `server.address` SHOULD represent the server address behind any intermediaries, for example proxies, if it's available.
 
 **[11] `gen_ai.memory.query.text`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/gen-ai-spans.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information.
 
 **[12] `gen_ai.memory.records`:** Instrumentations SHOULD NOT capture this attribute by default. Capture SHOULD be gated
-by an explicit user opt-in via [content capture configuration](/docs/gen-ai/gen-ai-spans.md#content-capture-configuration).
+by an explicit user opt-in via [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration).
 
 > [!Warning]
 > This attribute may contain sensitive information including user/PII data.

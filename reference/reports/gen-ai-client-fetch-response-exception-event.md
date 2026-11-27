@@ -1,6 +1,6 @@
 # Client Fetch Response Exception Event
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-spans.md#event-gen_aiclientfetch_responseexception)**
+> **[Semantic Convention](../../docs/gen-ai/client-fetch-response/events/gen_ai.client.fetch_response.exception.md)**
 
 ## Conditionally Required
 

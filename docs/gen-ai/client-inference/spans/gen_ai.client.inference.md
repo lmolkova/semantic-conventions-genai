@@ -30,6 +30,11 @@ as nested inference spans.
 Telemetry consumers should group inference spans by [`service.name`](https://opentelemetry.io/docs/specs/semconv/registry/entities/service/)
 when counting operations or tokens.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `{gen_ai.operation.name} {gen_ai.request.model}`.
 Semantic conventions for individual GenAI systems and frameworks MAY specify different span name format
 and MUST follow the overall [guidelines for span names](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.56.0/specification/trace/api.md#span).
@@ -229,7 +234,7 @@ if a request has 100 text tokens (40 cached) and 200 image tokens:
 - `gen_ai.usage.image.input_tokens`: 200
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/gen-ai-token-metrics.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
 
 **[29] `gen_ai.usage.output_tokens`:** This value SHOULD include reasoning tokens and tokens of all modalities.
 
@@ -239,7 +244,7 @@ token counts (for example, Cohere exposes both `usage.billed_units` and
 value matches the units the customer is charged for.
 
 The same tokens can be reported on multiple types of spans. See
-[how to aggregate token usage](/docs/gen-ai/gen-ai-token-metrics.md#how-to-aggregate-token-usage).
+[how to aggregate token usage](/docs/gen-ai/README.md#how-to-aggregate-token-usage).
 
 **[30] `gen_ai.usage.reasoning.output_tokens`:** The value SHOULD be included in `gen_ai.usage.output_tokens`.
 
@@ -258,7 +263,7 @@ input messages.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-input-messages.json).
@@ -292,7 +297,7 @@ operation.
 > [!Warning]
 > This attribute is likely to contain sensitive information including user/PII data.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-output-messages.json).
@@ -332,7 +337,7 @@ system instructions.
 > [!Warning]
 > This attribute may contain sensitive information.
 
-See [Recording content on attributes](/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes)
+See [Recording content on attributes](/docs/gen-ai/README.md#recording-content-on-attributes)
 section for more details.
 
 This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/specs/otel/common/#anyvalue) conforming to its [JSON schema](/model/gen-ai/gen-ai-system-instructions.json).

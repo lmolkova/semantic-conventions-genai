@@ -7,4 +7,4 @@ Operation: Client Inference
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md). |

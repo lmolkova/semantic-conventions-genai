@@ -7,4 +7,4 @@ Operation: Client Inference
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md). |

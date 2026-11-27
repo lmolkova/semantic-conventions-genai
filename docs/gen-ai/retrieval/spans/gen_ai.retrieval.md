@@ -11,6 +11,11 @@ Operation: Retrieval
 
 Describes a retrieval operation - an execution of a framework retrieval pipeline that returns documents relevant to a query.
 
+The span SHOULD cover the duration of the logical operation as observed by the
+caller, starting when it is initiated and ending when the response is fully
+received or the operation is terminated due to an error or cancellation.
+If the operation is retried automatically, the span SHOULD cover all retries.
+
 **Span name** SHOULD be `{gen_ai.operation.name}`.
 
 **Span kind** SHOULD be `INTERNAL`.

@@ -7,4 +7,4 @@ Operation: Client Inference
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`openai.gen_ai.client.inference`](/docs/openai/client-inference/spans/openai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`openai.gen_ai.client.inference`](/docs/openai/client-inference/spans/openai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/README.md). |

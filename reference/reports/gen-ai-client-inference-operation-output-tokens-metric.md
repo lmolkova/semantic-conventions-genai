@@ -1,6 +1,6 @@
 # Client Inference Operation Output Tokens Metric
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-token-metrics.md#metric-gen_aiclientinferenceoperationoutput_tokens)**
+> **[Semantic Convention](../../docs/gen-ai/client-inference/metrics/gen_ai.client.inference.operation.output_tokens.md)**
 
 ## Required
 
