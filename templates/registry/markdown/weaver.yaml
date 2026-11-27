@@ -12,6 +12,9 @@
 # Namespace bucketing: split the attribute key on `.` and group by the first
 # segment. `aws.bedrock.*` therefore lands under "aws"; refine by hand-list if
 # we ever need finer granularity.
+jq_modules:
+  - jq/docs.jq
+
 templates:
   - pattern: attribute_namespace.md.j2
     filter: semconv_grouped_attributes({"v2":true})
@@ -20,70 +23,17 @@ templates:
 
   # Index of entities (and entity refinements) per namespace.
   - template: entities_readme.md.j2
-    filter: >
-      [.refinements.entities[] | select(.deprecated == null)]
-      | group_by(.id | split(".") | first)
-      | map({namespace: (.[0].id | split(".") | first), items: map(. + {signal: "entities"})})
+    filter: entities_index
     application_mode: each
     file_name: "{{ ctx.namespace | kebab_case }}/entities/README.md"
 
-  # Per-operation signal docs: <ns>/<operation>/<signal>/<id>.md, <ns> from the signal id, plus a
-  # generated index per signal type. The operation comes from
-  # `annotations.docs.operation`; signals without it are skipped. The
-  # operation README.md is hand-written.
+  # One page per signal: <ns>/<operation>/<signal>/<id>.md (<ns> from the signal
+  # id, operation from `annotations.docs.operation`), entities in <ns>/entities/.
+  # Filters live in jq/docs.jq.
   - template: signal_page.md.j2
-    # Refinements get `_refines` (base id), `_refines_operation` (set when the
-    # base is documented here, so it can be linked) and `_added` / `_changed`:
-    # attribute keys they add or whose requirement level they change. Base
-    # signals get `_refinements`, the documented refinements of them.
-    filter: >
-      (.registry | {
-        spans: (.spans | map({key: .type, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
-        metrics: (.metrics | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
-        events: (.events | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
-        entities: (.entities | map({key: .type, value: (((.identity // []) + (.description // [])) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries)
-      }) as $base
-      | [ (.refinements.spans[] | {signal: "spans", item: .}),
-          (.refinements.metrics[] | {signal: "metrics", item: .}),
-          (.refinements.events[] | {signal: "events", item: .}),
-          (.refinements.entities[] | {signal: "entities", item: .}) ]
-      | map(select((.item.annotations.docs.operation != null or .signal == "entities") and .item.deprecated == null)
-        | . + {operation: .item.annotations.docs.operation, id: .item.id, base: (.item.type // .item.name)})
-      | . as $all
-      | map(. as $e | ($base[$e.signal] // {})[$e.base] as $b
-        | ((.item.attributes // []) + (.item.identity // []) + (.item.description // [])) as $attrs
-        | .item = (.item + (if $e.id == $e.base then {
-            _refinements: [$all[] | select(.signal == $e.signal and .base == $e.base and .id != $e.base) | {id, operation}]
-          } else {
-            _refines: $e.base,
-            _refines_local: ([$all[] | select(.signal == $e.signal and .id == $e.base)] | length > 0),
-            _refines_operation: ([$all[] | select(.signal == $e.signal and .id == $e.base) | .operation] | first),
-            _added: (if $b == null then [] else [$attrs[] | select(.key as $k | $b | has($k) | not) | .key] end),
-            _changed: (if $b == null then [] else [$attrs[] | select(.key as $k | ($b | has($k)) and $b[$k] != .requirement_level) | .key] end)
-          } end)))
+    filter: signal_pages
     application_mode: each
     file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id, ctx.item._refines is defined and ctx.item._refines) | trim }}"
-
-
-  # README per namespace that only refines signals defined elsewhere (e.g.
-  # provider namespaces), indexing its refinements by signal type.
-  - template: namespace_readme.md.j2
-    filter: >
-      ([.registry.attributes[] | .key | split(".") | first] | unique) as $attr_ns
-      | [ (.refinements.spans[] | {signal: "spans", item: .}),
-        (.refinements.metrics[] | {signal: "metrics", item: .}),
-        (.refinements.events[] | {signal: "events", item: .}),
-        (.refinements.entities[] | {signal: "entities", item: .}) ]
-      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
-        | . + {base: (.item.type // .item.name), namespace: (.item.id | split(".") | first)})
-      | . as $all
-      | map(. as $e | .item = (.item + {signal: $e.signal,
-          _refines_operation: ([$all[] | select(.signal == $e.signal and .item.id == $e.base) | .item.annotations.docs.operation] | first)}))
-      | group_by(.namespace)
-      | map(select(all(.[]; .item.id != .base)))
-      | map({namespace: .[0].namespace, items: map(.item), has_attributes: (.[0].namespace as $ns | $attr_ns | index($ns) != null)})
-    application_mode: each
-    file_name: "{{ ctx.namespace | kebab_case }}/README.md"
 
 text_maps:
   # Operations documented on their namespace README instead of their own folder.
