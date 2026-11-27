@@ -18,13 +18,3 @@
 {{ tables.out | join("\n\n") }}
 {%- endmacro %}
 
-{#- One row per operation, linking to its folder (rendered as its README). Each
-   item is `{operation, signals}`. -#}
-{% macro operations(items) -%}
-| Operation | Signals |
-| --- | --- |
-{% for o in items %}
-{%- set dir = ops.dir(ops.namespace(o.operation) | trim, o.operation) | trim -%}
-| [{{ ops.title(o.operation) | trim }}](/docs/{{ dir }}/) | {% for s in ["spans", "metrics", "events", "entities"] if s in o.signals %}{% if not loop.first %}, {% endif %}{{ s }}{% endfor %} |
-{% endfor %}
-{%- endmacro %}
