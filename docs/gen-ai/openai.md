@@ -36,7 +36,7 @@ See [`openai.gen_ai.client.inference`](client-inference/spans/openai.gen_ai.clie
 
 ### Embeddings
 
-See [common embeddings span definition](./client-embeddings/README.md#span-gen_aiclientembeddings).
+See [common embeddings span definition](client-embeddings/spans/gen_ai.client.embeddings.md).
 
 ### Fetch response
 

@@ -3,10 +3,7 @@
 
 # Span `gen_ai.memory.client`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Memory](../README.md)
+Operation: Client Memory
 
 <!-- prettier-ignore-start -->
 

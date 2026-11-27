@@ -3,11 +3,8 @@
 
 # MCP Server spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: MCP Server
 
-Operation: [MCP Server](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`mcp.server`](mcp.server.md) | This span describes the processing of the MCP request or notification initiated by the peer. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`mcp.server`](/docs/mcp/server/spans/mcp.server.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the processing of the MCP request or notification initiated by the peer. |

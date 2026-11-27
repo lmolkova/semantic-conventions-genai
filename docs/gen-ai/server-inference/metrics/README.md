@@ -3,13 +3,10 @@
 
 # Server Inference metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Server Inference
 
-Operation: [Server Inference](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.server.request.duration`](gen_ai.server.request.duration.md) | Generative AI server request duration such as time-to-last byte or last output token. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.server.time_per_output_token`](gen_ai.server.time_per_output_token.md) | Time per output token generated after the first token for successful responses. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.server.time_to_first_token`](gen_ai.server.time_to_first_token.md) | Time to generate first token for successful responses. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.server.request.duration`](/docs/gen-ai/server-inference/metrics/gen_ai.server.request.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | Generative AI server request duration such as time-to-last byte or last output token. |
+| [`gen_ai.server.time_per_output_token`](/docs/gen-ai/server-inference/metrics/gen_ai.server.time_per_output_token.md) | ![Development](https://img.shields.io/badge/-development-blue) | Time per output token generated after the first token for successful responses. |
+| [`gen_ai.server.time_to_first_token`](/docs/gen-ai/server-inference/metrics/gen_ai.server.time_to_first_token.md) | ![Development](https://img.shields.io/badge/-development-blue) | Time to generate first token for successful responses. |

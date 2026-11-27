@@ -3,13 +3,10 @@
 
 # Invoke Agent metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Invoke Agent
 
-Operation: [Invoke Agent](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.invoke_agent.duration`](gen_ai.invoke_agent.duration.md) | The end-to-end duration of a single in-process agent, workflow, or framework entrypoint invocation, from the moment the invocation starts until it emits the last chunk of its final response or terminates with an error. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.invoke_agent.inference_calls`](gen_ai.invoke_agent.inference_calls.md) | The number of inference (model) calls a GenAI agent, workflow, or framework entrypoint makes during a single invocation. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.invoke_agent.tool_calls`](gen_ai.invoke_agent.tool_calls.md) | The number of tool calls a GenAI agent, workflow, or framework entrypoint makes during a single invocation. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.invoke_agent.duration`](/docs/gen-ai/invoke-agent/metrics/gen_ai.invoke_agent.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The end-to-end duration of a single in-process agent, workflow, or framework entrypoint invocation, from the moment the invocation starts until it emits the last chunk of its final response or terminates with an error. |
+| [`gen_ai.invoke_agent.inference_calls`](/docs/gen-ai/invoke-agent/metrics/gen_ai.invoke_agent.inference_calls.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of inference (model) calls a GenAI agent, workflow, or framework entrypoint makes during a single invocation. |
+| [`gen_ai.invoke_agent.tool_calls`](/docs/gen-ai/invoke-agent/metrics/gen_ai.invoke_agent.tool_calls.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of tool calls a GenAI agent, workflow, or framework entrypoint makes during a single invocation. |

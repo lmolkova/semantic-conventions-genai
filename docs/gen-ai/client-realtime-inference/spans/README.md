@@ -3,12 +3,9 @@
 
 # Client Realtime Inference spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Realtime Inference
 
-Operation: [Client Realtime Inference](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.realtime_inference.client`](gen_ai.realtime_inference.client.md) | This span represents one server-side model generation within a realtime, bidirectional streaming session (such as OpenAI Realtime or Gemini Live). | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.user_speech.internal`](gen_ai.user_speech.internal.md) | This span represents the capture of a user speech utterance. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.realtime_inference.client`](/docs/gen-ai/client-realtime-inference/spans/gen_ai.realtime_inference.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span represents one server-side model generation within a realtime, bidirectional streaming session (such as OpenAI Realtime or Gemini Live). |
+| [`gen_ai.user_speech.internal`](/docs/gen-ai/client-realtime-inference/spans/gen_ai.user_speech.internal.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span represents the capture of a user speech utterance. |

@@ -3,10 +3,7 @@
 
 # Span `gen_ai.user_speech.internal`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Realtime Inference](../README.md)
+Operation: Client Realtime Inference
 
 <!-- prettier-ignore-start -->
 

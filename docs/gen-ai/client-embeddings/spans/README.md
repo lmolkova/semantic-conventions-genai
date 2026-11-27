@@ -3,11 +3,8 @@
 
 # Client Embeddings spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Embeddings
 
-Operation: [Client Embeddings](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.embeddings`](gen_ai.client.embeddings.md) | Describes a GenAI embeddings operation - a client call to a model or service that returns embeddings for one or more inputs. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.embeddings`](/docs/gen-ai/client-embeddings/spans/gen_ai.client.embeddings.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a GenAI embeddings operation - a client call to a model or service that returns embeddings for one or more inputs. |

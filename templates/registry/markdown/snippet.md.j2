@@ -7,6 +7,7 @@
 {%- import 'event_macros.j2' as ev -%}
 {%- import 'span_macros.j2' as sp -%}
 {%- import 'entity_macros.j2' as entity -%}
+{%- import 'signal_table.j2' as st -%}
 
 {%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
 {%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
@@ -25,7 +26,9 @@
 <!-- see templates/registry/markdown/snippet.md.j2 -->
 <!-- prettier-ignore-start -->
 
-{% if _kind %}
+{% if signal_overview is defined -%}
+{{ st.overview(signal_overview) | trim }}
+{% elif _kind %}
 {%- set span = {"type": (type | default(none)), "id": (id | default(none)), "kind": _kind, "stability": _stability, "deprecated": _deprecated, "brief": _brief, "note": _note, "requirement_level": _requirement_level, "name": _name, "entity_associations": (entity_associations | default(none))} -%}
 {{ sp.header(span, entity_registry_base_url) }}{{ at.generate(_attrs, attribute_registry_base_url, upstream_docs_base, "Attributes") }}
 {%- elif _instrument -%}

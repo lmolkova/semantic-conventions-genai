@@ -3,10 +3,7 @@
 
 # Metric `openai.gen_ai.client.inference.usage.cache_write.input_tokens`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Inference](../README.md)
+Operation: Client Inference
 
 <!-- prettier-ignore-start -->
 

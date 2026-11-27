@@ -3,11 +3,8 @@
 
 # Invoke Agent spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Invoke Agent
 
-Operation: [Invoke Agent](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.invoke_agent.internal`](gen_ai.invoke_agent.internal.md) | Describes an in-process GenAI agent, workflow, or framework entrypoint invocation. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.invoke_agent.internal`](/docs/gen-ai/invoke-agent/spans/gen_ai.invoke_agent.internal.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes an in-process GenAI agent, workflow, or framework entrypoint invocation. |

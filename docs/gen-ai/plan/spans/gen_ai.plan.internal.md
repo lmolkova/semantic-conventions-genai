@@ -3,10 +3,7 @@
 
 # Span `gen_ai.plan.internal`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Plan](../README.md)
+Operation: Plan
 
 <!-- prettier-ignore-start -->
 

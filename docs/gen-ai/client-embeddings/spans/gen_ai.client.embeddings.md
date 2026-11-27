@@ -3,10 +3,7 @@
 
 # Span `gen_ai.client.embeddings`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Embeddings](../README.md)
+Operation: Client Embeddings
 
 <!-- prettier-ignore-start -->
 

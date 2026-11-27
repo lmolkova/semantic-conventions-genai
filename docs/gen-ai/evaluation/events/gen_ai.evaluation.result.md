@@ -3,10 +3,7 @@
 
 # Event `gen_ai.evaluation.result`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Evaluation](../README.md)
+Operation: Evaluation
 
 <!-- prettier-ignore-start -->
 

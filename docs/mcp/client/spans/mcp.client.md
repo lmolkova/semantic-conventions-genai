@@ -3,10 +3,7 @@
 
 # Span `mcp.client`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [MCP Client](../README.md)
+Operation: MCP Client
 
 <!-- prettier-ignore-start -->
 
@@ -24,7 +21,7 @@ for the details on which values classify as errors.
 
 If the span status is set to `ERROR`, the status description SHOULD match the `JSONRPCError.message` if the message is available.
 
-MCP tool call execution spans are compatible with GenAI [execute_tool spans](/docs/gen-ai/execute-tool/README.md#span-gen_aiexecute_tool).
+MCP tool call execution spans are compatible with GenAI [execute_tool spans](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.md).
 
 If the MCP instrumentation can reliably detect that outer GenAI instrumentation
 is already tracing the tool execution, it SHOULD NOT create a separate span.

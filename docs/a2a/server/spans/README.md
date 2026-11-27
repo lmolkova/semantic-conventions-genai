@@ -3,13 +3,10 @@
 
 # A2A Server spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: A2A Server
 
-Operation: [A2A Server](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`a2a.grpc.server`](a2a.grpc.server.md) | This span describes processing of an A2A request received over the gRPC binding. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`a2a.http.server`](a2a.http.server.md) | This span describes processing of an A2A request received over an HTTP binding (HTTP+JSON or JSON-RPC over HTTP). | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`a2a.server`](a2a.server.md) | This span describes processing of an A2A request by the server. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`a2a.grpc.server`](/docs/a2a/server/spans/a2a.grpc.server.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes processing of an A2A request received over the gRPC binding. |
+| [`a2a.http.server`](/docs/a2a/server/spans/a2a.http.server.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes processing of an A2A request received over an HTTP binding (HTTP+JSON or JSON-RPC over HTTP). |
+| [`a2a.server`](/docs/a2a/server/spans/a2a.server.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes processing of an A2A request by the server. |

@@ -3,12 +3,9 @@
 
 # Client Inference events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Inference
 
-Operation: [Client Inference](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.inference.exception`](gen_ai.client.inference.exception.md) | This event represents an exception that caused a Generative AI client inference operation to fail, including `chat`, `generate_content`, and `text_completion`. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.client.inference.operation.details`](gen_ai.client.inference.operation.details.md) | Describes the details of a GenAI completion request including chat history and parameters. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.inference.exception`](/docs/gen-ai/client-inference/events/gen_ai.client.inference.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI client inference operation to fail, including `chat`, `generate_content`, and `text_completion`. |
+| [`gen_ai.client.inference.operation.details`](/docs/gen-ai/client-inference/events/gen_ai.client.inference.operation.details.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes the details of a GenAI completion request including chat history and parameters. |

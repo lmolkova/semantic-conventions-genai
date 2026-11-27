@@ -3,12 +3,9 @@
 
 # Client Realtime Inference events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Realtime Inference
 
-Operation: [Client Realtime Inference](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.realtime_session.ended`](gen_ai.client.realtime_session.ended.md) | Recorded when a realtime, bidirectional streaming session is closed. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.client.realtime_session.started`](gen_ai.client.realtime_session.started.md) | Recorded when a realtime, bidirectional streaming session (such as OpenAI Realtime or Gemini Live) is established. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.realtime_session.ended`](/docs/gen-ai/client-realtime-inference/events/gen_ai.client.realtime_session.ended.md) | ![Development](https://img.shields.io/badge/-development-blue) | Recorded when a realtime, bidirectional streaming session is closed. |
+| [`gen_ai.client.realtime_session.started`](/docs/gen-ai/client-realtime-inference/events/gen_ai.client.realtime_session.started.md) | ![Development](https://img.shields.io/badge/-development-blue) | Recorded when a realtime, bidirectional streaming session (such as OpenAI Realtime or Gemini Live) is established. |

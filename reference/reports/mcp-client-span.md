@@ -1,6 +1,6 @@
 # MCP Client Span
 
-> **[Semantic Convention](../../docs/mcp/README.md#client)**
+> **[Semantic Convention](../../docs/mcp/client/spans/mcp.client.md)**
 
 ## Required
 

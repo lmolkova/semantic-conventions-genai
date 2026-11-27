@@ -3,10 +3,7 @@
 
 # Metric `gen_ai.client.embeddings.operation.input_tokens`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Embeddings](../README.md)
+Operation: Client Embeddings
 
 <!-- prettier-ignore-start -->
 

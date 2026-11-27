@@ -3,10 +3,7 @@
 
 # Metric `mcp.server.operation.duration`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [MCP Server](../README.md)
+Operation: MCP Server
 
 <!-- prettier-ignore-start -->
 

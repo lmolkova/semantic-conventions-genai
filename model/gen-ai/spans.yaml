@@ -905,7 +905,7 @@ spans:
       GenAI instrumentations that can instrument tool execution calls SHOULD do so,
       unless another instrumentation can reliably cover all supported tool types.
       MCP tool executions may also be traced by the
-      [corresponding MCP instrumentation](/docs/mcp/README.md#client).
+      [corresponding MCP instrumentation](/docs/mcp/client/spans/mcp.client.md).
 
       Tools are often executed directly by application code. Application developers
       are encouraged to follow this semantic convention for tools invoked by their
@@ -916,7 +916,7 @@ spans:
       instrumentation SHOULD apply the corresponding
       [refinement](/docs/gen-ai/execute-tool/README.md#specialized-tool-call-spans) to the execute-tool
       span. Available refinements include
-      [agents exposed as tools](/docs/gen-ai/execute-tool/README.md#agent-as-a-tool) and
+      [agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md) and
       [Agent Skills](/docs/gen-ai/execute-tool/README.md#agent-skills).
     stability: development
     annotations:
@@ -1008,7 +1008,7 @@ span_refinements:
       - ref: gen_ai.provider.name
         annotations:
           markdown:
-            omit_enum_table: true
+            omit: true
       - ref_group: attributes.gen_ai.provider_refinement.output_type
       - ref: gen_ai.request.model
         requirement_level: required
@@ -1090,7 +1090,7 @@ span_refinements:
       - ref: gen_ai.provider.name
         annotations:
           markdown:
-            omit_enum_table: true
+            omit: true
       - ref_group: attributes.gen_ai.provider_refinement.output_type
       - ref: azure.resource_provider.namespace
         note: >
@@ -1119,7 +1119,7 @@ span_refinements:
       - ref: gen_ai.provider.name
         annotations:
           markdown:
-            omit_enum_table: true
+            omit: true
       - ref: gen_ai.request.top_k
         requirement_level: recommended
       - ref: gen_ai.request.reasoning.level

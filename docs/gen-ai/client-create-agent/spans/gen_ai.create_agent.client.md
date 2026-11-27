@@ -3,10 +3,7 @@
 
 # Span `gen_ai.create_agent.client`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Create Agent](../README.md)
+Operation: Client Create Agent
 
 <!-- prettier-ignore-start -->
 

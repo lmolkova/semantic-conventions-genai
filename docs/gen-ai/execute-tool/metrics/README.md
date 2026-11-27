@@ -3,11 +3,8 @@
 
 # Execute Tool metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Execute Tool
 
-Operation: [Execute Tool](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.execute_tool.duration`](gen_ai.execute_tool.duration.md) | The duration of a single tool execution. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.execute_tool.duration`](/docs/gen-ai/execute-tool/metrics/gen_ai.execute_tool.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of a single tool execution. |

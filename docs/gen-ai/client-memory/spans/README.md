@@ -3,11 +3,8 @@
 
 # Client Memory spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Memory
 
-Operation: [Client Memory](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.memory.client`](gen_ai.memory.client.md) | Describes a memory operation, including memory store lifecycle operations and memory record operations. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.memory.client`](/docs/gen-ai/client-memory/spans/gen_ai.memory.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a memory operation, including memory store lifecycle operations and memory record operations. |

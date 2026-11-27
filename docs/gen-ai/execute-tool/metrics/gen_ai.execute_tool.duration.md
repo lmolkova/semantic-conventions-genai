@@ -3,10 +3,7 @@
 
 # Metric `gen_ai.execute_tool.duration`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Execute Tool](../README.md)
+Operation: Execute Tool
 
 <!-- prettier-ignore-start -->
 

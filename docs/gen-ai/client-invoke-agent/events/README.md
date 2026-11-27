@@ -3,11 +3,8 @@
 
 # Client Invoke Agent events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Invoke Agent
 
-Operation: [Client Invoke Agent](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.invoke_agent.exception`](gen_ai.client.invoke_agent.exception.md) | This event represents an exception that caused a Generative AI client agent invocation operation to fail. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.invoke_agent.exception`](/docs/gen-ai/client-invoke-agent/events/gen_ai.client.invoke_agent.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI client agent invocation operation to fail. |

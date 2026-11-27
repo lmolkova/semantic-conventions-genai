@@ -3,10 +3,7 @@
 
 # Span `a2a.grpc.server`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [A2A Server](../README.md)
+Operation: A2A Server
 
 <!-- prettier-ignore-start -->
 
@@ -19,7 +16,7 @@ instrumented gRPC server call, it SHOULD enrich the gRPC server span with
 A2A attributes instead of reporting a nested `a2a.server` span.
 
 A2A protocol errors SHOULD set the span status to `ERROR` and SHOULD set
-`error.type` according to the [A2A error guidance](/docs/a2a/README.md#server),
+`error.type` according to the [A2A error guidance](/docs/a2a/server/spans/a2a.server.md),
 preferring an available A2A error reason over its mapped gRPC status code.
 
 Instrumentation coordinating A2A and gRPC telemetry SHOULD preserve the

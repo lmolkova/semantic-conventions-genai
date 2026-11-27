@@ -3,10 +3,7 @@
 
 # Span `gen_ai.retrieval`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Retrieval](../README.md)
+Operation: Retrieval
 
 <!-- prettier-ignore-start -->
 

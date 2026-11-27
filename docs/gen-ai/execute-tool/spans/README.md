@@ -3,15 +3,12 @@
 
 # Execute Tool spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Execute Tool
 
-Operation: [Execute Tool](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.execute_tool`](gen_ai.execute_tool.md) | Describes tool execution span. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.execute_tool.command`](gen_ai.execute_tool.command.md) | Describes a tool call that executes one or more commands. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.execute_tool.load_skill`](gen_ai.execute_tool.load_skill.md) | Describes a tool call that loads a skill into an agent's context. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.execute_tool.read_skill_resource`](gen_ai.execute_tool.read_skill_resource.md) | Describes a tool call that reads a resource belonging to a skill. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.execute_tool.transfer`](gen_ai.execute_tool.transfer.md) | Describes a tool call that transfers work or control to another agent. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.execute_tool`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes tool execution span. |
+| [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a tool call that executes one or more commands. |
+| [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a tool call that loads a skill into an agent's context. |
+| [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a tool call that reads a resource belonging to a skill. |
+| [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a tool call that transfers work or control to another agent. |

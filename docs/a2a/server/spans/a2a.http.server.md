@@ -3,10 +3,7 @@
 
 # Span `a2a.http.server`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [A2A Server](../README.md)
+Operation: A2A Server
 
 <!-- prettier-ignore-start -->
 
@@ -25,7 +22,7 @@ Instrumentation SHOULD use the additional A2A error context to set the
 span status to `ERROR`, as permitted by the
 [HTTP span status conventions](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/http/http-spans.md#status),
 and SHOULD set `error.type` according to the
-[A2A error guidance](/docs/a2a/README.md#server), even when the HTTP response
+[A2A error guidance](/docs/a2a/server/spans/a2a.server.md), even when the HTTP response
 indicates success.
 
 Instrumentation coordinating A2A and HTTP telemetry SHOULD preserve the

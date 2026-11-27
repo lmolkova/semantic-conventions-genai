@@ -3,10 +3,7 @@
 
 # Event `gen_ai.client.invoke_agent.exception`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Invoke Agent](../README.md)
+Operation: Client Invoke Agent
 
 <!-- prettier-ignore-start -->
 

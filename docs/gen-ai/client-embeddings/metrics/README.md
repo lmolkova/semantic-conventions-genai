@@ -3,12 +3,9 @@
 
 # Client Embeddings metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Embeddings
 
-Operation: [Client Embeddings](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.embeddings.duration`](gen_ai.client.embeddings.duration.md) | GenAI client embeddings operation duration. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.client.embeddings.operation.input_tokens`](gen_ai.client.embeddings.operation.input_tokens.md) | The number of input tokens used per embeddings operation. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.embeddings.duration`](/docs/gen-ai/client-embeddings/metrics/gen_ai.client.embeddings.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | GenAI client embeddings operation duration. |
+| [`gen_ai.client.embeddings.operation.input_tokens`](/docs/gen-ai/client-embeddings/metrics/gen_ai.client.embeddings.operation.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of input tokens used per embeddings operation. |

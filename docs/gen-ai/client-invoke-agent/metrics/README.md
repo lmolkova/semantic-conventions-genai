@@ -3,11 +3,8 @@
 
 # Client Invoke Agent metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Invoke Agent
 
-Operation: [Client Invoke Agent](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.invoke_agent.duration`](gen_ai.client.invoke_agent.duration.md) | GenAI client invoke agent operation duration. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.invoke_agent.duration`](/docs/gen-ai/client-invoke-agent/metrics/gen_ai.client.invoke_agent.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | GenAI client invoke agent operation duration. |

@@ -3,11 +3,8 @@
 
 # Plan spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Plan
 
-Operation: [Plan](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.plan.internal`](gen_ai.plan.internal.md) | Represents an agent planning or task decomposition phase. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.plan.internal`](/docs/gen-ai/plan/spans/gen_ai.plan.internal.md) | ![Development](https://img.shields.io/badge/-development-blue) | Represents an agent planning or task decomposition phase. |

@@ -3,12 +3,9 @@
 
 # MCP Server metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: MCP Server
 
-Operation: [MCP Server](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`mcp.server.operation.duration`](mcp.server.operation.duration.md) | MCP request or notification duration as observed on the receiver from the time it was received until the result or ack is sent. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`mcp.server.session.duration`](mcp.server.session.duration.md) | The duration of the MCP session as observed on the MCP server. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`mcp.server.operation.duration`](/docs/mcp/server/metrics/mcp.server.operation.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | MCP request or notification duration as observed on the receiver from the time it was received until the result or ack is sent. |
+| [`mcp.server.session.duration`](/docs/mcp/server/metrics/mcp.server.session.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP server. |

@@ -3,11 +3,8 @@
 
 # Invoke Agent events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Invoke Agent
 
-Operation: [Invoke Agent](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.invoke_agent.exception`](gen_ai.invoke_agent.exception.md) | This event represents an exception that caused a Generative AI internal agent invocation operation to fail. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.invoke_agent.exception`](/docs/gen-ai/invoke-agent/events/gen_ai.invoke_agent.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI internal agent invocation operation to fail. |

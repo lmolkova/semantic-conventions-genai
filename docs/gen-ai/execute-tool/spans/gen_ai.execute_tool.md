@@ -3,10 +3,7 @@
 
 # Span `gen_ai.execute_tool`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Execute Tool](../README.md)
+Operation: Execute Tool
 
 <!-- prettier-ignore-start -->
 
@@ -19,7 +16,7 @@ Describes tool execution span.
 GenAI instrumentations that can instrument tool execution calls SHOULD do so,
 unless another instrumentation can reliably cover all supported tool types.
 MCP tool executions may also be traced by the
-[corresponding MCP instrumentation](/docs/mcp/README.md#client).
+[corresponding MCP instrumentation](/docs/mcp/client/spans/mcp.client.md).
 
 Tools are often executed directly by application code. Application developers
 are encouraged to follow this semantic convention for tools invoked by their
@@ -30,7 +27,7 @@ When the library API or state identifies a specialized tool call,
 instrumentation SHOULD apply the corresponding
 [refinement](/docs/gen-ai/execute-tool/README.md#specialized-tool-call-spans) to the execute-tool
 span. Available refinements include
-[agents exposed as tools](/docs/gen-ai/execute-tool/README.md#agent-as-a-tool) and
+[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md) and
 [Agent Skills](/docs/gen-ai/execute-tool/README.md#agent-skills).
 
 **Span name** SHOULD be `execute_tool {gen_ai.tool.name}`.

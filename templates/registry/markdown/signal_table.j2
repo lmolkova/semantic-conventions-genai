@@ -1,0 +1,19 @@
+{%- import 'operations.j2' as ops -%}
+{%- import 'stability.j2' as stability -%}
+{#- One row per signal, linking to its generated page. -#}
+{% macro render(items, signal) -%}
+| {{ ops.signal_title(signal) | trim }} | Stability | Description |
+| --- | --- | --- |
+{% for s in items | sort(attribute="id") %}| [`{{ s.id }}`]({{ ops.signal_url(s.annotations.docs.operation, signal, s.id) | trim }}) | {{ stability.badge(s.stability, s.deprecated) | trim }} | {{ s.brief | trim | replace("\n", " ") }} |
+{% endfor %}
+{%- endmacro %}
+
+{#- One table per signal type; each item carries its type in `signal`. -#}
+{% macro overview(items) -%}
+{%- set tables = namespace(out=[]) -%}
+{%- for signal in ["spans", "metrics", "events", "entities"] -%}
+{%- set group = items | selectattr("signal", "equalto", signal) | list -%}
+{%- if group -%}{%- set tables.out = tables.out + [render(group, signal) | trim] -%}{%- endif -%}
+{%- endfor -%}
+{{ tables.out | join("\n\n") }}
+{%- endmacro %}

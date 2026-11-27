@@ -27,7 +27,7 @@ See [`azure.ai.gen_ai.client.inference`](client-inference/spans/azure.ai.gen_ai.
 
 ### Embedding
 
-See [common embedding span definition](./client-embeddings/README.md#span-gen_aiclientembeddings).
+See [common embedding span definition](client-embeddings/spans/gen_ai.client.embeddings.md).
 
 ## Metrics
 

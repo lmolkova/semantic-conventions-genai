@@ -3,11 +3,8 @@
 
 # Client Invoke Agent spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Invoke Agent
 
-Operation: [Client Invoke Agent](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.invoke_agent`](gen_ai.client.invoke_agent.md) | Describes GenAI agent invocation over a remote service. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.invoke_agent`](/docs/gen-ai/client-invoke-agent/spans/gen_ai.client.invoke_agent.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes GenAI agent invocation over a remote service. |

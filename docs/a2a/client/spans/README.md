@@ -3,11 +3,8 @@
 
 # A2A Client spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: A2A Client
 
-Operation: [A2A Client](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`a2a.client`](a2a.client.md) | This span describes an A2A call from the client side. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`a2a.client`](/docs/a2a/client/spans/a2a.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes an A2A call from the client side. |

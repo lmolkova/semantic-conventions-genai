@@ -3,10 +3,7 @@
 
 # Metric `gen_ai.invoke_agent.tool_calls`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Invoke Agent](../README.md)
+Operation: Invoke Agent
 
 <!-- prettier-ignore-start -->
 

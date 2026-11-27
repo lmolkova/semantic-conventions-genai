@@ -3,11 +3,8 @@
 
 # Client Embeddings events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Embeddings
 
-Operation: [Client Embeddings](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.embeddings.exception`](gen_ai.client.embeddings.exception.md) | This event represents an exception that caused a Generative AI client embeddings operation to fail. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.embeddings.exception`](/docs/gen-ai/client-embeddings/events/gen_ai.client.embeddings.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI client embeddings operation to fail. |

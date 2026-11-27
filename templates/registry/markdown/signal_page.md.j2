@@ -5,10 +5,7 @@
 
 # {{ ops.signal_title(ctx.signal) | trim }} `{{ ctx.id }}`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [{{ ops.title(ctx.operation) | trim }}](../README.md)
+Operation: {{ ops.title(ctx.operation) | trim }}
 
 {{ signals.render(ctx.item, ctx.signal) | trim }}
 

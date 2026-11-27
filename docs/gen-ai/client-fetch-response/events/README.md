@@ -3,11 +3,8 @@
 
 # Client Fetch Response events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Fetch Response
 
-Operation: [Client Fetch Response](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.client.fetch_response.exception`](gen_ai.client.fetch_response.exception.md) | This event represents an exception that caused a Generative AI client fetch response operation to fail. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.client.fetch_response.exception`](/docs/gen-ai/client-fetch-response/events/gen_ai.client.fetch_response.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI client fetch response operation to fail. |

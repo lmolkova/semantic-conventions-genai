@@ -3,10 +3,7 @@
 
 # Span `gen_ai.fetch_response.client`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Fetch Response](../README.md)
+Operation: Client Fetch Response
 
 <!-- prettier-ignore-start -->
 

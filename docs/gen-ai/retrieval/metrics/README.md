@@ -3,11 +3,8 @@
 
 # Retrieval metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Retrieval
 
-Operation: [Retrieval](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.retrieval.duration`](gen_ai.retrieval.duration.md) | The duration of a retrieval operation - an execution of a framework retrieval pipeline that returns documents relevant to a query. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.retrieval.duration`](/docs/gen-ai/retrieval/metrics/gen_ai.retrieval.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of a retrieval operation - an execution of a framework retrieval pipeline that returns documents relevant to a query. |

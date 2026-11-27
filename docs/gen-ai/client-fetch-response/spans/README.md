@@ -3,12 +3,9 @@
 
 # Client Fetch Response spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Fetch Response
 
-Operation: [Client Fetch Response](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.fetch_response.client`](gen_ai.fetch_response.client.md) | Describes a request to a Generative AI provider that fetches a previously generated model response by its identifier. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`openai.fetch_response.client`](openai.fetch_response.client.md) | Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.fetch_response.client`](/docs/gen-ai/client-fetch-response/spans/gen_ai.fetch_response.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a request to a Generative AI provider that fetches a previously generated model response by its identifier. |
+| [`openai.fetch_response.client`](/docs/gen-ai/client-fetch-response/spans/openai.fetch_response.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for the [OpenAI](https://openai.com/) [Get a model response](https://platform.openai.com/docs/api-reference/responses/get) operation extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |

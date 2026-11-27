@@ -3,10 +3,7 @@
 
 # Event `gen_ai.client.embeddings.exception`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Embeddings](../README.md)
+Operation: Client Embeddings
 
 <!-- prettier-ignore-start -->
 

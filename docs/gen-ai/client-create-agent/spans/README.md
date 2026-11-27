@@ -3,11 +3,8 @@
 
 # Client Create Agent spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Create Agent
 
-Operation: [Client Create Agent](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.create_agent.client`](gen_ai.create_agent.client.md) | Describes GenAI agent creation and is usually applicable when working with remote agent services. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.create_agent.client`](/docs/gen-ai/client-create-agent/spans/gen_ai.create_agent.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes GenAI agent creation and is usually applicable when working with remote agent services. |

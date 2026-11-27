@@ -3,11 +3,8 @@
 
 # MCP Client spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: MCP Client
 
-Operation: [MCP Client](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`mcp.client`](mcp.client.md) | This span describes the MCP call from the client side. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`mcp.client`](/docs/mcp/client/spans/mcp.client.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span describes the MCP call from the client side. |

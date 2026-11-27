@@ -3,10 +3,7 @@
 
 # Metric `gen_ai.server.time_per_output_token`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Server Inference](../README.md)
+Operation: Server Inference
 
 <!-- prettier-ignore-start -->
 

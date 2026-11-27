@@ -3,11 +3,8 @@
 
 # Retrieval spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Retrieval
 
-Operation: [Retrieval](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.retrieval`](gen_ai.retrieval.md) | Describes a retrieval operation - an execution of a framework retrieval pipeline that returns documents relevant to a query. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.retrieval`](/docs/gen-ai/retrieval/spans/gen_ai.retrieval.md) | ![Development](https://img.shields.io/badge/-development-blue) | Describes a retrieval operation - an execution of a framework retrieval pipeline that returns documents relevant to a query. |

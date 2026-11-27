@@ -3,10 +3,7 @@
 
 # Span `aws.bedrock.gen_ai.client.inference`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Inference](../README.md)
+Operation: Client Inference
 
 <!-- prettier-ignore-start -->
 

@@ -3,10 +3,7 @@
 
 # Event `gen_ai.client.realtime_session.started`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [Client Realtime Inference](../README.md)
+Operation: Client Realtime Inference
 
 <!-- prettier-ignore-start -->
 

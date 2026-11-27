@@ -3,10 +3,7 @@
 
 # Span `a2a.server`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [A2A Server](../README.md)
+Operation: A2A Server
 
 <!-- prettier-ignore-start -->
 
@@ -20,8 +17,8 @@ calls and the time to produce the response stream for streaming calls.
 This span is reported when instrumentation cannot detect the transport
 server span the A2A request is handled in. When it can, instrumentation
 SHOULD enrich the transport server span instead - see A2A
-[HTTP](/docs/a2a/README.md#server-over-http) and
-[gRPC](/docs/a2a/README.md#server-over-grpc) server spans.
+[HTTP](/docs/a2a/server/spans/a2a.http.server.md) and
+[gRPC](/docs/a2a/server/spans/a2a.grpc.server.md) server spans.
 
 **Span name** SHOULD be `{a2a.method.name}`.
 

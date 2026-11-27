@@ -3,11 +3,8 @@
 
 # Evaluation events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Evaluation
 
-Operation: [Evaluation](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.evaluation.result`](gen_ai.evaluation.result.md) | This event captures the result of evaluating GenAI output for quality, accuracy, or other characteristics. This event SHOULD be parented to GenAI operation span being evaluated when possible or set `gen_ai.response.id` when span id is not available. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.evaluation.result`](/docs/gen-ai/evaluation/events/gen_ai.evaluation.result.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event captures the result of evaluating GenAI output for quality, accuracy, or other characteristics. This event SHOULD be parented to GenAI operation span being evaluated when possible or set `gen_ai.response.id` when span id is not available. |

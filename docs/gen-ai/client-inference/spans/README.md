@@ -3,15 +3,12 @@
 
 # Client Inference spans
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Client Inference
 
-Operation: [Client Inference](../README.md)
-
-| Span | Description | Stability |
+| Span | Stability | Description |
 | --- | --- | --- |
-| [`anthropic.gen_ai.client.inference`](anthropic.gen_ai.client.inference.md) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`aws.bedrock.gen_ai.client.inference`](aws.bedrock.gen_ai.client.inference.md) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`azure.ai.gen_ai.client.inference`](azure.ai.gen_ai.client.inference.md) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`gen_ai.client.inference`](gen_ai.client.inference.md) | This span represents a logical client call to Generative AI model or service that generates a response or requests a tool call based on the input prompt. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`openai.gen_ai.client.inference`](openai.gen_ai.client.inference.md) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`anthropic.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`aws.bedrock.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`azure.ai.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span represents a logical client call to Generative AI model or service that generates a response or requests a tool call based on the input prompt. |
+| [`openai.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/openai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |

@@ -3,10 +3,7 @@
 
 # Span `a2a.client`
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
-
-Operation: [A2A Client](../README.md)
+Operation: A2A Client
 
 <!-- prettier-ignore-start -->
 

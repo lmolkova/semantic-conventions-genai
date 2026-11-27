@@ -3,12 +3,9 @@
 
 # MCP Client metrics
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: MCP Client
 
-Operation: [MCP Client](../README.md)
-
-| Metric | Description | Stability |
+| Metric | Stability | Description |
 | --- | --- | --- |
-| [`mcp.client.operation.duration`](mcp.client.operation.duration.md) | The duration of the MCP request or notification as observed on the sender from the time it was sent until the response or ack is received. | ![Development](https://img.shields.io/badge/-development-blue) |
-| [`mcp.client.session.duration`](mcp.client.session.duration.md) | The duration of the MCP session as observed on the MCP client. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`mcp.client.operation.duration`](/docs/mcp/client/metrics/mcp.client.operation.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP request or notification as observed on the sender from the time it was sent until the response or ack is received. |
+| [`mcp.client.session.duration`](/docs/mcp/client/metrics/mcp.client.session.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | The duration of the MCP session as observed on the MCP client. |

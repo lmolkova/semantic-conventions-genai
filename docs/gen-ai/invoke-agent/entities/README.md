@@ -3,11 +3,8 @@
 
 # Invoke Agent entities
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Invoke Agent
 
-Operation: [Invoke Agent](../README.md)
-
-| Entity | Description | Stability |
+| Entity | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.main_agent`](gen_ai.main_agent.md) | A logical top-level Generative AI agent in the process. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.main_agent`](/docs/gen-ai/invoke-agent/entities/gen_ai.main_agent.md) | ![Development](https://img.shields.io/badge/-development-blue) | A logical top-level Generative AI agent in the process. |

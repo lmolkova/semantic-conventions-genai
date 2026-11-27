@@ -3,11 +3,8 @@
 
 # Execute Tool events
 
-> [!NOTE]
-> Generated from the [model](/model/). Do not edit by hand.
+Operation: Execute Tool
 
-Operation: [Execute Tool](../README.md)
-
-| Event | Description | Stability |
+| Event | Stability | Description |
 | --- | --- | --- |
-| [`gen_ai.execute_tool.exception`](gen_ai.execute_tool.exception.md) | This event represents an exception that caused a Generative AI tool execution operation to fail. | ![Development](https://img.shields.io/badge/-development-blue) |
+| [`gen_ai.execute_tool.exception`](/docs/gen-ai/execute-tool/events/gen_ai.execute_tool.exception.md) | ![Development](https://img.shields.io/badge/-development-blue) | This event represents an exception that caused a Generative AI tool execution operation to fail. |
