@@ -3,7 +3,7 @@
 
 # Event `gen_ai.evaluation.result`
 
-Operation: Evaluation
+Operation: [Evaluation](/docs/gen-ai/evaluation/README.md)
 
 <!-- prettier-ignore-start -->
 

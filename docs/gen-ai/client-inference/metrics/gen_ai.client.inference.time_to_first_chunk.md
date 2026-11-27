@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.inference.time_to_first_chunk`
 
-Operation: Client Inference
+Operation: [Client Inference](/docs/gen-ai/client-inference/README.md)
 
 <!-- prettier-ignore-start -->
 

@@ -5,7 +5,7 @@
 
 # {{ ops.signal_title(ctx.signal) | trim }} `{{ ctx.id }}`
 
-Operation: {{ ops.title(ctx.operation) | trim }}
+Operation: [{{ ops.title(ctx.operation) | trim }}]({{ ops.operation_url(ctx.operation) | trim }})
 {%- set item = ctx.item %}
 {%- if item._refines %}
 

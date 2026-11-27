@@ -3,7 +3,7 @@
 
 # Event `gen_ai.execute_tool.exception`
 
-Operation: Execute Tool
+Operation: [Execute Tool](/docs/gen-ai/execute-tool/README.md)
 
 <!-- prettier-ignore-start -->
 

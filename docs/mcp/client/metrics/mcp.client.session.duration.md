@@ -3,7 +3,7 @@
 
 # Metric `mcp.client.session.duration`
 
-Operation: MCP Client
+Operation: [MCP Client](/docs/mcp/README.md)
 
 <!-- prettier-ignore-start -->
 

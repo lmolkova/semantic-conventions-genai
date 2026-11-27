@@ -3,7 +3,7 @@
 
 # Span `a2a.server`
 
-Operation: A2A Server
+Operation: [A2A Server](/docs/a2a/README.md)
 
 <!-- prettier-ignore-start -->
 

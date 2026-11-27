@@ -78,20 +78,14 @@ templates:
     application_mode: each
     file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id) | trim }}"
 
-  - template: signal_index.md.j2
-    filter: >
-      [ (.refinements.spans[] | {signal: "spans", item: .}),
-        (.refinements.metrics[] | {signal: "metrics", item: .}),
-        (.refinements.events[] | {signal: "events", item: .}),
-        (.refinements.entities[] | {signal: "entities", item: .}) ]
-      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
-        | . + {operation: .item.annotations.docs.operation, namespace: (.item.id | split(".") | first)})
-      | group_by([.namespace, .operation, .signal])
-      | map({namespace: .[0].namespace, operation: .[0].operation, signal: .[0].signal, items: (map(.item) | sort_by(.id))})
-    application_mode: each
-    file_name: "{% import 'operations.j2' as ops %}{{ ops.index_path(ctx.namespace, ctx.operation, ctx.signal) | trim }}"
 
 text_maps:
+  # Operations documented on their namespace README instead of their own folder.
+  operation_docs:
+    mcp.client: /docs/mcp/README.md
+    mcp.server: /docs/mcp/README.md
+    a2a.client: /docs/a2a/README.md
+    a2a.server: /docs/a2a/README.md
   operation_titles:
     gen_ai.client.inference: Client Inference
     gen_ai.server.inference: Server Inference

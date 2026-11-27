@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.server.time_per_output_token`
 
-Operation: Server Inference
+Operation: [Server Inference](/docs/gen-ai/server-inference/README.md)
 
 <!-- prettier-ignore-start -->
 

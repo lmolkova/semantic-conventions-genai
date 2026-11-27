@@ -3,7 +3,7 @@
 
 # Span `mcp.client`
 
-Operation: MCP Client
+Operation: [MCP Client](/docs/mcp/README.md)
 
 <!-- prettier-ignore-start -->
 

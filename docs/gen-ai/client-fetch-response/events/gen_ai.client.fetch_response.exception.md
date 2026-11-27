@@ -3,7 +3,7 @@
 
 # Event `gen_ai.client.fetch_response.exception`
 
-Operation: Client Fetch Response
+Operation: [Client Fetch Response](/docs/gen-ai/client-fetch-response/README.md)
 
 <!-- prettier-ignore-start -->
 

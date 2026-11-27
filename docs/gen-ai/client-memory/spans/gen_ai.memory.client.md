@@ -3,7 +3,7 @@
 
 # Span `gen_ai.memory.client`
 
-Operation: Client Memory
+Operation: [Client Memory](/docs/gen-ai/client-memory/README.md)
 
 <!-- prettier-ignore-start -->
 

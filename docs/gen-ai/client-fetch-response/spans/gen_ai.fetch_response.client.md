@@ -3,7 +3,7 @@
 
 # Span `gen_ai.fetch_response.client`
 
-Operation: Client Fetch Response
+Operation: [Client Fetch Response](/docs/gen-ai/client-fetch-response/README.md)
 
 **Known refinements:**
 

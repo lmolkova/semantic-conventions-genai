@@ -3,7 +3,7 @@
 
 # Entity `gen_ai.main_agent`
 
-Operation: Invoke Agent
+Operation: [Invoke Agent](/docs/gen-ai/invoke-agent/README.md)
 
 <!-- prettier-ignore-start -->
 

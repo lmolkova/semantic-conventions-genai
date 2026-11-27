@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.invoke_agent.tool_calls`
 
-Operation: Invoke Agent
+Operation: [Invoke Agent](/docs/gen-ai/invoke-agent/README.md)
 
 <!-- prettier-ignore-start -->
 

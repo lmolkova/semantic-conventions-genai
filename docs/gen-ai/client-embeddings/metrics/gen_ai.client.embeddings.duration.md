@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.embeddings.duration`
 
-Operation: Client Embeddings
+Operation: [Client Embeddings](/docs/gen-ai/client-embeddings/README.md)
 
 <!-- prettier-ignore-start -->
 

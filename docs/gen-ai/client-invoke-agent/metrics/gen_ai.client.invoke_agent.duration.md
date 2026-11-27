@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.invoke_agent.duration`
 
-Operation: Client Invoke Agent
+Operation: [Client Invoke Agent](/docs/gen-ai/client-invoke-agent/README.md)
 
 <!-- prettier-ignore-start -->
 

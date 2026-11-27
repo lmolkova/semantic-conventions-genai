@@ -3,7 +3,7 @@
 
 # Event `gen_ai.client.realtime_session.ended`
 
-Operation: Client Realtime Inference
+Operation: [Client Realtime Inference](/docs/gen-ai/client-realtime-inference/README.md)
 
 <!-- prettier-ignore-start -->
 

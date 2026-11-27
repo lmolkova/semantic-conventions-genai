@@ -14,8 +14,9 @@
 {%- if ns and ns != namespace(operation) | trim %}{{ ns | title_case | acronym }} {% endif -%}
 {{ operation | map_text("operation_titles") }}
 {%- endmacro %}
-{% macro index_path(ns, operation, signal) -%}
-{{ dir(ns, operation) | trim }}/{{ signal }}/README.md
+{#- The operation's README, unless `operation_docs` points it elsewhere. -#}
+{% macro operation_url(operation) -%}
+{{ operation | map_text("operation_docs", "/docs/" ~ (dir(namespace(operation) | trim, operation) | trim) ~ "/README.md") }}
 {%- endmacro %}
 {% macro signal_path(operation, signal, id) -%}
 {{ dir(namespace(id) | trim, operation) | trim }}/{{ signal }}/{{ id }}.md

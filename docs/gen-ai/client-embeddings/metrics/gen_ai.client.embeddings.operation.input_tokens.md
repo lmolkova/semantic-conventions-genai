@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.embeddings.operation.input_tokens`
 
-Operation: Client Embeddings
+Operation: [Client Embeddings](/docs/gen-ai/client-embeddings/README.md)
 
 <!-- prettier-ignore-start -->
 

@@ -24,20 +24,20 @@ Model operations:
 * [Client inference](gen-ai/client-inference/README.md)
 * [Client realtime inference](gen-ai/client-realtime-inference/README.md)
 * [Client embeddings](gen-ai/client-embeddings/README.md)
-* [Client fetch response](gen-ai/client-fetch-response/)
-* [Server inference](gen-ai/server-inference/)
+* [Client fetch response](gen-ai/client-fetch-response/README.md)
+* [Server inference](gen-ai/server-inference/README.md)
 * [Execute tool](gen-ai/execute-tool/README.md)
 * [LLM call examples](gen-ai/non-normative/examples-llm-calls.md)
 
 Agentic operations:
 
-* [Client create agent](gen-ai/client-create-agent/)
+* [Client create agent](gen-ai/client-create-agent/README.md)
 * [Client invoke agent](gen-ai/client-invoke-agent/README.md)
-* [Invoke agent](gen-ai/invoke-agent/)
-* [Plan](gen-ai/plan/)
+* [Invoke agent](gen-ai/invoke-agent/README.md)
+* [Plan](gen-ai/plan/README.md)
 * [Execute tool](gen-ai/execute-tool/README.md)
 * [Retrieval](gen-ai/retrieval/README.md)
-* [Client memory](gen-ai/client-memory/)
+* [Client memory](gen-ai/client-memory/README.md)
 * [Agent call examples](gen-ai/non-normative/examples-agent-calls.md)
 
 Protocols:
@@ -55,7 +55,7 @@ Technology specific semantic conventions are defined for the following GenAI sys
 See also:
 
 * [Registry](registry/README.md): Attribute registry for namespaces defined in this repository.
-* [Evaluation](gen-ai/evaluation/): Semantic Conventions for Generative AI evaluation results - *events*.
+* [Evaluation](gen-ai/evaluation/README.md): Semantic Conventions for Generative AI evaluation results - *events*.
 
 ## Attributes shared across operations
 
