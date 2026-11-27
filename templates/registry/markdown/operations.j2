@@ -10,7 +10,7 @@
 {{ namespace(id) | trim | kebab_case }}
 {%- endmacro %}
 {% macro ns_title(ns) -%}
-{{ ns | map_text("namespace_titles", ns | title_case | acronym) }}
+{{ ns | replace("_", "") | title_case | acronym }}
 {%- endmacro %}
 {% macro op_path(operation) -%}
 {{ ns_dir(operation) | trim }}/{{ (operation | split_id)[1:] | join("_") | kebab_case }}.md

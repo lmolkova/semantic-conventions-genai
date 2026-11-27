@@ -32,8 +32,6 @@ templates:
     file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.signal, ctx.id, ctx.item._refines is defined and ctx.item._refines) | trim }}"
 
 text_maps:
-  namespace_titles:
-    gen_ai: GenAI
 
 acronyms:
   - A2A
