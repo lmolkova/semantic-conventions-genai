@@ -3,7 +3,7 @@
 
 # Span `gen_ai.plan.internal`
 
-Operation: [Plan](/docs/gen-ai/operations/plan/README.md)
+Operation: [GenAI Plan](/docs/gen-ai/plan.md)
 
 <!-- prettier-ignore-start -->
 

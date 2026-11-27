@@ -3,7 +3,7 @@
 
 # Metric refinement `openai.gen_ai.client.inference.usage.input_tokens`
 
-Operation: [Client Inference](/docs/gen-ai/operations/client-inference/README.md)
+Operation: [GenAI Client Inference](/docs/gen-ai/client-inference.md)
 
 **Refines:** [`gen_ai.client.inference.usage.input_tokens`](/docs/gen-ai/registry/metrics/gen_ai.client.inference.usage.input_tokens.md)
 

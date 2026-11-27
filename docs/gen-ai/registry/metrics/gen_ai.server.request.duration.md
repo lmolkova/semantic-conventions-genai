@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.server.request.duration`
 
-Operation: [Server Inference](/docs/gen-ai/operations/server-inference/README.md)
+Operation: [GenAI Server Inference](/docs/gen-ai/server-inference.md)
 
 <!-- prettier-ignore-start -->
 

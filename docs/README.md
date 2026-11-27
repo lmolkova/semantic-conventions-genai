@@ -37,12 +37,12 @@ docs generated here link to it at a pinned upstream version.
 
 Operations:
 
-* [Client inference](gen-ai/operations/client-inference/README.md)
-* [Client realtime inference](gen-ai/operations/client-realtime-inference/README.md)
-* [Client embeddings](gen-ai/operations/client-embeddings/README.md)
-* [Client fetch response](gen-ai/operations/client-fetch-response/README.md)
-* [Server inference](gen-ai/operations/server-inference/README.md)
-* [Execute tool](gen-ai/operations/execute-tool/README.md)
+* [Client inference](gen-ai/client-inference.md)
+* [Client realtime inference](gen-ai/client-realtime-inference.md)
+* [Client embeddings](gen-ai/client-embeddings.md)
+* [Client fetch response](gen-ai/client-fetch-response.md)
+* [Server inference](gen-ai/server-inference.md)
+* [Execute tool](gen-ai/execute-tool.md)
 
 Check out [LLM call examples](gen-ai/non-normative/examples-llm-calls.md).
 
@@ -50,13 +50,13 @@ Check out [LLM call examples](gen-ai/non-normative/examples-llm-calls.md).
 
 Operations:
 
-* [Client create agent](gen-ai/operations/client-create-agent/README.md)
-* [Client invoke agent](gen-ai/operations/client-invoke-agent/README.md)
-* [Invoke agent](gen-ai/operations/invoke-agent/README.md)
-* [Plan](gen-ai/operations/plan/README.md)
-* [Execute tool](gen-ai/operations/execute-tool/README.md)
-* [Retrieval](gen-ai/operations/retrieval/README.md)
-* [Client memory](gen-ai/operations/client-memory/README.md)
+* [Client create agent](gen-ai/client-create-agent.md)
+* [Client invoke agent](gen-ai/client-invoke-agent.md)
+* [Invoke agent](gen-ai/invoke-agent.md)
+* [Plan](gen-ai/plan.md)
+* [Execute tool](gen-ai/execute-tool.md)
+* [Retrieval](gen-ai/retrieval.md)
+* [Client memory](gen-ai/client-memory.md)
 
 Check out [agent call examples](gen-ai/non-normative/examples-agent-calls.md).
 
@@ -67,7 +67,7 @@ Check out [agent call examples](gen-ai/non-normative/examples-agent-calls.md).
 
 ## Evaluation
 
-See [Evaluation](gen-ai/operations/evaluation/README.md) for Generative AI evaluation result events.
+See [Evaluation](gen-ai/evaluation.md) for Generative AI evaluation result events.
 
 ## Technology-specific conventions
 
@@ -270,7 +270,7 @@ standard configuration options:
 
 > [!NOTE]
 > Use [inference token metrics](#inference-token-metrics) (or corresponding
-> [embeddings](gen-ai/operations/client-embeddings/README.md#metrics) or other metrics, depending on the
+> [embeddings](gen-ai/client-embeddings.md#metrics) or other metrics, depending on the
 > operation) whenever possible. They aren't affected by trace sampling. Filter
 > or group by `service.name` if multiple services report the same operations.
 

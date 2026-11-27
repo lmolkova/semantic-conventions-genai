@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.inference.time_per_output_chunk`
 
-Operation: [Client Inference](/docs/gen-ai/operations/client-inference/README.md)
+Operation: [GenAI Client Inference](/docs/gen-ai/client-inference.md)
 
 <!-- prettier-ignore-start -->
 

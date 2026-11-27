@@ -3,7 +3,7 @@
 
 # Event `gen_ai.client.embeddings.exception`
 
-Operation: [Client Embeddings](/docs/gen-ai/operations/client-embeddings/README.md)
+Operation: [GenAI Client Embeddings](/docs/gen-ai/client-embeddings.md)
 
 <!-- prettier-ignore-start -->
 

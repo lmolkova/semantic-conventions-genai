@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.client.inference.duration`
 
-Operation: [Client Inference](/docs/gen-ai/operations/client-inference/README.md)
+Operation: [GenAI Client Inference](/docs/gen-ai/client-inference.md)
 
 **Known refinements:**
 

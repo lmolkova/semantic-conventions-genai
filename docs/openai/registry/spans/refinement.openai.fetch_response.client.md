@@ -3,7 +3,7 @@
 
 # Span refinement `openai.fetch_response.client`
 
-Operation: [Client Fetch Response](/docs/gen-ai/operations/client-fetch-response/README.md)
+Operation: [GenAI Client Fetch Response](/docs/gen-ai/client-fetch-response.md)
 
 **Refines:** [`gen_ai.fetch_response.client`](/docs/gen-ai/registry/spans/gen_ai.fetch_response.client.md)
 

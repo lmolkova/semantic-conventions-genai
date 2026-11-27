@@ -3,7 +3,7 @@
 
 # Span `gen_ai.execute_tool`
 
-Operation: [Execute Tool](/docs/gen-ai/operations/execute-tool/README.md)
+Operation: [GenAI Execute Tool](/docs/gen-ai/execute-tool.md)
 
 **Known refinements:**
 

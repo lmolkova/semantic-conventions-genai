@@ -3,7 +3,7 @@
 
 # Event `gen_ai.client.inference.exception`
 
-Operation: [Client Inference](/docs/gen-ai/operations/client-inference/README.md)
+Operation: [GenAI Client Inference](/docs/gen-ai/client-inference.md)
 
 <!-- prettier-ignore-start -->
 

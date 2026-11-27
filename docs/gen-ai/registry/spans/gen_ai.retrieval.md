@@ -3,7 +3,7 @@
 
 # Span `gen_ai.retrieval`
 
-Operation: [Retrieval](/docs/gen-ai/operations/retrieval/README.md)
+Operation: [GenAI Retrieval](/docs/gen-ai/retrieval.md)
 
 <!-- prettier-ignore-start -->
 

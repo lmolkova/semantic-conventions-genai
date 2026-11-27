@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.retrieval.duration`
 
-Operation: [Retrieval](/docs/gen-ai/operations/retrieval/README.md)
+Operation: [GenAI Retrieval](/docs/gen-ai/retrieval.md)
 
 <!-- prettier-ignore-start -->
 

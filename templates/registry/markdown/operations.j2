@@ -1,5 +1,5 @@
 {#- Docs layout under `docs/<ns>/`, `<ns>` being the first segment of an id:
-   - `operations/<op>/README.md`: hand-written operation docs;
+   - `<op>.md`: hand-written operation docs;
    - `registry/README.md`: generated index of all signals and attributes;
    - `registry/<signal>/[refinement.]<id>.md`: one generated page per signal.
    Urls are root-anchored so they resolve from any page. -#}
@@ -12,17 +12,18 @@
 {% macro ns_title(ns) -%}
 {{ ns | map_text("namespace_titles", ns | title_case | acronym) }}
 {%- endmacro %}
-{% macro op_dir(operation) -%}
-{{ ns_dir(operation) | trim }}/operations/{{ (operation | split_id)[1:] | join("_") | kebab_case }}
+{% macro op_path(operation) -%}
+{{ ns_dir(operation) | trim }}/{{ (operation | split_id)[1:] | join("_") | kebab_case }}.md
 {%- endmacro %}
 {#- Prefixed with the namespace when it differs from the operation's, e.g. `OpenAI Client Inference`. -#}
 {% macro title(operation, ns=none) -%}
-{%- if ns and ns != namespace(operation) | trim %}{{ ns_title(ns) | trim }} {% endif -%}
-{{ operation | map_text("operation_titles") }}
+{%- set op_ns = namespace(operation) | trim -%}
+{%- if ns and ns != op_ns %}{{ ns_title(ns) | trim }} {% endif -%}
+{{ ns_title(op_ns) | trim }} {{ (operation | split_id)[1:] | join("_") | title_case | acronym }}
 {%- endmacro %}
 {#- The operation's README, unless `operation_docs` points it elsewhere. -#}
 {% macro operation_url(operation) -%}
-{{ operation | map_text("operation_docs", "/docs/" ~ (op_dir(operation) | trim) ~ "/README.md") }}
+{{ operation | map_text("operation_docs", "/docs/" ~ (op_path(operation) | trim)) }}
 {%- endmacro %}
 {#- Refinement pages get a `refinement.` prefix. -#}
 {% macro signal_path(signal, id, refinement=false) -%}

@@ -3,7 +3,7 @@
 
 # Span refinement `openai.gen_ai.client.inference`
 
-Operation: [Client Inference](/docs/gen-ai/operations/client-inference/README.md)
+Operation: [GenAI Client Inference](/docs/gen-ai/client-inference.md)
 
 **Refines:** [`gen_ai.client.inference`](/docs/gen-ai/registry/spans/gen_ai.client.inference.md)
 

@@ -3,7 +3,7 @@
 
 # Span `gen_ai.user_speech.internal`
 
-Operation: [Client Realtime Inference](/docs/gen-ai/operations/client-realtime-inference/README.md)
+Operation: [GenAI Client Realtime Inference](/docs/gen-ai/client-realtime-inference.md)
 
 <!-- prettier-ignore-start -->
 

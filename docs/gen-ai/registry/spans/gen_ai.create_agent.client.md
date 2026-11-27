@@ -3,7 +3,7 @@
 
 # Span `gen_ai.create_agent.client`
 
-Operation: [Client Create Agent](/docs/gen-ai/operations/client-create-agent/README.md)
+Operation: [GenAI Client Create Agent](/docs/gen-ai/client-create-agent.md)
 
 <!-- prettier-ignore-start -->
 

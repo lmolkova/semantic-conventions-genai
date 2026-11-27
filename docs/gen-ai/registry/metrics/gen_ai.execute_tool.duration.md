@@ -3,7 +3,7 @@
 
 # Metric `gen_ai.execute_tool.duration`
 
-Operation: [Execute Tool](/docs/gen-ai/operations/execute-tool/README.md)
+Operation: [GenAI Execute Tool](/docs/gen-ai/execute-tool.md)
 
 <!-- prettier-ignore-start -->
 

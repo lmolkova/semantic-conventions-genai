@@ -40,24 +40,6 @@ text_maps:
     mcp.server: /docs/mcp/README.md
     a2a.client: /docs/a2a/README.md
     a2a.server: /docs/a2a/README.md
-  operation_titles:
-    gen_ai.client.inference: Client Inference
-    gen_ai.server.inference: Server Inference
-    gen_ai.client.realtime_inference: Client Realtime Inference
-    gen_ai.client.embeddings: Client Embeddings
-    gen_ai.retrieval: Retrieval
-    gen_ai.client.fetch_response: Client Fetch Response
-    gen_ai.client.memory: Client Memory
-    gen_ai.client.create_agent: Client Create Agent
-    gen_ai.client.invoke_agent: Client Invoke Agent
-    gen_ai.invoke_agent: Invoke Agent
-    gen_ai.execute_tool: Execute Tool
-    gen_ai.plan: Plan
-    gen_ai.evaluation: Evaluation
-    mcp.client: MCP Client
-    mcp.server: MCP Server
-    a2a.client: A2A Client
-    a2a.server: A2A Server
 
 acronyms:
   - A2A

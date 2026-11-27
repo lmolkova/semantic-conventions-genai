@@ -86,7 +86,7 @@ SEMCONV_DOC_LINKS: dict[str, str] = {
     "invoke_agent_client": "../../docs/gen-ai/registry/spans/gen_ai.client.invoke_agent.md",
     "invoke_agent_internal": "../../docs/gen-ai/registry/spans/gen_ai.invoke_agent.internal.md",
     "plan": "../../docs/gen-ai/registry/spans/gen_ai.plan.internal.md",
-    "inference": "../../docs/gen-ai/operations/client-inference/README.md#spans",
+    "inference": "../../docs/gen-ai/client-inference.md#spans",
     "embeddings": "../../docs/gen-ai/registry/spans/gen_ai.client.embeddings.md",
     "retrieval": "../../docs/gen-ai/registry/spans/gen_ai.retrieval.md",
     "fetch_response": "../../docs/gen-ai/registry/spans/gen_ai.fetch_response.client.md",

@@ -3,7 +3,7 @@
 
 # Span `gen_ai.client.invoke_agent`
 
-Operation: [Client Invoke Agent](/docs/gen-ai/operations/client-invoke-agent/README.md)
+Operation: [GenAI Client Invoke Agent](/docs/gen-ai/client-invoke-agent.md)
 
 <!-- prettier-ignore-start -->
 
