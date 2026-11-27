@@ -47,10 +47,10 @@ Protocols:
 
 Technology specific semantic conventions are defined for the following GenAI system:
 
-* [Anthropic](gen-ai/anthropic.md): Semantic Conventions for Anthropic.
-* [Azure AI Inference](gen-ai/azure-ai-inference.md): Semantic Conventions for Azure AI Inference.
-* [AWS Bedrock](gen-ai/aws-bedrock.md): Semantic Conventions for AWS Bedrock.
-* [OpenAI](gen-ai/openai.md): Semantic Conventions for OpenAI.
+* [Anthropic](anthropic/README.md): Semantic Conventions for Anthropic.
+* [Azure AI Inference](azure/README.md): Semantic Conventions for Azure AI Inference.
+* [AWS Bedrock](aws/README.md): Semantic Conventions for AWS Bedrock.
+* [OpenAI](openai/README.md): Semantic Conventions for OpenAI.
 
 See also:
 

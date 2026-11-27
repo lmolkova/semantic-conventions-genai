@@ -31,7 +31,10 @@
 {%- for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim not in base_ids and ops.base_id(r) | trim not in orphan_bases.ids -%}
 {%- set orphan_bases.ids = orphan_bases.ids + [ops.base_id(r) | trim] -%}
 {%- endfor -%}
-{%- for o in orphan_bases.ids | sort %}| `{{ o }}` | | | |
+{%- for o in orphan_bases.ids | sort %}
+{%- set refs_o = namespace(op=none) -%}
+{%- for r in ns.refs if ops.base_id(r) | trim == o and r._refines_operation %}{% set refs_o.op = r._refines_operation %}{% endfor -%}
+| {% if refs_o.op %}[`{{ o }}`]({{ ops.signal_url(refs_o.op, signal, o) | trim }}){% else %}`{{ o }}`{% endif %} | | | |
 {% for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim == o %}| | {{ link(r, signal) }} | {{ cells(r) }} |
 {% endfor %}
 {%- endfor %}

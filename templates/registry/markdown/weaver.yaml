@@ -79,6 +79,25 @@ templates:
     file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id, ctx.item._refines is defined and ctx.item._refines) | trim }}"
 
 
+  # README per namespace that only refines signals defined elsewhere (e.g.
+  # provider namespaces), indexing its refinements by signal type.
+  - template: namespace_readme.md.j2
+    filter: >
+      [ (.refinements.spans[] | {signal: "spans", item: .}),
+        (.refinements.metrics[] | {signal: "metrics", item: .}),
+        (.refinements.events[] | {signal: "events", item: .}),
+        (.refinements.entities[] | {signal: "entities", item: .}) ]
+      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
+        | . + {base: (.item.type // .item.name), namespace: (.item.id | split(".") | first)})
+      | . as $all
+      | map(. as $e | .item = (.item + {signal: $e.signal,
+          _refines_operation: ([$all[] | select(.signal == $e.signal and .item.id == $e.base) | .item.annotations.docs.operation] | first)}))
+      | group_by(.namespace)
+      | map(select(all(.[]; .item.id != .base)))
+      | map({namespace: .[0].namespace, items: map(.item)})
+    application_mode: each
+    file_name: "{{ ctx.namespace | kebab_case }}/README.md"
+
 text_maps:
   # Operations documented on their namespace README instead of their own folder.
   operation_docs:
