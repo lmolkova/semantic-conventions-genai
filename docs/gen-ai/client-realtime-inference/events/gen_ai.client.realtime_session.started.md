@@ -22,9 +22,9 @@ Instrumentations SHOULD set the severity to INFO (severity number 9) when record
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`gen_ai.provider.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [1] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
-| [`gen_ai.realtime_session.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [2] | string | The unique identifier for a realtime, bidirectional streaming session. [3] | `sess_5j66UpCpwteGg4YSxUnt7lPY` |
-| [`gen_ai.request.model`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. | `gpt-4` |
+| [`gen_ai.provider.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The Generative AI provider as identified by the client or server instrumentation. [1] | `openai`; `gcp.gen_ai`; `gcp.vertex_ai` |
+| [`gen_ai.realtime_session.id`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [2] | string | The unique identifier for a realtime, bidirectional streaming session. [3] | `sess_5j66UpCpwteGg4YSxUnt7lPY` |
+| [`gen_ai.request.model`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The name of the GenAI model a request is being made to. | `gpt-4` |
 | [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If `server.address` is set. | int | GenAI server port. [4] | `80`; `8080`; `443` |
 | [`server.address`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Recommended` | string | GenAI server address. [5] | `example.com`; `10.1.2.80`; `/tmp/my.sock` |
 

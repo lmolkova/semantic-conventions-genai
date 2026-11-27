@@ -6,6 +6,10 @@
 # {{ ctx.namespace | title_case | acronym }}
 
 Refinements defined in the `{{ ctx.namespace }}` namespace.
+{%- if ctx.has_attributes %}
+
+Attributes: [{{ ctx.namespace }}](attributes.md).
+{%- endif %}
 {%- for signal, title in [["spans", "Spans"], ["metrics", "Metrics"], ["events", "Events"], ["entities", "Entities"]] %}
 {%- set group = ctx.items | selectattr("signal", "equalto", signal) | list %}
 {%- if group %}

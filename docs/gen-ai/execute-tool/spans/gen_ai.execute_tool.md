@@ -7,10 +7,10 @@ Operation: [Execute Tool](/docs/gen-ai/execute-tool/README.md)
 
 **Known refinements:**
 
-- [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.refinement.md)
-- [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.refinement.md)
-- [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.refinement.md)
-- [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.refinement.md)
+- [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.command.md)
+- [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.load_skill.md)
+- [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.read_skill_resource.md)
+- [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.transfer.md)
 
 <!-- prettier-ignore-start -->
 
@@ -33,10 +33,10 @@ instrumentations do not cover.
 When the library API or state identifies a specialized tool call,
 instrumentation SHOULD apply the corresponding refinement to the execute-tool
 span. Available refinements include
-[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.refinement.md),
-[loading a skill](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.refinement.md),
-[reading a skill resource](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.refinement.md), and
-[command execution](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.refinement.md).
+[agents exposed as tools](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.transfer.md),
+[loading a skill](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.load_skill.md),
+[reading a skill resource](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.read_skill_resource.md), and
+[command execution](/docs/gen-ai/execute-tool/spans/refinement.gen_ai.execute_tool.command.md).
 
 **Span name** SHOULD be `execute_tool {gen_ai.tool.name}`.
 
@@ -46,7 +46,7 @@ span. Available refinements include
 
 **Entity Associations** The span SHOULD be associated with one of the following entities:
 
-- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
+- [`gen_ai.main_agent`](/docs/gen-ai/entities/gen_ai.main_agent.md)
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/general/signal-requirement-level.md).
 
@@ -54,16 +54,16 @@ span. Available refinements include
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
-| [`gen_ai.tool.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | Name of the tool utilized by the agent. | `Flights` |
+| [`gen_ai.operation.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
+| [`gen_ai.tool.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | Name of the tool utilized by the agent. | `Flights` |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When applicable. | string | The human-readable name of the agent executing the tool. [3] | `Math Tutor`; `Fiction Writer` |
-| [`gen_ai.conversation.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [4] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
-| [`gen_ai.tool.call.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | The tool call identifier supplied by the model or provider. [6] | `call_mszuSIzqtI65i1wAUOE8w5H4` |
-| [`gen_ai.tool.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | The tool description. [7] | `Multiply two numbers` |
-| [`gen_ai.tool.type`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | Type of the tool utilized by the agent [8] | `function`; `extension`; `datastore` |
-| [`gen_ai.tool.call.arguments`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Parameters passed to the tool call. [9] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
-| [`gen_ai.tool.call.result`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The result returned by the tool call (if any and if execution was successful). [10] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
+| [`gen_ai.agent.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When applicable. | string | The human-readable name of the agent executing the tool. [3] | `Math Tutor`; `Fiction Writer` |
+| [`gen_ai.conversation.id`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [4] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
+| [`gen_ai.tool.call.id`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | The tool call identifier supplied by the model or provider. [6] | `call_mszuSIzqtI65i1wAUOE8w5H4` |
+| [`gen_ai.tool.description`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | The tool description. [7] | `Multiply two numbers` |
+| [`gen_ai.tool.type`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | Type of the tool utilized by the agent [8] | `function`; `extension`; `datastore` |
+| [`gen_ai.tool.call.arguments`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Parameters passed to the tool call. [9] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
+| [`gen_ai.tool.call.result`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The result returned by the tool call (if any and if execution was successful). [10] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -138,10 +138,10 @@ This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/s
 The following attributes can be important for making sampling decisions
 and SHOULD be provided **at span creation time** (if provided at all):
 
-* [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.tool.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.tool.type`](/docs/registry/attributes/gen-ai.md)
+* [`gen_ai.agent.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.operation.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.tool.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.tool.type`](/docs/gen-ai/attributes.md)
 
 ---
 

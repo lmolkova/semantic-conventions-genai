@@ -9,5 +9,5 @@ Refinements defined in the `anthropic` namespace.
 
 | Span | Refinement | Stability | Description |
 | --- | --- | --- | --- |
-| [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md) | | | |
-| | [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.refinement.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |
+| `gen_ai.client.inference` | | | |
+| | [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/refinement.anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |

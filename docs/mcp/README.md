@@ -16,6 +16,8 @@ HTTP conventions (when HTTP is used as transport) do not adequately cover MCP re
 and notifications either, given that multiple MCP requests could be sent over a single
 HTTP request in the corresponding request and response streams.
 
+Attributes: [mcp](attributes.md).
+
 ## Spans
 
 <!-- weaver {signal_overview: [.refinements | to_entries[] | select(.key == "spans") | .key as $signal | .value[] | select((.annotations.docs.operation // "") | startswith("mcp.")) | select(.deprecated == null and (.id | split(".") | first) == (.annotations.docs.operation | split(".") | first)) | . + {signal: $signal}]} -->

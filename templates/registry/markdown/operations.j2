@@ -18,9 +18,11 @@
 {% macro operation_url(operation) -%}
 {{ operation | map_text("operation_docs", "/docs/" ~ (dir(namespace(operation) | trim, operation) | trim) ~ "/README.md") }}
 {%- endmacro %}
-{#- Refinement pages get a `.refinement.md` suffix. -#}
+{#- Refinement pages get a `refinement.` prefix. Entities are not tied to an
+   operation and live in `<ns>/entities/`. -#}
 {% macro signal_path(operation, signal, id, refinement=false) -%}
-{{ dir(namespace(id) | trim, operation) | trim }}/{{ signal }}/{{ id }}{{ ".refinement" if refinement }}.md
+{%- if signal == "entities" -%}{{ namespace(id) | trim | kebab_case }}{% else %}{{ dir(namespace(id) | trim, operation) | trim }}{% endif -%}
+/{{ signal }}/{{ "refinement." if refinement }}{{ id }}.md
 {%- endmacro %}
 {% macro signal_url(operation, signal, id, refinement=false) -%}
 /docs/{{ signal_path(operation, signal, id, refinement) | trim }}

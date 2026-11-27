@@ -44,19 +44,19 @@ otherwise.
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
-| [`gen_ai.tool.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | Name of the tool utilized by the agent. | `Flights` |
+| [`gen_ai.operation.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
+| [`gen_ai.tool.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | Name of the tool utilized by the agent. | `Flights` |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When applicable. | string | The human-readable name of the agent executing the tool. [3] | `Math Tutor`; `Fiction Writer` |
-| [`gen_ai.conversation.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [4] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
-| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If the skill name is available. | string | The name of the [Agent Skill](https://agentskills.io/specification#skill-md-format). | `code-review`; `pdf-processing` |
-| [`gen_ai.tool.call.id`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | The tool call identifier supplied by the model or provider. [6] | `call_mszuSIzqtI65i1wAUOE8w5H4` |
-| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If the skill description is available. | string | The [description of the Agent Skill](https://agentskills.io/specification#skill-md-format). [7] | `Review a changelist against the team's review policy.` |
-| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.source.uri`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If the skill source URI is available. | string | The source URI for loading the skill. [8] | `https://skills.example.com/code-review`; `gs://example-skills/code-review`; `file:///opt/skills/code-review` |
-| [`gen_ai.tool.description`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | The tool description. [9] | `Multiply two numbers` |
-| [`gen_ai.tool.type`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | Type of the tool utilized by the agent [10] | `function`; `extension`; `datastore` |
-| [`gen_ai.tool.call.arguments`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Parameters passed to the tool call. [11] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
-| [`gen_ai.tool.call.result`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The result returned by the tool call (if any and if execution was successful). [12] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
+| [`gen_ai.agent.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When applicable. | string | The human-readable name of the agent executing the tool. [3] | `Math Tutor`; `Fiction Writer` |
+| [`gen_ai.conversation.id`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If available. | string | The unique identifier for a conversation (session, thread), used to store and correlate messages within this conversation. [4] | `conv_5j66UpCpwteGg4YSxUnt7lPY` |
+| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If the skill name is available. | string | The name of the [Agent Skill](https://agentskills.io/specification#skill-md-format). | `code-review`; `pdf-processing` |
+| [`gen_ai.tool.call.id`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [5] | string | The tool call identifier supplied by the model or provider. [6] | `call_mszuSIzqtI65i1wAUOE8w5H4` |
+| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.description`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If the skill description is available. | string | The [description of the Agent Skill](https://agentskills.io/specification#skill-md-format). [7] | `Review a changelist against the team's review policy.` |
+| ![Added](https://img.shields.io/badge/-added-teal) [`gen_ai.skill.source.uri`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If the skill source URI is available. | string | The source URI for loading the skill. [8] | `https://skills.example.com/code-review`; `gs://example-skills/code-review`; `file:///opt/skills/code-review` |
+| [`gen_ai.tool.description`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | The tool description. [9] | `Multiply two numbers` |
+| [`gen_ai.tool.type`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` If available. | string | Type of the tool utilized by the agent [10] | `function`; `extension`; `datastore` |
+| [`gen_ai.tool.call.arguments`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | Parameters passed to the tool call. [11] | {<br>&nbsp;&nbsp;&nbsp;&nbsp;"location": "San Francisco?",<br>&nbsp;&nbsp;&nbsp;&nbsp;"date": "2025-10-01"<br>} |
+| [`gen_ai.tool.call.result`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Opt-In` | any | The result returned by the tool call (if any and if execution was successful). [12] | {<br>&nbsp;&nbsp;"temperature_range": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"high": 75,<br>&nbsp;&nbsp;&nbsp;&nbsp;"low": 60<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;"conditions": "sunny"<br>} |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -145,11 +145,11 @@ This attribute MUST be recorded as an [AnyValue](https://opentelemetry.io/docs/s
 The following attributes can be important for making sampling decisions
 and SHOULD be provided **at span creation time** (if provided at all):
 
-* [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.skill.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.tool.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.tool.type`](/docs/registry/attributes/gen-ai.md)
+* [`gen_ai.agent.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.operation.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.skill.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.tool.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.tool.type`](/docs/gen-ai/attributes.md)
 
 ---
 

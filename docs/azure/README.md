@@ -9,5 +9,5 @@ Refinements defined in the `azure` namespace.
 
 | Span | Refinement | Stability | Description |
 | --- | --- | --- | --- |
-| [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md) | | | |
-| | [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.refinement.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |
+| `gen_ai.client.inference` | | | |
+| | [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/refinement.azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |

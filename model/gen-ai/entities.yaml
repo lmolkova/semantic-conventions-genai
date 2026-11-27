@@ -2,9 +2,6 @@ file_format: definition/2
 entities:
   - type: gen_ai.main_agent
     stability: development
-    annotations:
-      docs:
-        operation: gen_ai.invoke_agent
     brief: >
       A logical top-level Generative AI agent in the process.
     note: >
@@ -14,13 +11,13 @@ entities:
       declared in an Agent-to-Agent (A2A) Agent Card). It SHOULD be used when it is
       possible to associate an OpenTelemetry SDK instance with that main agent.
 
-      As noted on [gen_ai.main_agent.id](/docs/registry/attributes/gen-ai.md),
+      As noted on [gen_ai.main_agent.id](/docs/gen-ai/attributes.md),
       transient in-memory or process-local identifiers MUST NOT be used. If no stable
       identifier is available, the main agent entity MUST NOT be emitted.
 
       In-process instrumentations that record telemetry for `invoke_agent` operation 
       should use `gen_ai.agent.*` attributes such as   
-      [gen_ai.agent.name](/docs/registry/attributes/gen-ai.md)) instead.
+      [gen_ai.agent.name](/docs/gen-ai/attributes.md)) instead.
     identity:
       - ref: gen_ai.main_agent.id
         requirement_level: required

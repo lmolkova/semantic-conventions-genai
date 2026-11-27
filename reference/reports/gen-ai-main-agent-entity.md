@@ -1,6 +1,6 @@
 # Main Agent Entity
 
-> **[Semantic Convention](../../docs/registry/entities/gen-ai.md#gen-ai-main-agent)**
+> **[Semantic Convention](../../docs/gen-ai/entities/gen_ai.main_agent.md)**
 
 ## Required
 

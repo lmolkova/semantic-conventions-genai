@@ -13,36 +13,19 @@
 # segment. `aws.bedrock.*` therefore lands under "aws"; refine by hand-list if
 # we ever need finer granularity.
 templates:
-  - pattern: attributes_readme.md.j2
-    filter: semconv_grouped_attributes({"v2":true})
-    application_mode: single
-    file_name: registry/attributes/README.md
-
   - pattern: attribute_namespace.md.j2
     filter: semconv_grouped_attributes({"v2":true})
     application_mode: each
-    file_name: "registry/attributes/{{ ctx.root_namespace | kebab_case }}.md"
+    file_name: "{{ ctx.root_namespace | kebab_case }}/attributes.md"
 
-  - pattern: registry_readme.md.j2
-    filter: "."
-    application_mode: single
-    file_name: registry/README.md
-
-  # entity registry
-  - template: entity_readme.md.j2
+  # Index of entities (and entity refinements) per namespace.
+  - template: entities_readme.md.j2
     filter: >
-      try (semconv_signal("entity"; {"v2":true, "exclude_deprecated":true})
-      | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
-    application_mode: single
-    file_name: "registry/entities/README.md"
-  - template: entity_namespace.md.j2
-    filter: >
-      try (semconv_signal("entity"; {"v2":true, "exclude_deprecated":true})
-      | group_by(.root_namespace)
-      | map({ root_namespace: .[0].root_namespace, entities: . | sort_by(.type) })) catch empty
+      [.refinements.entities[] | select(.deprecated == null)]
+      | group_by(.id | split(".") | first)
+      | map({namespace: (.[0].id | split(".") | first), items: map(. + {signal: "entities"})})
     application_mode: each
-    file_name: "registry/entities/{{ ctx.root_namespace | kebab_case }}.md"
+    file_name: "{{ ctx.namespace | kebab_case }}/entities/README.md"
 
   # Per-operation signal docs: <ns>/<operation>/<signal>/<id>.md, <ns> from the signal id, plus a
   # generated index per signal type. The operation comes from
@@ -57,20 +40,23 @@ templates:
       (.registry | {
         spans: (.spans | map({key: .type, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
         metrics: (.metrics | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
-        events: (.events | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries)
+        events: (.events | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
+        entities: (.entities | map({key: .type, value: (((.identity // []) + (.description // [])) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries)
       }) as $base
       | [ (.refinements.spans[] | {signal: "spans", item: .}),
           (.refinements.metrics[] | {signal: "metrics", item: .}),
           (.refinements.events[] | {signal: "events", item: .}),
           (.refinements.entities[] | {signal: "entities", item: .}) ]
-      | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
+      | map(select((.item.annotations.docs.operation != null or .signal == "entities") and .item.deprecated == null)
         | . + {operation: .item.annotations.docs.operation, id: .item.id, base: (.item.type // .item.name)})
       | . as $all
-      | map(. as $e | ($base[$e.signal] // {})[$e.base] as $b | ($e.item.attributes // []) as $attrs
+      | map(. as $e | ($base[$e.signal] // {})[$e.base] as $b
+        | ((.item.attributes // []) + (.item.identity // []) + (.item.description // [])) as $attrs
         | .item = (.item + (if $e.id == $e.base then {
             _refinements: [$all[] | select(.signal == $e.signal and .base == $e.base and .id != $e.base) | {id, operation}]
           } else {
             _refines: $e.base,
+            _refines_local: ([$all[] | select(.signal == $e.signal and .id == $e.base)] | length > 0),
             _refines_operation: ([$all[] | select(.signal == $e.signal and .id == $e.base) | .operation] | first),
             _added: (if $b == null then [] else [$attrs[] | select(.key as $k | $b | has($k) | not) | .key] end),
             _changed: (if $b == null then [] else [$attrs[] | select(.key as $k | ($b | has($k)) and $b[$k] != .requirement_level) | .key] end)
@@ -83,7 +69,8 @@ templates:
   # provider namespaces), indexing its refinements by signal type.
   - template: namespace_readme.md.j2
     filter: >
-      [ (.refinements.spans[] | {signal: "spans", item: .}),
+      ([.registry.attributes[] | .key | split(".") | first] | unique) as $attr_ns
+      | [ (.refinements.spans[] | {signal: "spans", item: .}),
         (.refinements.metrics[] | {signal: "metrics", item: .}),
         (.refinements.events[] | {signal: "events", item: .}),
         (.refinements.entities[] | {signal: "entities", item: .}) ]
@@ -94,7 +81,7 @@ templates:
           _refines_operation: ([$all[] | select(.signal == $e.signal and .item.id == $e.base) | .item.annotations.docs.operation] | first)}))
       | group_by(.namespace)
       | map(select(all(.[]; .item.id != .base)))
-      | map({namespace: .[0].namespace, items: map(.item)})
+      | map({namespace: .[0].namespace, items: map(.item), has_attributes: (.[0].namespace as $ns | $attr_ns | index($ns) != null)})
     application_mode: each
     file_name: "{{ ctx.namespace | kebab_case }}/README.md"
 

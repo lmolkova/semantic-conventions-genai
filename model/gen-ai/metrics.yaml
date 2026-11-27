@@ -142,7 +142,7 @@ metrics:
     note: |
       Instrumentations SHOULD report this metric for streaming calls when the first chunk is received, SHOULD NOT report it for non-streaming calls, and MUST NOT report it if no chunk is received.
 
-      The chunk definition and measurement boundaries are the same as for [`gen_ai.response.time_to_first_chunk`](/docs/registry/attributes/gen-ai.md#gen-ai-response-time-to-first-chunk).
+      The chunk definition and measurement boundaries are the same as for [`gen_ai.response.time_to_first_chunk`](/docs/gen-ai/attributes.md#gen-ai-response-time-to-first-chunk).
     stability: development
     annotations:
       docs:

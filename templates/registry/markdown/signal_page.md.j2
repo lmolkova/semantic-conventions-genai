@@ -4,12 +4,14 @@
 <!-- see templates/registry/markdown/signal_page.md.j2 -->
 
 # {{ ops.signal_title(ctx.signal) | trim }}{{ " refinement" if ctx.item._refines }} `{{ ctx.id }}`
+{%- if ctx.operation %}
 
 Operation: [{{ ops.title(ctx.operation) | trim }}]({{ ops.operation_url(ctx.operation) | trim }})
+{%- endif %}
 {%- set item = ctx.item %}
 {%- if item._refines %}
 
-**Refines:** {% if item._refines_operation %}[`{{ item._refines }}`]({{ ops.signal_url(item._refines_operation, ctx.signal, item._refines) | trim }}){% else %}`{{ item._refines }}`{% endif %}
+**Refines:** {% if item._refines_local %}[`{{ item._refines }}`]({{ ops.signal_url(item._refines_operation, ctx.signal, item._refines) | trim }}){% else %}`{{ item._refines }}`{% endif %}
 {%- if item._added %}
 
 **Adds:** {% for k in item._added %}{% if not loop.first %}, {% endif %}`{{ k }}`{% endfor %}

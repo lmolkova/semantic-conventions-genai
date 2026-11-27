@@ -77,14 +77,13 @@ check-policies:
 		--policy policies/check/json-schema-annotations
 		# --baseline-registry '$(BASELINE_REGISTRY)' \ uncomment after removing deprecated entries
 
-# Generate the attribute registry pages under docs/registry/ from local
-# templates that consume the v2 resolved registry.
+# Generate per-namespace attribute and entity pages and per-operation signal
+# pages under docs/ from local templates that consume the v2 resolved registry.
 generate-registry:
 	$(WEAVER) registry generate \
 		-r ./model \
 		--v2 \
 		-t ./templates/registry \
-		--param registry_base_url=/docs/registry/ \
 		--param upstream_docs_base=$(UPSTREAM_DOCS_BASE) \
 		markdown \
 		./docs
@@ -97,7 +96,6 @@ generate-docs:
 		--v2 \
 		-t ./templates \
 		--target markdown \
-		--param registry_base_url=/docs/registry/ \
 		--param upstream_docs_base=$(UPSTREAM_DOCS_BASE) \
 		docs
 
@@ -166,7 +164,6 @@ package-dev:
 # `uv sync` which re-downloads every tooling dependency. Remove it manually
 # (`rm -rf reference/.venv`) for a full reset.
 clean:
-	rm -rf docs/registry
 	rm -rf .build
 	rm -rf reference/.cache
 	find . -type d -name __pycache__ -prune -exec rm -rf {} +

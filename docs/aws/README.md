@@ -5,9 +5,11 @@
 
 Refinements defined in the `aws` namespace.
 
+Attributes: [aws](attributes.md).
+
 ## Spans
 
 | Span | Refinement | Stability | Description |
 | --- | --- | --- | --- |
-| [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md) | | | |
-| | [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.refinement.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |
+| `gen_ai.client.inference` | | | |
+| | [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/refinement.aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/README.md). |

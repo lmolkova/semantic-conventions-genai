@@ -9,8 +9,8 @@
 {%- import 'entity_macros.j2' as entity -%}
 {%- import 'signal_table.j2' as st -%}
 
-{%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
-{%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
+{%- set attribute_registry_base_url = "/docs" -%}
+{%- set entity_registry_base_url = "/docs" -%}
 {%- set upstream_docs_base = params.upstream_docs_base | trim -%}
 {%- set _kind = kind | default(none) -%}
 {%- set _instrument = instrument | default(none) -%}

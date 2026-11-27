@@ -4,7 +4,7 @@
    refinements, a Refinement column lists them under the signal they refine;
    a refined signal that is not in the table is shown by id, unlinked. -#}
 {% macro link(s, signal) -%}
-[`{{ s.id }}`]({{ ops.signal_url(s.annotations.docs.operation, signal, s.id, s.id != ops.base_id(s) | trim) | trim }})
+[`{{ s.id }}`]({{ ops.signal_url(s.annotations.docs.operation if s.annotations and s.annotations.docs else none, signal, s.id, s.id != ops.base_id(s) | trim) | trim }})
 {%- endmacro %}
 {% macro cells(s) -%}
 {{ stability.badge(s.stability, s.deprecated) | trim }} | {{ s.brief | trim | replace("\n", " ") }}
@@ -33,7 +33,7 @@
 {%- endfor -%}
 {%- for o in orphan_bases.ids | sort %}
 {%- set refs_o = namespace(op=none) -%}
-{%- for r in ns.refs if ops.base_id(r) | trim == o and r._refines_operation %}{% set refs_o.op = r._refines_operation %}{% endfor -%}
+{%- for r in ns.refs if ops.base_id(r) | trim == o and r._refines_local %}{% set refs_o.op = r._refines_operation or "entities" %}{% endfor -%}
 | {% if refs_o.op %}[`{{ o }}`]({{ ops.signal_url(refs_o.op, signal, o) | trim }}){% else %}`{{ o }}`{% endif %} | | | |
 {% for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim == o %}| | {{ link(r, signal) }} | {{ cells(r) }} |
 {% endfor %}

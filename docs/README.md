@@ -54,7 +54,7 @@ Technology specific semantic conventions are defined for the following GenAI sys
 
 See also:
 
-* [Registry](registry/README.md): Attribute registry for namespaces defined in this repository.
+* GenAI [attributes](gen-ai/attributes.md) and [entities](gen-ai/entities/README.md)
 * [Evaluation](gen-ai/evaluation/README.md): Semantic Conventions for Generative AI evaluation results - *events*.
 
 ## Attributes shared across operations
@@ -70,7 +70,7 @@ Instrumentations SHOULD NOT propagate attributes not listed here.
 Instrumentations SHOULD NOT use these attributes on signals that don't reference them
 explicitly.
 
-* [`gen_ai.conversation.id`](/docs/registry/attributes/gen-ai.md#gen-ai-conversation-id)
+* [`gen_ai.conversation.id`](/docs/gen-ai/attributes.md#gen-ai-conversation-id)
 
 ## Capturing instructions, inputs, and outputs
 
@@ -143,17 +143,17 @@ whether content is captured and which telemetry signals receive it.
 
 The content capture configuration governs the following attributes and their representation on spans and events:
 
-- [`gen_ai.input.messages`](/docs/registry/attributes/gen-ai.md#gen-ai-input-messages)
-- [`gen_ai.output.messages`](/docs/registry/attributes/gen-ai.md#gen-ai-output-messages)
-- [`gen_ai.system_instructions`](/docs/registry/attributes/gen-ai.md#gen-ai-system-instructions)
-- [`gen_ai.tool.call.arguments`](/docs/registry/attributes/gen-ai.md#gen-ai-tool-call-arguments)
-- [`gen_ai.tool.call.result`](/docs/registry/attributes/gen-ai.md#gen-ai-tool-call-result)
-- [`gen_ai.retrieval.query.text`](/docs/registry/attributes/gen-ai.md#gen-ai-retrieval-query-text)
-- [`gen_ai.prompt.variables`](/docs/registry/attributes/gen-ai.md#gen-ai-prompt-variables)
-- [`gen_ai.memory.query.text`](/docs/registry/attributes/gen-ai.md#gen-ai-memory-query-text)
-- [`gen_ai.memory.records`](/docs/registry/attributes/gen-ai.md#gen-ai-memory-records)
+- [`gen_ai.input.messages`](/docs/gen-ai/attributes.md#gen-ai-input-messages)
+- [`gen_ai.output.messages`](/docs/gen-ai/attributes.md#gen-ai-output-messages)
+- [`gen_ai.system_instructions`](/docs/gen-ai/attributes.md#gen-ai-system-instructions)
+- [`gen_ai.tool.call.arguments`](/docs/gen-ai/attributes.md#gen-ai-tool-call-arguments)
+- [`gen_ai.tool.call.result`](/docs/gen-ai/attributes.md#gen-ai-tool-call-result)
+- [`gen_ai.retrieval.query.text`](/docs/gen-ai/attributes.md#gen-ai-retrieval-query-text)
+- [`gen_ai.prompt.variables`](/docs/gen-ai/attributes.md#gen-ai-prompt-variables)
+- [`gen_ai.memory.query.text`](/docs/gen-ai/attributes.md#gen-ai-memory-query-text)
+- [`gen_ai.memory.records`](/docs/gen-ai/attributes.md#gen-ai-memory-records)
 
-Attributes providing schemas rather than user/model payload content (such as [`gen_ai.tool.definitions`](/docs/registry/attributes/gen-ai.md#gen-ai-tool-definitions)) are not governed by this configuration.
+Attributes providing schemas rather than user/model payload content (such as [`gen_ai.tool.definitions`](/docs/gen-ai/attributes.md#gen-ai-tool-definitions)) are not governed by this configuration.
 
 A content attribute MUST NOT be reported on a signal unless that signal's conventions
 reference the attribute or explicitly permit copying it from another signal.
@@ -289,7 +289,7 @@ Two families of token instruments are defined:
 - **Usage** (`gen_ai.client.inference.usage.*` counters) are the primary instruments
   for measuring token consumption. They track how many tokens were spent over time, spending rate,
   and serve as a proxy for cost approximation. Each token category is a separate
-  monotonic counter broken down by [`gen_ai.token.modality`](/docs/registry/attributes/gen-ai.md),
+  monotonic counter broken down by [`gen_ai.token.modality`](/docs/gen-ai/attributes.md),
   except `gen_ai.client.inference.usage.reasoning.output_tokens`.
   The `cache_read`,
   `cache_write`, and `reasoning` counters report subsets of the `input_tokens`

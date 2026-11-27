@@ -6,8 +6,8 @@
 
 {#- Body of a resolved span, metric, event or entity, as rendered in snippets. -#}
 {% macro render(item, signal) -%}
-{%- set attribute_registry_base_url = (params.registry_base_url ~ "attributes") | trim -%}
-{%- set entity_registry_base_url = (params.registry_base_url ~ "entities") | trim -%}
+{%- set attribute_registry_base_url = "/docs" -%}
+{%- set entity_registry_base_url = "/docs" -%}
 {%- set upstream_docs_base = params.upstream_docs_base | trim -%}
 <!-- prettier-ignore-start -->
 

@@ -21,7 +21,6 @@ first — it covers the CLA, Code of Conduct, and other prerequisites.
 ```text
 ├── docs
 │   ├── gen-ai/            # hand-written docs with embedded generated tables
-│   └── registry/          # auto-generated attribute registry pages
 ├── model
 │   └── <namespace>/       # e.g. gen-ai, mcp, openai
 │       ├── registry.yaml  # attribute definitions
@@ -49,7 +48,7 @@ After updating the YAML, run:
 make generate-all
 ```
 
-This regenerates the attribute registry pages under `docs/registry/`,
+This regenerates the attribute pages (`docs/<namespace>/attributes.md`), entity and signal pages,
 refreshes the generated tables embedded in the hand-written docs under
 `docs/gen-ai/` and regenerates the status reports.
 

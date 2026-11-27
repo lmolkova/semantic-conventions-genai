@@ -13,7 +13,7 @@ through several coupled surfaces:
 
 - `model/<namespace>/*.yaml` — source of truth for attributes, spans, metrics,
   and events. All attributes must be defined in `registry.yaml`.
-- `docs/gen-ai/` and `docs/registry/` — generated from the model via Weaver
+- `docs/` — attribute, entity, and signal pages generated from the model via Weaver
   (`make generate-all`). Generated tables and registry pages should not be
   hand-edited.
 - `model/gen-ai/*.json` — JSON schemas for structured attribute values
@@ -55,7 +55,7 @@ through several coupled surfaces:
 
 ## What not to flag in review
 
-- Generated files under `docs/registry/`
+- Generated files under `docs/` (`attributes.md`, `entities/`, signal pages)
   — review the model changes that produced them instead.
 - Generated tables inside `docs/gen-ai/*.md` — review the model changes
   that produced them instead.

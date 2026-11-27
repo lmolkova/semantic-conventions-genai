@@ -32,7 +32,7 @@ reasoning or normal inference.
 
 **Entity Associations** The span SHOULD be associated with one of the following entities:
 
-- [`gen_ai.main_agent`](/docs/registry/entities/gen-ai.md#gen-ai-main-agent)
+- [`gen_ai.main_agent`](/docs/gen-ai/entities/gen_ai.main_agent.md)
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/general/signal-requirement-level.md).
 
@@ -40,9 +40,9 @@ reasoning or normal inference.
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-| [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
+| [`gen_ai.operation.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Required` | string | The name of the operation being performed. [1] | `chat`; `generate_content`; `realtime_inference` |
 | [`error.type`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/error.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If the operation ended in an error. | string | Describes a class of error the operation ended with. [2] | `timeout`; `java.net.UnknownHostException`; `server_certificate_invalid`; `500` |
-| [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the agent performing the planning. [3] | `Math Tutor`; `Fiction Writer` |
+| [`gen_ai.agent.name`](/docs/gen-ai/attributes.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` When available. | string | The human-readable name of the agent performing the planning. [3] | `Math Tutor`; `Fiction Writer` |
 
 **[1] `gen_ai.operation.name`:** If one of the predefined values applies, but specific system uses a different name it's RECOMMENDED to document it in the semantic conventions for specific GenAI system and use system-specific name in the instrumentation. If a different name is not documented, instrumentation libraries SHOULD use applicable predefined value.
 
@@ -60,8 +60,8 @@ how `gen_ai.agent.name` is recorded in the context of that framework.
 The following attributes can be important for making sampling decisions
 and SHOULD be provided **at span creation time** (if provided at all):
 
-* [`gen_ai.agent.name`](/docs/registry/attributes/gen-ai.md)
-* [`gen_ai.operation.name`](/docs/registry/attributes/gen-ai.md)
+* [`gen_ai.agent.name`](/docs/gen-ai/attributes.md)
+* [`gen_ai.operation.name`](/docs/gen-ai/attributes.md)
 
 ---
 
