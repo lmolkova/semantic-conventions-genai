@@ -34,12 +34,6 @@ templates:
 text_maps:
   namespace_titles:
     gen_ai: GenAI
-  # Operations documented on their namespace README instead of their own folder.
-  operation_docs:
-    mcp.client: /docs/mcp/README.md
-    mcp.server: /docs/mcp/README.md
-    a2a.client: /docs/a2a/README.md
-    a2a.server: /docs/a2a/README.md
 
 acronyms:
   - A2A

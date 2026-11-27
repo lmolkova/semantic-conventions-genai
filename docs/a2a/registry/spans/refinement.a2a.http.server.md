@@ -3,7 +3,7 @@
 
 # Span refinement `a2a.http.server`
 
-Operation: [A2A Server](/docs/a2a/README.md)
+Operation: [A2A Server](/docs/a2a/server.md)
 
 **Refines:** `http.server`
 

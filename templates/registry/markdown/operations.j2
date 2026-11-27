@@ -21,9 +21,8 @@
 {%- if ns and ns != op_ns %}{{ ns_title(ns) | trim }} {% endif -%}
 {{ ns_title(op_ns) | trim }} {{ (operation | split_id)[1:] | join("_") | title_case | acronym }}
 {%- endmacro %}
-{#- The operation's README, unless `operation_docs` points it elsewhere. -#}
 {% macro operation_url(operation) -%}
-{{ operation | map_text("operation_docs", "/docs/" ~ (op_path(operation) | trim)) }}
+/docs/{{ op_path(operation) | trim }}
 {%- endmacro %}
 {#- Refinement pages get a `refinement.` prefix. -#}
 {% macro signal_path(signal, id, refinement=false) -%}

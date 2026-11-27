@@ -3,7 +3,7 @@
 
 # Span `mcp.client`
 
-Operation: [MCP Client](/docs/mcp/README.md)
+Operation: [MCP Client](/docs/mcp/client.md)
 
 <!-- prettier-ignore-start -->
 
@@ -29,6 +29,9 @@ Instead, it SHOULD add MCP-specific attributes to the existing tool execution sp
 
 Instrumentations that support this behavior MAY provide a configuration
 option to enable it.
+
+Instrumentations SHOULD inject context into the request as described in
+[context propagation](/docs/mcp/README.md#context-propagation).
 
 **Span name** SHOULD follow the format `{mcp.method.name} {target}`
 where target SHOULD match `{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when

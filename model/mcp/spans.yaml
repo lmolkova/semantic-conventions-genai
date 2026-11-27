@@ -65,6 +65,9 @@ spans:
 
       Instrumentations that support this behavior MAY provide a configuration
       option to enable it.
+
+      Instrumentations SHOULD inject context into the request as described in
+      [context propagation](/docs/mcp/README.md#context-propagation).
     stability: development
     annotations:
       docs:
@@ -99,6 +102,9 @@ spans:
       for the details on which values classify as errors.
 
       If the span status is set to `ERROR`, the status description SHOULD match the `JSONRPCError.message` if the message is available.
+
+      Instrumentations SHOULD use the context extracted from the request as the parent
+      as described in [context propagation](/docs/mcp/README.md#context-propagation).
     stability: development
     annotations:
       docs:

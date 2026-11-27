@@ -3,7 +3,7 @@
 
 # Span `a2a.client`
 
-Operation: [A2A Client](/docs/a2a/README.md)
+Operation: [A2A Client](/docs/a2a/client.md)
 
 <!-- prettier-ignore-start -->
 

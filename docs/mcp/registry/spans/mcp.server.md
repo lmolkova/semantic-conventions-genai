@@ -3,7 +3,7 @@
 
 # Span `mcp.server`
 
-Operation: [MCP Server](/docs/mcp/README.md)
+Operation: [MCP Server](/docs/mcp/server.md)
 
 <!-- prettier-ignore-start -->
 
@@ -19,6 +19,9 @@ document for details on how to record span status. See also `rpc.status_code` at
 for the details on which values classify as errors.
 
 If the span status is set to `ERROR`, the status description SHOULD match the `JSONRPCError.message` if the message is available.
+
+Instrumentations SHOULD use the context extracted from the request as the parent
+as described in [context propagation](/docs/mcp/README.md#context-propagation).
 
 **Span name** SHOULD follow the format `{mcp.method.name} {target}`
 where target SHOULD match `{gen_ai.tool.name}` or `{gen_ai.prompt.name}` when

@@ -3,7 +3,7 @@
 
 # Metric `mcp.server.operation.duration`
 
-Operation: [MCP Server](/docs/mcp/README.md)
+Operation: [MCP Server](/docs/mcp/server.md)
 
 <!-- prettier-ignore-start -->
 
