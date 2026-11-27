@@ -7,7 +7,7 @@ Operation: [Client Inference](/docs/gen-ai/client-inference/README.md)
 
 **Known refinements:**
 
-- [`openai.gen_ai.client.inference.duration`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.duration.md)
+- [`openai.gen_ai.client.inference.duration`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.duration.refinement.md)
 
 <!-- prettier-ignore-start -->
 

@@ -23,7 +23,7 @@ The Semantic Conventions for [Anthropic](https://www.anthropic.com/) extend and 
 
 `gen_ai.provider.name` MUST be set to `"anthropic"` and SHOULD be provided **at span creation time**.
 
-See [`anthropic.gen_ai.client.inference`](../anthropic/client-inference/spans/anthropic.gen_ai.client.inference.md) for the definition.
+See [`anthropic.gen_ai.client.inference`](../anthropic/client-inference/spans/anthropic.gen_ai.client.inference.refinement.md) for the definition.
 
 ### Embedding
 

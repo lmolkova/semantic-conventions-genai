@@ -32,7 +32,7 @@ The Semantic Conventions for [OpenAI](https://openai.com/) extend and override t
 
 ### Inference
 
-See [`openai.gen_ai.client.inference`](../openai/client-inference/spans/openai.gen_ai.client.inference.md) for the definition.
+See [`openai.gen_ai.client.inference`](../openai/client-inference/spans/openai.gen_ai.client.inference.refinement.md) for the definition.
 
 ### Embeddings
 
@@ -40,7 +40,7 @@ See [common embeddings span definition](client-embeddings/spans/gen_ai.client.em
 
 ### Fetch response
 
-See [`openai.fetch_response.client`](../openai/client-fetch-response/spans/openai.fetch_response.client.md) for the definition.
+See [`openai.fetch_response.client`](../openai/client-fetch-response/spans/openai.fetch_response.client.refinement.md) for the definition.
 
 ## Metrics
 
@@ -51,43 +51,43 @@ Individual systems may include additional system-specific attributes. It is reco
 
 Reports the usage of input tokens following the common [gen_ai.client.inference.usage.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.input_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.usage.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.input_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.usage.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.input_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.output_tokens`
 
 Reports the usage of output tokens following the common [gen_ai.client.inference.usage.output_tokens](client-inference/metrics/gen_ai.client.inference.usage.output_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.usage.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.output_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.usage.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.output_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.cache_read.input_tokens`
 
 Reports the usage of cached input tokens following the common [gen_ai.client.inference.usage.cache_read.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.cache_read.input_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.usage.cache_read.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_read.input_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.usage.cache_read.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_read.input_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.cache_write.input_tokens`
 
 Reports the usage of input tokens written to a provider-managed cache following the common [gen_ai.client.inference.usage.cache_write.input_tokens](client-inference/metrics/gen_ai.client.inference.usage.cache_write.input_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.usage.reasoning.output_tokens`
 
 Reports the usage of reasoning output tokens following the common [gen_ai.client.inference.usage.reasoning.output_tokens](client-inference/metrics/gen_ai.client.inference.usage.reasoning.output_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.operation.input_tokens`
 
 Reports the usage of input tokens following the common [gen_ai.client.inference.operation.input_tokens](client-inference/metrics/gen_ai.client.inference.operation.input_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.operation.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.input_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.operation.input_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.input_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.operation.output_tokens`
 
 Reports the usage of output tokens following the common [gen_ai.client.inference.operation.output_tokens](client-inference/metrics/gen_ai.client.inference.operation.output_tokens.md) definition.
 
-See [`openai.gen_ai.client.inference.operation.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.output_tokens.md) for the definition.
+See [`openai.gen_ai.client.inference.operation.output_tokens`](../openai/client-inference/metrics/openai.gen_ai.client.inference.operation.output_tokens.refinement.md) for the definition.
 
 ### Metric: `gen_ai.client.operation.duration`
 
@@ -206,6 +206,6 @@ reported following their own conventions.
 
 Measures the duration to complete an inference operation following the common [gen_ai.client.inference.duration](client-inference/metrics/gen_ai.client.inference.duration.md) definition.
 
-See [`openai.gen_ai.client.inference.duration`](../openai/client-inference/metrics/openai.gen_ai.client.inference.duration.md) for the definition.
+See [`openai.gen_ai.client.inference.duration`](../openai/client-inference/metrics/openai.gen_ai.client.inference.duration.refinement.md) for the definition.
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status

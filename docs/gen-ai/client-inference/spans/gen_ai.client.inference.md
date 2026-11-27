@@ -7,10 +7,10 @@ Operation: [Client Inference](/docs/gen-ai/client-inference/README.md)
 
 **Known refinements:**
 
-- [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.md)
-- [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.md)
-- [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.md)
-- [`openai.gen_ai.client.inference`](/docs/openai/client-inference/spans/openai.gen_ai.client.inference.md)
+- [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.refinement.md)
+- [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.refinement.md)
+- [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.refinement.md)
+- [`openai.gen_ai.client.inference`](/docs/openai/client-inference/spans/openai.gen_ai.client.inference.refinement.md)
 
 <!-- prettier-ignore-start -->
 

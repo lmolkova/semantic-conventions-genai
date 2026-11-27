@@ -1,11 +1,41 @@
 {%- import 'operations.j2' as ops -%}
 {%- import 'stability.j2' as stability -%}
-{#- One row per signal, linking to its generated page. -#}
+{#- One row per signal, linking to its generated page. When the table has
+   refinements, a Refinement column lists them under the signal they refine;
+   a refined signal that is not in the table is shown by id, unlinked. -#}
+{% macro link(s, signal) -%}
+[`{{ s.id }}`]({{ ops.signal_url(s.annotations.docs.operation, signal, s.id, s.id != ops.base_id(s) | trim) | trim }})
+{%- endmacro %}
+{% macro cells(s) -%}
+{{ stability.badge(s.stability, s.deprecated) | trim }} | {{ s.brief | trim | replace("\n", " ") }}
+{%- endmacro %}
 {% macro render(items, signal) -%}
+{%- set ns = namespace(bases=[], refs=[]) -%}
+{%- for s in items -%}
+{%- if s.id == ops.base_id(s) | trim %}{% set ns.bases = ns.bases + [s] %}{% else %}{% set ns.refs = ns.refs + [s] %}{% endif -%}
+{%- endfor -%}
+{%- set base_ids = ns.bases | map(attribute="id") | list -%}
+{%- if not ns.refs -%}
 | {{ ops.signal_title(signal) | trim }} | Stability | Description |
 | --- | --- | --- |
-{% for s in items | sort(attribute="id") %}| [`{{ s.id }}`]({{ ops.signal_url(s.annotations.docs.operation, signal, s.id) | trim }}) | {{ stability.badge(s.stability, s.deprecated) | trim }} | {{ s.brief | trim | replace("\n", " ") }} |
+{% for b in ns.bases | sort(attribute="id") %}| {{ link(b, signal) }} | {{ cells(b) }} |
 {% endfor %}
+{%- else -%}
+| {{ ops.signal_title(signal) | trim }} | Refinement | Stability | Description |
+| --- | --- | --- | --- |
+{% for b in ns.bases | sort(attribute="id") %}| {{ link(b, signal) }} | | {{ cells(b) }} |
+{% for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim == b.id %}| | {{ link(r, signal) }} | {{ cells(r) }} |
+{% endfor %}
+{%- endfor %}
+{%- set orphan_bases = namespace(ids=[]) -%}
+{%- for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim not in base_ids and ops.base_id(r) | trim not in orphan_bases.ids -%}
+{%- set orphan_bases.ids = orphan_bases.ids + [ops.base_id(r) | trim] -%}
+{%- endfor -%}
+{%- for o in orphan_bases.ids | sort %}| `{{ o }}` | | | |
+{% for r in ns.refs | sort(attribute="id") if ops.base_id(r) | trim == o %}| | {{ link(r, signal) }} | {{ cells(r) }} |
+{% endfor %}
+{%- endfor %}
+{%- endif -%}
 {%- endmacro %}
 
 {#- One table per signal type; each item carries its type in `signal`. -#}

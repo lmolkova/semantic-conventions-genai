@@ -76,7 +76,7 @@ templates:
             _changed: (if $b == null then [] else [$attrs[] | select(.key as $k | ($b | has($k)) and $b[$k] != .requirement_level) | .key] end)
           } end)))
     application_mode: each
-    file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id) | trim }}"
+    file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id, ctx.item._refines is defined and ctx.item._refines) | trim }}"
 
 
 text_maps:

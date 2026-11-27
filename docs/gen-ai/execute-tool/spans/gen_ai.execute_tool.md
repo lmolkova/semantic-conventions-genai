@@ -7,10 +7,10 @@ Operation: [Execute Tool](/docs/gen-ai/execute-tool/README.md)
 
 **Known refinements:**
 
-- [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.md)
-- [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.md)
-- [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.md)
-- [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md)
+- [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.refinement.md)
+- [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.refinement.md)
+- [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.refinement.md)
+- [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.refinement.md)
 
 <!-- prettier-ignore-start -->
 
@@ -33,10 +33,10 @@ instrumentations do not cover.
 When the library API or state identifies a specialized tool call,
 instrumentation SHOULD apply the corresponding refinement to the execute-tool
 span. Available refinements include
-[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md),
-[loading a skill](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.md),
-[reading a skill resource](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.md), and
-[command execution](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.md).
+[agents exposed as tools](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.refinement.md),
+[loading a skill](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.refinement.md),
+[reading a skill resource](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.refinement.md), and
+[command execution](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.refinement.md).
 
 **Span name** SHOULD be `execute_tool {gen_ai.tool.name}`.
 

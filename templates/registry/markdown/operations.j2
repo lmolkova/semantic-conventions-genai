@@ -18,11 +18,16 @@
 {% macro operation_url(operation) -%}
 {{ operation | map_text("operation_docs", "/docs/" ~ (dir(namespace(operation) | trim, operation) | trim) ~ "/README.md") }}
 {%- endmacro %}
-{% macro signal_path(operation, signal, id) -%}
-{{ dir(namespace(id) | trim, operation) | trim }}/{{ signal }}/{{ id }}.md
+{#- Refinement pages get a `.refinement.md` suffix. -#}
+{% macro signal_path(operation, signal, id, refinement=false) -%}
+{{ dir(namespace(id) | trim, operation) | trim }}/{{ signal }}/{{ id }}{{ ".refinement" if refinement }}.md
 {%- endmacro %}
-{% macro signal_url(operation, signal, id) -%}
-/docs/{{ signal_path(operation, signal, id) | trim }}
+{% macro signal_url(operation, signal, id, refinement=false) -%}
+/docs/{{ signal_path(operation, signal, id, refinement) | trim }}
+{%- endmacro %}
+{#- The id of the signal an item refines (its own id for base signals). -#}
+{% macro base_id(item) -%}
+{{ item.type or item.name }}
 {%- endmacro %}
 {% macro signal_title(signal) -%}
 {{ {"spans": "Span", "metrics": "Metric", "events": "Event", "entities": "Entity"}[signal] }}

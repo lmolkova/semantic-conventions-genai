@@ -7,7 +7,7 @@ Operation: [Client Fetch Response](/docs/gen-ai/client-fetch-response/README.md)
 
 **Known refinements:**
 
-- [`openai.fetch_response.client`](/docs/openai/client-fetch-response/spans/openai.fetch_response.client.md)
+- [`openai.fetch_response.client`](/docs/openai/client-fetch-response/spans/openai.fetch_response.client.refinement.md)
 
 <!-- prettier-ignore-start -->
 

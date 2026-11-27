@@ -7,7 +7,7 @@ Operation: [Client Inference](/docs/gen-ai/client-inference/README.md)
 
 **Known refinements:**
 
-- [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md)
+- [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.refinement.md)
 
 <!-- prettier-ignore-start -->
 
