@@ -1,6 +1,6 @@
 # Evaluation Result Event
 
-> **[Semantic Convention](../../docs/gen-ai/gen-ai-events.md#event-gen_aievaluationresult)**
+> **[Semantic Convention](../../docs/gen-ai/evaluation/events/gen_ai.evaluation.result.md)**
 
 ## Required
 

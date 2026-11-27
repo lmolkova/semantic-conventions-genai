@@ -14,6 +14,7 @@ The event name MUST be `gen_ai.client.inference.operation.details`.
 Describes the details of a GenAI completion request including chat history and parameters.
 
 This event could be used to store input and output details independently from traces.
+Capturing message content on this event is controlled by [content capture configuration](/docs/gen-ai/README.md#content-capture-configuration) (e.g. `OTEL_INSTRUMENTATION_GENAI_CAPTURE_CONTENT=EVENT_ONLY` or `SPAN_AND_EVENT`).
 Instrumentations SHOULD set the severity to DEBUG (severity number 5) when recording this event.
 
 **Requirement level:** [Recommended](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/general/signal-requirement-level.md).

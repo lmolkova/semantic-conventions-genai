@@ -44,7 +44,6 @@ Technology specific semantic conventions are defined for the following GenAI sys
 See also:
 
 * [Evaluation](evaluation/): Semantic Conventions for Generative AI evaluation results - *events*.
-* [Events](gen-ai-events.md): Semantic Conventions for Generative AI inputs and outputs - *events*.
 * [Exceptions](gen-ai-exceptions.md): Semantic Conventions for Generative AI *exceptions*.
 * [Metrics](gen-ai-metrics.md): Semantic Conventions for Generative AI operations - *metrics*.
 

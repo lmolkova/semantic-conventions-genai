@@ -97,7 +97,7 @@ SEMCONV_DOC_LINKS: dict[str, str] = {
     "gen_ai.client.inference.exception": "../../docs/gen-ai/client-inference/events/gen_ai.client.inference.exception.md",
     "gen_ai.client.inference.operation.details": "../../docs/gen-ai/client-inference/events/gen_ai.client.inference.operation.details.md",
     "gen_ai.client.invoke_agent.exception": "../../docs/gen-ai/client-invoke-agent/events/gen_ai.client.invoke_agent.exception.md",
-    "gen_ai.evaluation.result": "../../docs/gen-ai/gen-ai-events.md#event-gen_aievaluationresult",
+    "gen_ai.evaluation.result": "../../docs/gen-ai/evaluation/events/gen_ai.evaluation.result.md",
     "gen_ai.execute_tool.exception": "../../docs/gen-ai/execute-tool/events/gen_ai.execute_tool.exception.md",
     "gen_ai.invoke_agent.exception": "../../docs/gen-ai/invoke-agent/events/gen_ai.invoke_agent.exception.md",
     "gen_ai.main_agent": "../../docs/registry/entities/gen-ai.md#gen-ai-main-agent",
