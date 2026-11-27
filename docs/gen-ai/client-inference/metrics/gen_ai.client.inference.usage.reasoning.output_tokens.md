@@ -5,6 +5,10 @@
 
 Operation: Client Inference
 
+**Known refinements:**
+
+- [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md)
+
 <!-- prettier-ignore-start -->
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |

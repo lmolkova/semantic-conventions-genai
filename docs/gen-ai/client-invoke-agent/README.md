@@ -47,12 +47,6 @@ Agent creation is covered by the
 
 The following metric instruments describe remote agent invocations.
 
-### Metric: `gen_ai.client.invoke_agent.duration`
-
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
-
-See [`gen_ai.client.invoke_agent.duration`](metrics/gen_ai.client.invoke_agent.duration.md) for the definition.
-
 ## Events
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status

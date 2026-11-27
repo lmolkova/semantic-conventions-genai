@@ -5,6 +5,8 @@
 
 Operation: A2A Server
 
+**Refines:** `rpc.grpc.call.server`
+
 <!-- prettier-ignore-start -->
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)

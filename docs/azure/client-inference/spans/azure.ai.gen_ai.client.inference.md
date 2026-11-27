@@ -5,6 +5,12 @@
 
 Operation: Client Inference
 
+**Refines:** [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md)
+
+**Adds:** `azure.resource_provider.namespace`
+
+**Changes requirement level of:** `server.port`
+
 <!-- prettier-ignore-start -->
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)
@@ -38,8 +44,8 @@ and MUST follow the overall [guidelines for span names](https://github.com/open-
 | [`gen_ai.request.seed`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable and if the request includes a seed. | int | Requests with same seed value more likely to return same result. | `100` |
 | [`gen_ai.request.stream`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` [10] | boolean | Indicates whether the GenAI request was made in streaming mode. | |
 | [`gen_ai.request.top_k`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Conditionally Required` If applicable. | int | The top-K sampling setting for the GenAI request: restricts token generation at each step to the K most likely next tokens. [11] | `40` |
-| [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If not default (443). | int | GenAI server port. [12] | `80`; `8080`; `443` |
-| [`azure.resource_provider.namespace`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/azure.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | [Azure Resource Provider Namespace](https://learn.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers) as recognized by the client. [13] | `Microsoft.CognitiveServices` |
+| ![Changed](https://img.shields.io/badge/-changed-orange) [`server.port`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/server.md) | ![Stable](https://img.shields.io/badge/-stable-lightgreen) | `Conditionally Required` If not default (443). | int | GenAI server port. [12] | `80`; `8080`; `443` |
+| ![Added](https://img.shields.io/badge/-added-teal) [`azure.resource_provider.namespace`](https://github.com/open-telemetry/semantic-conventions/blob/v1.45.0/docs/registry/attributes/azure.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | string | [Azure Resource Provider Namespace](https://learn.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers) as recognized by the client. [13] | `Microsoft.CognitiveServices` |
 | [`gen_ai.conversation.compacted`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` when available | boolean | Indicates whether the effective conversation context used for this operation is a compacted view of a prior conversation. [14] | `true` |
 | [`gen_ai.request.frequency_penalty`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | double | The frequency penalty setting for the GenAI request. | `0.1` |
 | [`gen_ai.request.max_tokens`](/docs/registry/attributes/gen-ai.md) | ![Development](https://img.shields.io/badge/-development-blue) | `Recommended` | int | The maximum number of tokens the model generates for a request. | `100` |

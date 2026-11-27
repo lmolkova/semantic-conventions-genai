@@ -13,11 +13,11 @@ linkTitle: Client Inference
 
 | Span | Stability | Description |
 | --- | --- | --- |
-| [`anthropic.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
-| [`aws.bedrock.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
-| [`azure.ai.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`anthropic.gen_ai.client.inference`](/docs/anthropic/client-inference/spans/anthropic.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Anthropic](https://www.anthropic.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`aws.bedrock.gen_ai.client.inference`](/docs/aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [AWS Bedrock](https://aws.amazon.com/bedrock/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`azure.ai.gen_ai.client.inference`](/docs/azure/client-inference/spans/azure.ai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/rest/api/microsoft-foundry/modelinference/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
 | [`gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | This span represents a logical client call to Generative AI model or service that generates a response or requests a tool call based on the input prompt. |
-| [`openai.gen_ai.client.inference`](/docs/gen-ai/client-inference/spans/openai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
+| [`openai.gen_ai.client.inference`](/docs/openai/client-inference/spans/openai.gen_ai.client.inference.md) | ![Development](https://img.shields.io/badge/-development-blue) | Semantic Conventions for [OpenAI](https://openai.com/) client spans extend and override the semantic conventions for [Gen AI Spans](/docs/gen-ai/gen-ai-spans.md). |
 
 | Metric | Stability | Description |
 | --- | --- | --- |
@@ -31,14 +31,14 @@ linkTitle: Client Inference
 | [`gen_ai.client.inference.usage.input_tokens`](/docs/gen-ai/client-inference/metrics/gen_ai.client.inference.usage.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of input (prompt) tokens used, including cached tokens. |
 | [`gen_ai.client.inference.usage.output_tokens`](/docs/gen-ai/client-inference/metrics/gen_ai.client.inference.usage.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of output (completion) tokens used, including reasoning tokens. |
 | [`gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/gen-ai/client-inference/metrics/gen_ai.client.inference.usage.reasoning.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | The number of output tokens used for reasoning (e.g. chain-of-thought, extended thinking). |
-| [`openai.gen_ai.client.inference.duration`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.duration`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.operation.input_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.operation.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.operation.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.operation.output_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.operation.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.operation.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.usage.cache_read.input_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_read.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.cache_read.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.cache_write.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.usage.input_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.usage.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.usage.output_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.usage.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
-| [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/gen-ai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.reasoning.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.duration`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.duration.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.duration`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.operation.input_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.operation.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.operation.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.operation.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.operation.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.operation.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.usage.cache_read.input_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_read.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.cache_read.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.cache_write.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.usage.input_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.input_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.input_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.usage.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
+| [`openai.gen_ai.client.inference.usage.reasoning.output_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.reasoning.output_tokens.md) | ![Development](https://img.shields.io/badge/-development-blue) | OpenAI-specific extension to `gen_ai.client.inference.usage.reasoning.output_tokens`. Adds `openai.response.service_tier` and `openai.response.system_fingerprint` when the provider is `openai`. |
 
 | Event | Stability | Description |
 | --- | --- | --- |
@@ -77,28 +77,9 @@ Inference token metrics (`gen_ai.client.inference.usage.*` counters and
 `gen_ai.client.inference.operation.*` histograms) are defined in
 [Inference Token Metrics](../gen-ai-token-metrics.md).
 
-### Metric: `gen_ai.client.inference.duration`
-
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
-
-See [`gen_ai.client.inference.duration`](metrics/gen_ai.client.inference.duration.md) for the definition.
-
-### Metric: `gen_ai.client.inference.time_to_first_chunk`
-
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
-
-See [`gen_ai.client.inference.time_to_first_chunk`](metrics/gen_ai.client.inference.time_to_first_chunk.md) for the definition.
-
-### Metric: `gen_ai.client.inference.time_per_output_chunk`
-
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92].
-
-See [`gen_ai.client.inference.time_per_output_chunk`](metrics/gen_ai.client.inference.time_per_output_chunk.md) for the definition.
-
 ## Events
 
 > [!Note]
 > Events are in-development and not yet available in some languages. Check [spec-compliance matrix](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/spec-compliance-matrix.md#logs) to see the implementation status in corresponding language.
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
-[ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters

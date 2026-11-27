@@ -44,18 +44,37 @@ templates:
     application_mode: each
     file_name: "registry/entities/{{ ctx.root_namespace | kebab_case }}.md"
 
-  # Per-operation signal docs: <ns>/<operation>/<signal>/<id>.md plus a
+  # Per-operation signal docs: <ns>/<operation>/<signal>/<id>.md, <ns> from the signal id, plus a
   # generated index per signal type. The operation comes from
   # `annotations.docs.operation`; signals without it are skipped. The
   # operation README.md is hand-written.
   - template: signal_page.md.j2
-    filter: &operation_signals >
-      [ (.refinements.spans[] | {signal: "spans", item: .}),
-        (.refinements.metrics[] | {signal: "metrics", item: .}),
-        (.refinements.events[] | {signal: "events", item: .}),
-        (.refinements.entities[] | {signal: "entities", item: .}) ]
+    # Refinements get `_refines` (base id), `_refines_operation` (set when the
+    # base is documented here, so it can be linked) and `_added` / `_changed`:
+    # attribute keys they add or whose requirement level they change. Base
+    # signals get `_refinements`, the documented refinements of them.
+    filter: >
+      (.registry | {
+        spans: (.spans | map({key: .type, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
+        metrics: (.metrics | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries),
+        events: (.events | map({key: .name, value: ((.attributes // []) | map({key: .key, value: .requirement_level}) | from_entries)}) | from_entries)
+      }) as $base
+      | [ (.refinements.spans[] | {signal: "spans", item: .}),
+          (.refinements.metrics[] | {signal: "metrics", item: .}),
+          (.refinements.events[] | {signal: "events", item: .}),
+          (.refinements.entities[] | {signal: "entities", item: .}) ]
       | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
-        | . + {operation: .item.annotations.docs.operation, id: .item.id})
+        | . + {operation: .item.annotations.docs.operation, id: .item.id, base: (.item.type // .item.name)})
+      | . as $all
+      | map(. as $e | ($base[$e.signal] // {})[$e.base] as $b | ($e.item.attributes // []) as $attrs
+        | .item = (.item + (if $e.id == $e.base then {
+            _refinements: [$all[] | select(.signal == $e.signal and .base == $e.base and .id != $e.base) | {id, operation}]
+          } else {
+            _refines: $e.base,
+            _refines_operation: ([$all[] | select(.signal == $e.signal and .id == $e.base) | .operation] | first),
+            _added: (if $b == null then [] else [$attrs[] | select(.key as $k | $b | has($k) | not) | .key] end),
+            _changed: (if $b == null then [] else [$attrs[] | select(.key as $k | ($b | has($k)) and $b[$k] != .requirement_level) | .key] end)
+          } end)))
     application_mode: each
     file_name: "{% import 'operations.j2' as ops %}{{ ops.signal_path(ctx.operation, ctx.signal, ctx.id) | trim }}"
 
@@ -66,11 +85,11 @@ templates:
         (.refinements.events[] | {signal: "events", item: .}),
         (.refinements.entities[] | {signal: "entities", item: .}) ]
       | map(select(.item.annotations.docs.operation != null and .item.deprecated == null)
-        | . + {operation: .item.annotations.docs.operation})
-      | group_by([.operation, .signal])
-      | map({operation: .[0].operation, signal: .[0].signal, items: (map(.item) | sort_by(.id))})
+        | . + {operation: .item.annotations.docs.operation, namespace: (.item.id | split(".") | first)})
+      | group_by([.namespace, .operation, .signal])
+      | map({namespace: .[0].namespace, operation: .[0].operation, signal: .[0].signal, items: (map(.item) | sort_by(.id))})
     application_mode: each
-    file_name: "{% import 'operations.j2' as ops %}{{ ops.index_path(ctx.operation, ctx.signal) | trim }}"
+    file_name: "{% import 'operations.j2' as ops %}{{ ops.index_path(ctx.namespace, ctx.operation, ctx.signal) | trim }}"
 
 text_maps:
   operation_titles:

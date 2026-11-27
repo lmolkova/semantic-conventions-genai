@@ -16,6 +16,6 @@ for [Gen AI Spans](gen-ai-spans.md).
 These attributes track input data and metadata for a request to an AWS Bedrock model. The attributes include general Generative AI
 attributes and ones specific the AWS Bedrock.
 
-See [`aws.bedrock.gen_ai.client.inference`](client-inference/spans/aws.bedrock.gen_ai.client.inference.md) for the definition.
+See [`aws.bedrock.gen_ai.client.inference`](../aws/client-inference/spans/aws.bedrock.gen_ai.client.inference.md) for the definition.
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status

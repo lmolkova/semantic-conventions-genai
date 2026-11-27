@@ -5,6 +5,10 @@
 
 Operation: Client Inference
 
+**Known refinements:**
+
+- [`openai.gen_ai.client.inference.usage.cache_write.input_tokens`](/docs/openai/client-inference/metrics/openai.gen_ai.client.inference.usage.cache_write.input_tokens.md)
+
 <!-- prettier-ignore-start -->
 
 | Name | Instrument Type | Unit (UCUM) | Description | Stability | Entity Associations |

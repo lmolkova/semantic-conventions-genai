@@ -10,7 +10,12 @@
    `requirement_level`, `provenance`, etc. directly inlined. Provenance is null
    for imported attributes; name_with_link reads it to pick the right link. #}
 {#- `markdown.omit` drops an attribute from the table, e.g. where the signal's note already pins its value. -#}
-{% macro generate(all_attributes, attribute_registry_base_url, upstream_docs_base, title) -%}
+{#- Refinements only: keys in `section._added` / `section._changed` get a badge. -#}
+{% macro mark(key, section) -%}
+{%- if section and key in (section._added | default([], true)) %}![Added](https://img.shields.io/badge/-added-teal) {% elif section and key in (section._changed | default([], true)) %}![Changed](https://img.shields.io/badge/-changed-orange) {% endif -%}
+{%- endmacro %}
+
+{% macro generate(all_attributes, attribute_registry_base_url, upstream_docs_base, title, section=none) -%}
 {%- set kept = namespace(items=[]) -%}
 {%- for a in all_attributes if not (a.annotations and a.annotations.markdown and a.annotations.markdown.omit) -%}
 {%- set kept.items = kept.items + [a] -%}
@@ -21,6 +26,6 @@
 
 | Key | Stability | [Requirement Level](https://opentelemetry.io/docs/specs/semconv/general/attribute-requirement-level/) | Value Type | Description | Example Values |
 | --- | --- | --- | --- | --- | --- |
-{% for attribute in attributes | attribute_sort %}| {{ attrs.name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) }} | {{ stability.badge(attribute.stability, attribute.deprecated, attribute.brief) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attribute.brief | trim }}{{ notes.add({"note": attrs.note(attribute), "name": attribute.key}) }} | {{ examples.format(attribute) }}|
+{% for attribute in attributes | attribute_sort %}| {{ mark(attribute.key, section) }}{{ attrs.name_with_link(attribute, attribute_registry_base_url, upstream_docs_base) }} | {{ stability.badge(attribute.stability, attribute.deprecated, attribute.brief) | trim }} | {{ requirement.render({"level": attribute.requirement_level, "name": attribute.key}, notes) | trim }} | {{ attrs.type(attribute) }} | {{ attribute.brief | trim }}{{ notes.add({"note": attrs.note(attribute), "name": attribute.key}) }} | {{ examples.format(attribute) }}|
 {% endfor %}{{ notes.render() }}{{ sampling.snippet(attributes, attribute_registry_base_url, upstream_docs_base) }}{{ enums.tables(attributes | selectattr("type", "mapping"), notes) }}
 {%- endif %}{% endmacro %}

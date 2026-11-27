@@ -151,6 +151,7 @@ metrics:
       docs:
         operation: gen_ai.client.inference
       code_generation:
+        explicit_bucket_boundaries: [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864]
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -168,6 +169,7 @@ metrics:
       docs:
         operation: gen_ai.client.inference
       code_generation:
+        explicit_bucket_boundaries: [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864]
         metric_value_type: int
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -193,6 +195,7 @@ metrics:
       docs:
         operation: gen_ai.client.embeddings
       code_generation:
+        explicit_bucket_boundaries: [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864]
         metric_value_type: int
     attributes:
       - ref_group: attributes.gen_ai.embeddings

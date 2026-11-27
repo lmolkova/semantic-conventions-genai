@@ -111,38 +111,6 @@ context, if it's present.
 
 ## Metrics
 
-### Metric: `mcp.client.operation.duration`
-
-This metric SHOULD be specified with
-[`ExplicitBucketBoundaries`](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters)
-of `[ 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60, 120, 300 ]`.
-
-See [`mcp.client.operation.duration`](client/metrics/mcp.client.operation.duration.md) for the definition.
-
-### Metric: `mcp.server.operation.duration`
-
-This metric SHOULD be specified with
-[`ExplicitBucketBoundaries`](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters)
-of `[ 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60, 120, 300 ]`.
-
-See [`mcp.server.operation.duration`](server/metrics/mcp.server.operation.duration.md) for the definition.
-
-### Metric: `mcp.client.session.duration`
-
-This metric SHOULD be specified with
-[`ExplicitBucketBoundaries`](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters)
-of `[ 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60, 120, 300 ]`.
-
-See [`mcp.client.session.duration`](client/metrics/mcp.client.session.duration.md) for the definition.
-
-### Metric: `mcp.server.session.duration`
-
-This metric SHOULD be specified with
-[`ExplicitBucketBoundaries`](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters)
-of `[ 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 30, 60, 120, 300 ]`.
-
-See [`mcp.server.session.duration`](server/metrics/mcp.server.session.duration.md) for the definition.
-
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
 
 ## Recording MCP transport

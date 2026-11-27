@@ -44,6 +44,7 @@ metrics:
     stability: development
     annotations:
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -68,6 +69,7 @@ metrics:
       docs:
         operation: gen_ai.client.inference
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -89,6 +91,7 @@ metrics:
       docs:
         operation: gen_ai.client.embeddings
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: attributes.gen_ai.embeddings
@@ -115,6 +118,7 @@ metrics:
       docs:
         operation: gen_ai.client.invoke_agent
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: attributes.gen_ai.address_and_port
@@ -144,6 +148,7 @@ metrics:
       docs:
         operation: gen_ai.client.inference
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -160,6 +165,7 @@ metrics:
       docs:
         operation: gen_ai.client.inference
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -173,6 +179,7 @@ metrics:
       docs:
         operation: gen_ai.server.inference
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -187,6 +194,7 @@ metrics:
       docs:
         operation: gen_ai.server.inference
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.025, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.75, 1.0, 2.5]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -200,6 +208,7 @@ metrics:
       docs:
         operation: gen_ai.server.inference
       code_generation:
+        explicit_bucket_boundaries: [0.001, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1, 0.25, 0.5, 0.75, 1.0, 2.5, 5.0, 7.5, 10.0]
         metric_value_type: double
     attributes:
       - ref_group: metric_attributes.gen_ai
@@ -209,6 +218,7 @@ metrics:
       docs:
         operation: gen_ai.invoke_agent
       code_generation:
+        explicit_bucket_boundaries: [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2, 102.4, 204.8, 409.6, 900, 1800, 3600, 7200, 14400, 43200, 86400]
         metric_value_type: double
     brief: >
       The end-to-end duration of a single in-process agent, workflow, or
@@ -241,6 +251,7 @@ metrics:
       docs:
         operation: gen_ai.invoke_agent
       code_generation:
+        explicit_bucket_boundaries: [1, 2, 4, 8, 16, 32, 64, 128]
         metric_value_type: int
     brief: >
       The number of inference (model) calls a GenAI agent, workflow, or
@@ -273,6 +284,7 @@ metrics:
       docs:
         operation: gen_ai.invoke_agent
       code_generation:
+        explicit_bucket_boundaries: [1, 2, 4, 8, 16, 32, 64, 128]
         metric_value_type: int
     brief: >
       The number of tool calls a GenAI agent, workflow, or framework
@@ -307,6 +319,7 @@ metrics:
       docs:
         operation: gen_ai.execute_tool
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     brief: >
       The duration of a single tool execution.
@@ -328,6 +341,7 @@ metrics:
       docs:
         operation: gen_ai.retrieval
       code_generation:
+        explicit_bucket_boundaries: [0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24, 20.48, 40.96, 81.92]
         metric_value_type: double
     brief: >
       The duration of a retrieval operation - an execution of a framework retrieval

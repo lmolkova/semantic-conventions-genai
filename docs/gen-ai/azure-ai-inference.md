@@ -23,7 +23,7 @@ The Semantic Conventions for [Azure AI Inference](https://learn.microsoft.com/az
 
 `gen_ai.provider.name` MUST be set to `"azure.ai.inference"` and SHOULD be provided **at span creation time**.
 
-See [`azure.ai.gen_ai.client.inference`](client-inference/spans/azure.ai.gen_ai.client.inference.md) for the definition.
+See [`azure.ai.gen_ai.client.inference`](../azure/client-inference/spans/azure.ai.gen_ai.client.inference.md) for the definition.
 
 ### Embedding
 

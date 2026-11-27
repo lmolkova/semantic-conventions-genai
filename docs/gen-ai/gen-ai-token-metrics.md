@@ -74,7 +74,7 @@ Two families of token instruments are defined:
   usage percentiles (e.g. p95/p99) and detect outliers.
 
 Embeddings operations only report the
-[`gen_ai.client.embeddings.operation.input_tokens`](client-embeddings/README.md#metric-gen_aiclientembeddingsoperationinput_tokens)
+[`gen_ai.client.embeddings.operation.input_tokens`](client-embeddings/metrics/gen_ai.client.embeddings.operation.input_tokens.md)
 histogram, and total token usage can be computed from it.
 
 > [!NOTE]
@@ -121,16 +121,11 @@ See [`gen_ai.client.inference.usage.reasoning.output_tokens`](client-inference/m
 
 ### Metric: `gen_ai.client.inference.operation.input_tokens`
 
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864].
-
 See [`gen_ai.client.inference.operation.input_tokens`](client-inference/metrics/gen_ai.client.inference.operation.input_tokens.md) for the definition.
 
 ### Metric: `gen_ai.client.inference.operation.output_tokens`
 
 
-This metric SHOULD be specified with [ExplicitBucketBoundaries] of [1, 4, 16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 4194304, 16777216, 67108864].
-
 See [`gen_ai.client.inference.operation.output_tokens`](client-inference/metrics/gen_ai.client.inference.operation.output_tokens.md) for the definition.
 
 [DocumentStatus]: https://opentelemetry.io/docs/specs/otel/document-status
-[ExplicitBucketBoundaries]: https://github.com/open-telemetry/opentelemetry-specification/blob/v1.55.0/specification/metrics/api.md#instrument-advisory-parameters

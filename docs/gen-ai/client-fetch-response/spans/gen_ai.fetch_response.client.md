@@ -5,6 +5,10 @@
 
 Operation: Client Fetch Response
 
+**Known refinements:**
+
+- [`openai.fetch_response.client`](/docs/openai/client-fetch-response/spans/openai.fetch_response.client.md)
+
 <!-- prettier-ignore-start -->
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)

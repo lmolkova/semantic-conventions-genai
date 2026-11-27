@@ -5,6 +5,13 @@
 
 Operation: Execute Tool
 
+**Known refinements:**
+
+- [`gen_ai.execute_tool.command`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.command.md)
+- [`gen_ai.execute_tool.load_skill`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.load_skill.md)
+- [`gen_ai.execute_tool.read_skill_resource`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.read_skill_resource.md)
+- [`gen_ai.execute_tool.transfer`](/docs/gen-ai/execute-tool/spans/gen_ai.execute_tool.transfer.md)
+
 <!-- prettier-ignore-start -->
 
 **Status:** ![Development](https://img.shields.io/badge/-development-blue)

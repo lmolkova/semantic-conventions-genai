@@ -1,19 +1,24 @@
-{#- Operation docs layout: `<ns>/<operation>/<signal>/<id>.md`, where the
-   operation comes from the signal's `annotations.docs.operation`, e.g.
-   `gen_ai.client.inference` -> `gen-ai/client-inference`. Paths are relative to
-   `docs/`; urls are root-anchored so they resolve from any page. -#}
-{% macro dir(operation) -%}
-{%- set parts = operation | split_id -%}
-{{ parts | first | kebab_case }}/{{ parts[1:] | join("_") | kebab_case }}
+{#- Operation docs layout: `<ns>/<operation>/<signal>/<id>.md`. The operation
+   comes from the signal's `annotations.docs.operation` and the namespace from
+   the signal id, so refinements land in their own namespace:
+   `openai.gen_ai.client.inference` -> `openai/client-inference`. Paths are
+   relative to `docs/`; urls are root-anchored so they resolve from any page. -#}
+{% macro namespace(id) -%}
+{{ id | split_id | first }}
 {%- endmacro %}
-{% macro title(operation) -%}
+{% macro dir(ns, operation) -%}
+{{ ns | kebab_case }}/{{ (operation | split_id)[1:] | join("_") | kebab_case }}
+{%- endmacro %}
+{#- Prefixed with the namespace when it differs from the operation's, e.g. `OpenAI Client Inference`. -#}
+{% macro title(operation, ns=none) -%}
+{%- if ns and ns != namespace(operation) | trim %}{{ ns | title_case | acronym }} {% endif -%}
 {{ operation | map_text("operation_titles") }}
 {%- endmacro %}
-{% macro index_path(operation, signal) -%}
-{{ dir(operation) | trim }}/{{ signal }}/README.md
+{% macro index_path(ns, operation, signal) -%}
+{{ dir(ns, operation) | trim }}/{{ signal }}/README.md
 {%- endmacro %}
 {% macro signal_path(operation, signal, id) -%}
-{{ dir(operation) | trim }}/{{ signal }}/{{ id }}.md
+{{ dir(namespace(id) | trim, operation) | trim }}/{{ signal }}/{{ id }}.md
 {%- endmacro %}
 {% macro signal_url(operation, signal, id) -%}
 /docs/{{ signal_path(operation, signal, id) | trim }}

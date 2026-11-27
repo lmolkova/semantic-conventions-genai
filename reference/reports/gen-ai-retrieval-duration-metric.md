@@ -1,6 +1,6 @@
 # Retrieval Duration Metric
 
-> **[Semantic Convention](../../docs/gen-ai/retrieval/README.md#metric-gen_airetrievalduration)**
+> **[Semantic Convention](../../docs/gen-ai/retrieval/metrics/gen_ai.retrieval.duration.md)**
 
 ## Required
 

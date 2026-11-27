@@ -6,6 +6,26 @@
 # {{ ops.signal_title(ctx.signal) | trim }} `{{ ctx.id }}`
 
 Operation: {{ ops.title(ctx.operation) | trim }}
+{%- set item = ctx.item %}
+{%- if item._refines %}
+
+**Refines:** {% if item._refines_operation %}[`{{ item._refines }}`]({{ ops.signal_url(item._refines_operation, ctx.signal, item._refines) | trim }}){% else %}`{{ item._refines }}`{% endif %}
+{%- if item._added %}
+
+**Adds:** {% for k in item._added %}{% if not loop.first %}, {% endif %}`{{ k }}`{% endfor %}
+{%- endif %}
+{%- if item._changed %}
+
+**Changes requirement level of:** {% for k in item._changed %}{% if not loop.first %}, {% endif %}`{{ k }}`{% endfor %}
+{%- endif %}
+{%- endif %}
+{%- if item._refinements %}
+
+**Known refinements:**
+{% for r in item._refinements | sort(attribute="id") %}
+- [`{{ r.id }}`]({{ ops.signal_url(r.operation, ctx.signal, r.id) | trim }})
+{%- endfor %}
+{%- endif %}
 
 {{ signals.render(ctx.item, ctx.signal) | trim }}
 

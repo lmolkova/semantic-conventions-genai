@@ -12,12 +12,12 @@
 <!-- prettier-ignore-start -->
 
 {% if signal == "spans" -%}
-{{ sp.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{{ sp.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes", item) }}
 {%- elif signal == "metrics" -%}
 {{ mt.generate(item) }}
-{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes", item) }}
 {%- elif signal == "events" -%}
-{{ ev.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes") }}
+{{ ev.header(item, entity_registry_base_url) }}{{ at.generate(item.attributes | default([]), attribute_registry_base_url, upstream_docs_base, "Attributes", item) }}
 {%- elif signal == "entities" -%}
 {{ entity.header(item) }}{{ entity.all_attribute_table(item, attribute_registry_base_url, upstream_docs_base) }}
 {%- endif %}
